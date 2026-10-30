@@ -12,8 +12,9 @@
 * {
   box-sizing: border-box;
 }
-body {
+html, body {
   margin: 0;
+  overflow-x: hidden;
 }
 button,
 a,
@@ -112,12 +113,34 @@ small {
   letter-spacing: 1px;
   white-space: nowrap;
 }
-.brand span {
+.brand .brand-name {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 1.2px;
+  color: #ffffff;
+}
+.brand .brand-role {
   display: block;
   font-size: 9px;
   letter-spacing: 1.5px;
-  margin-top: 6px;
+  margin-top: 4px;
   color: var(--silver);
+}
+.skip-intro-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #c4c7d4;
+  font: 9px var(--mono);
+  letter-spacing: 1.5px;
+  padding: 6px 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.skip-intro-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.5);
 }
 nav {
   display: flex;
@@ -187,66 +210,162 @@ nav a[aria-current]:after {
   top: 12px;
 }
 .hero {
-  height: max(780px, calc(100svh - 72px));
-  max-height: 1080px;
+  height: 100vh;
+  min-height: 800px;
+  max-height: 1120px;
   position: relative;
   overflow: hidden;
   padding-top: 76px;
-  background: #09090b;
+  background: #040508;
 }
-.hero-art {
-  position: absolute;
-  inset: 30px -1% -2%;
-  background: url("/assets/citadel.webp") 55% 50% / cover no-repeat;
-  animation: arrive 2s ease-out;
-}
-.hero-shade {
+.castle-gateway-canvas-wrap {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(90deg, #030303c4 0%, #03030364 24%, transparent 53%),
-    linear-gradient(
-      0deg,
-      #030303 0%,
-      transparent 17%,
-      transparent 88%,
-      #03030355
-    );
+  z-index: 1;
+  pointer-events: auto;
+  width: 100%;
+  height: 100%;
 }
-.hero-copy {
+.hero-vignette {
   position: absolute;
-  left: 4.2%;
-  top: 25%;
-  z-index: 3;
-  width: 360px;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 63% 45%, transparent 35%, rgba(3, 4, 6, 0.45) 70%, rgba(2, 3, 4, 0.9) 100%),
+    linear-gradient(180deg, rgba(3, 4, 6, 0.75) 0%, transparent 18%, transparent 78%, rgba(3, 3, 5, 0.95) 100%),
+    linear-gradient(90deg, rgba(3, 4, 6, 0.8) 0%, rgba(3, 4, 6, 0.4) 30%, transparent 60%);
 }
-.hero-copy h1 {
-  font-family: "Pixelify Sans", sans-serif;
-  font-weight: 500;
-  font-size: clamp(65px, 6vw, 92px);
-  line-height: 0.93;
-  letter-spacing: -2px;
-  margin: 25px 0 27px;
-  text-shadow: 0 4px 35px #000;
+.hero-hud-panel {
+  position: absolute;
+  left: 4.5%;
+  top: 17%;
+  z-index: 4;
+  width: min(440px, 92vw);
+  padding: 32px 36px;
+  border-radius: 4px;
+  background: rgba(8, 9, 13, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  animation: hudFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-.cursor {
-  display: none;
+@keyframes hudFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-.identity {
-  font: 500 16px var(--mono);
-  letter-spacing: 1px;
-}
-.identity span {
-  display: block;
+.eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 10px;
-  letter-spacing: 1.5px;
-  margin-top: 9px;
+  letter-spacing: 2px;
+  color: #b8bcc8;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 5px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 2px;
 }
-.hero-copy p {
-  font-size: 15px;
-  line-height: 1.7;
-  color: #d5d5d8;
-  margin: 25px 0;
+.blink-dot {
+  width: 5px;
+  height: 5px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ffffff;
+  animation: blinkPulse 2s infinite ease-in-out;
+}
+@keyframes blinkPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.8); }
+}
+.hero-title {
+  font-family: "Pixelify Sans", sans-serif;
+  font-size: clamp(48px, 5.2vw, 82px);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -1.5px;
+  margin: 0 0 18px;
+  color: #ffffff;
+  text-shadow: 0 4px 35px rgba(0, 0, 0, 0.95);
+}
+.hero-subtext {
+  color: #e4e6ee;
+}
+.identity-block {
+  margin-bottom: 18px;
+  border-left: 2px solid rgba(255, 255, 255, 0.6);
+  padding-left: 14px;
+}
+.identity-name {
+  font: 600 15px var(--mono);
+  letter-spacing: 1.5px;
+  color: #f5f5f7;
+}
+.identity-role {
+  font: 10px var(--mono);
+  letter-spacing: 2px;
+  color: #9da2af;
+  margin-top: 4px;
+}
+.hero-desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #b0b4c0;
+  margin-bottom: 24px;
+}
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.hero-btn-enter {
+  background: #ffffff !important;
+  color: #08090d !important;
+  font-weight: 600;
+  border: 1px solid #ffffff;
+  padding: 14px 24px;
+  border-radius: 2px;
+  box-shadow: 0 0 28px rgba(255, 255, 255, 0.22);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font: 600 11px var(--mono);
+  letter-spacing: 1.2px;
+}
+.hero-btn-enter:hover {
+  background: #e4e7f0 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 0 38px rgba(255, 255, 255, 0.45);
+}
+.hero-btn-explore {
+  background: rgba(14, 16, 22, 0.65) !important;
+  color: #c8ccdc !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  padding: 14px 20px;
+  border-radius: 2px;
+  backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 11px var(--mono);
+  letter-spacing: 1.2px;
+}
+.hero-btn-explore:hover {
+  background: rgba(26, 30, 42, 0.85) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  transform: translateY(-2px);
 }
 .button {
   display: inline-flex;
@@ -291,177 +410,245 @@ nav a[aria-current]:after {
   color: white;
   text-shadow: 0 0 10px #fff8;
 }
-.hero-copy .text-link {
-  margin-top: 10px;
-}
-.castle-link {
+.hero-bottom-strip {
   position: absolute;
-  z-index: 4;
-  padding: 13px 21px;
-  min-width: 118px;
-  border: 1px solid #ffffff70;
-  backdrop-filter: blur(12px);
-  background: linear-gradient(130deg, #272729c2, #030303cc);
-  font: 12px var(--mono);
-  text-align: center;
-  box-shadow:
-    inset 0 1px 0 #fff2,
-    0 8px 24px #0008;
-  transition:
-    transform 0.3s,
-    background 0.3s;
+  bottom: 24px;
+  left: 4.5%;
+  right: 4.5%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  animation: hudFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-.castle-link:hover {
-  transform: translateY(-5px);
-  background: #38383b;
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #9da2af;
+  padding: 10px 16px;
+  background: rgba(9, 10, 14, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 3px;
+  white-space: nowrap;
 }
-.castle-link small {
-  display: block;
-  font-size: 8px;
-  letter-spacing: 1px;
-  color: #bcbcc2;
-  margin-top: 7px;
+.pin-icon {
+  color: #60a5fa;
 }
-.forge {
-  left: 45%;
-  top: 31%;
-  transform: rotate(-4deg);
+.status-dot {
+  width: 4px;
+  height: 4px;
+  background: #60a5fa;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #60a5fa;
+  display: inline-block;
 }
-.archive {
-  left: 72%;
-  top: 34%;
-  transform: rotate(3deg);
+.status-text {
+  color: #d1d5db;
 }
-.origin {
-  left: 43%;
-  top: 51%;
+.featured-projects-cards {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
-.journey {
-  left: 75%;
-  top: 55%;
+.feat-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  background: rgba(9, 10, 14, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 3px;
+  transition: all 0.25s ease;
+  text-decoration: none;
 }
-.hero-values {
-  position: absolute;
-  right: 2.4%;
-  top: 23%;
+.feat-card:hover {
+  background: rgba(22, 25, 34, 0.88);
+  border-color: rgba(255, 255, 255, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+.feat-num {
+  font-size: 10px;
+  color: #6e7382;
+  font-weight: 600;
+}
+.feat-info {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+}
+.feat-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+.feat-desc {
   font-size: 9px;
-  letter-spacing: 1px;
+  color: #8d92a0;
+  margin-top: 2px;
+}
+.hero-motto {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #7f8494;
   text-align: right;
-  color: #c9c9cc;
+  line-height: 1.5;
+  white-space: nowrap;
 }
-.hero-values i {
-  width: 3px;
-  height: 3px;
-  border: 1px solid #b9b9bd;
-  align-self: flex-end;
-}
-.entrance {
-  position: absolute;
-  left: 63.5%;
-  top: 69%;
-  width: 90px;
-  height: 105px;
-  background: transparent;
-  transform: translate(-50%, -50%);
-  z-index: 6;
-}
-.entrance span {
-  display: block;
-  width: 54px;
-  height: 72px;
-  border: 1px solid #ffffff80;
-  border-radius: 50%;
-  margin: auto;
-  box-shadow:
-    0 0 35px #ffffff36,
-    inset 0 0 22px #ffffff33;
-  animation: portalPulse 4s infinite;
-}
-.entrance small {
-  display: block;
-  font: 8px var(--mono);
-  letter-spacing: 3px;
-  margin-top: 8px;
+.hero-motto strong {
+  color: #d8dce8;
 }
 .vault-hint {
   position: absolute;
-  left: 63.5%;
-  bottom: 9%;
+  left: 63.2%;
+  bottom: 8%;
   transform: translateX(-50%);
   z-index: 5;
   display: flex;
   align-items: center;
   gap: 16px;
-  border: 1px solid #ffffff70;
-  background: #08090be8;
-  padding: 16px 22px;
-  box-shadow: 0 0 35px #fff1;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(8, 9, 13, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 13px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
   font: 12px var(--mono);
   white-space: nowrap;
+  border-radius: 3px;
+  transition: all 0.25s ease;
+}
+.vault-hint:hover {
+  background: rgba(24, 28, 38, 0.9);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 12px 35px rgba(255, 255, 255, 0.15);
+}
+.vault-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 1px;
 }
 .vault-hint small {
   display: block;
   font-size: 8px;
   letter-spacing: 1px;
-  margin-top: 7px;
-  color: #bcbcc2;
+  margin-top: 4px;
+  color: #9fa4b2;
 }
-.vault-hint:hover {
-  background: #222;
+.hero-values {
+  position: absolute;
+  right: 2.4%;
+  top: 21%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-align: right;
+  color: #b0b4c2;
 }
-.hero-coordinate,
+.hero-values i {
+  width: 3px;
+  height: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  align-self: flex-end;
+}
 .scroll-cue {
   position: absolute;
-  bottom: 30px;
-  font-size: 9px;
-  letter-spacing: 1px;
+  bottom: 90px;
+  right: 4.5%;
   z-index: 5;
-}
-.hero-coordinate {
-  left: 4.2%;
-  color: #b0b0b5;
-}
-.hero-coordinate span {
-  padding: 0 12px;
-}
-.scroll-cue {
-  right: 4%;
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 12px;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #9da2b0;
+  transition: color 0.2s ease;
 }
-.atmosphere {
+.scroll-cue:hover {
+  color: #ffffff;
+}
+.scroll-mouse-icon {
+  width: 13px;
+  height: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 7px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-top: 3px;
+}
+.scroll-wheel-dot {
+  width: 2px;
+  height: 4px;
+  background: #ffffff;
+  border-radius: 1px;
+  animation: mouseWheel 2s infinite ease-in-out;
+}
+@keyframes mouseWheel {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(6px); opacity: 0; }
+}
+.corner-reticle {
   position: absolute;
-  width: 35%;
-  height: 44%;
-  left: 47%;
-  top: 25%;
+  width: 14px;
+  height: 14px;
   pointer-events: none;
-  opacity: 0.7;
+  z-index: 5;
 }
-.fog {
+.corner-reticle.top-left {
+  top: 90px;
+  left: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+.corner-reticle.bottom-right {
+  bottom: 24px;
+  right: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+}
+.portal-hover-indicator {
   position: absolute;
-  width: 65%;
-  height: 16%;
-  filter: blur(26px);
-  opacity: 0.2;
+  left: 63.2%;
+  top: 74%;
+  transform: translate(-50%, 0);
+  z-index: 10;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #ffffff;
+  background: rgba(5, 6, 9, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  padding: 6px 14px;
+  border-radius: 2px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: pulseSlow 2s infinite ease-in-out;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse at 30% 50%, #c9c9c9 0, transparent 60%),
-    radial-gradient(ellipse at 75% 60%, #d2d2d2 0, transparent 55%);
-  animation: fogDrift 20s ease-in-out infinite alternate;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.25);
 }
-.fog-one {
-  left: -15%;
-  bottom: 19%;
+@keyframes pulseSlow {
+  0%, 100% { opacity: 0.85; transform: translate(-50%, 0) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -2px) scale(1.03); }
 }
-.fog-two {
-  right: -15%;
-  bottom: 10%;
-  animation-delay: -10s;
+.portal-flash-overlay {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  z-index: 999;
+  pointer-events: none;
 }
 .project-strip {
   display: grid;
@@ -1639,66 +1826,47 @@ html[data-motion="reduced"] *:after {
     margin-left: auto;
   }
   .hero {
-    min-height: 800px;
-    height: calc(100svh - 50px);
+    min-height: 750px;
+    height: 100vh;
   }
-  .hero-art {
-    background-position: 57% center;
+  .hero-hud-panel {
+    top: 13%;
+    left: 4%;
+    width: min(390px, 92vw);
+    padding: 24px 26px;
   }
-  .hero-copy {
-    top: 22%;
-    width: 280px;
+  .hero-title {
+    font-size: 54px;
+    margin-bottom: 14px;
   }
-  .hero-copy h1 {
-    font-size: 68px;
-  }
-  .hero-copy .eyebrow {
-    font-size: 9px;
-  }
-  .hero-copy p {
+  .hero-desc {
     font-size: 13px;
+    margin-bottom: 18px;
   }
-  .identity {
-    font-size: 13px;
-  }
-  .identity span {
-    font-size: 8px;
-  }
-  .castle-link {
-    font-size: 10px;
-    padding: 10px;
-    min-width: 90px;
-  }
-  .forge {
-    top: 24%;
-    left: 46%;
-  }
-  .archive {
-    left: 77%;
-    top: 35%;
-  }
-  .origin {
-    left: 45%;
-    top: 45%;
-  }
-  .journey {
-    left: 78%;
-    top: 54%;
-  }
-  .vault-hint {
-    left: 65%;
-    font-size: 10px;
+  .hero-bottom-strip {
     gap: 10px;
-    padding: 14px;
+    bottom: 16px;
   }
-  .vault-hint small {
-    font-size: 6px;
+  .feat-card {
+    padding: 8px 12px;
   }
-  .hero-coordinate {
-    font-size: 7px;
+  .feat-desc {
+    display: none;
+  }
+  .hero-motto {
+    display: none;
+  }
+  .hero-values {
+    display: none;
   }
   .scroll-cue {
-    font-size: 7px;
+    display: none;
+  }
+  .vault-hint {
+    left: 63%;
+    font-size: 10px;
+    padding: 10px 14px;
+    bottom: 84px;
   }
   .project-strip {
     padding: 0 3%;
@@ -1859,85 +2027,89 @@ html[data-motion="reduced"] *:after {
     gap: 6px;
   }
   .hero {
-    height: 844px;
-    min-height: 0;
+    height: 100svh;
+    min-height: 680px;
     max-height: none;
+    padding-top: 66px;
   }
-  .hero-art {
-    inset: 66px -155px 0 -170px;
-    background-position: 59% center;
-    background-size: auto 100%;
-    opacity: 0.85;
+  .hero-hud-panel {
+    top: 76px;
+    left: 16px;
+    right: 16px;
+    width: auto;
+    padding: 20px 18px;
+    background: rgba(8, 9, 13, 0.82);
   }
-  .hero-shade {
-    background:
-      linear-gradient(
-        0deg,
-        #030303 0%,
-        transparent 27%,
-        #03030340 54%,
-        #030303b0 100%
-      ),
-      linear-gradient(90deg, #03030370, transparent);
-  }
-  .hero-copy {
-    top: 124px;
-    left: 25px;
-    width: calc(100% - 50px);
-  }
-  .hero-copy .eyebrow {
+  .eyebrow-badge {
     font-size: 8px;
-    letter-spacing: 1.4px;
+    padding: 4px 8px;
+    margin-bottom: 10px;
   }
-  .hero-copy h1 {
-    font-size: 70px;
-    line-height: 0.88;
-    margin: 23px 0;
+  .hero-title {
+    font-size: 40px;
+    line-height: 0.92;
+    margin: 0 0 10px;
   }
-  .identity {
-    font-size: 12px;
-  }
-  .identity span {
-    font-size: 8px;
-  }
-  .hero-copy p {
+  .identity-name {
     font-size: 13px;
-    margin: 20px 0;
-    color: #d4d4da;
   }
-  .primary {
-    min-width: 242px;
-    padding: 15px 18px;
-    font-size: 10px;
+  .identity-role {
+    font-size: 8px;
   }
-  .hero-copy .text-link {
-    font-size: 9px;
+  .hero-desc {
+    font-size: 12px;
+    margin-bottom: 16px;
+    line-height: 1.5;
   }
-  .castle-links {
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .hero-btn-enter,
+  .hero-btn-explore {
+    justify-content: center;
+    width: 100%;
+    padding: 12px 16px;
+  }
+  .hero-bottom-strip {
+    bottom: 14px;
+    left: 16px;
+    right: 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .status-badge {
+    padding: 6px 12px;
+    font-size: 8px;
+    justify-content: center;
+  }
+  .featured-projects-cards {
     display: none;
   }
-  .atmosphere {
-    left: 18%;
-    top: 45%;
-    width: 65%;
-    height: 35%;
+  .hero-motto {
+    display: none;
   }
-  .entrance {
-    left: 62%;
-    top: 74%;
-    width: 75px;
-    height: 85px;
+  .hero-values {
+    display: none;
   }
-  .entrance span {
-    height: 56px;
-    width: 40px;
+  .scroll-cue {
+    display: none;
+  }
+  .corner-reticle {
+    display: none;
   }
   .vault-hint {
     left: 50%;
-    bottom: 57px;
-    width: calc(100% - 50px);
+    bottom: 48px;
+    width: calc(100% - 32px);
     justify-content: center;
-    padding: 17px 12px;
+    padding: 9px 12px;
+    font-size: 9px;
+  }
+  .vault-label {
+    font-size: 9px;
   }
   .vault-hint small {
     font-size: 7px;
