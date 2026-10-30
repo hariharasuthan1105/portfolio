@@ -1,5 +1,5 @@
 import { useMemo, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -81,25 +81,25 @@ void main() {
   float specPower = pow(specAngle, 16.0);
   vec3 specular = vec3(0.88, 0.94, 1.0) * specPower * atten * 0.45;
   
-  // Atmospheric rim light on silhouettes (archer, warrior, spires)
+  // Atmospheric rim light on silhouettes (both archers, citadel spires)
   float rim = pow(1.0 - max(dot(viewDir, bumpNormal), 0.0), 3.0);
   vec3 rimColor = vec3(0.85, 0.90, 1.0) * rim * (0.12 + 0.25 * depth);
   
   // Moon backlighting from central eclipse
   float moonRim = pow(max(dot(viewDir, vec3(0.0, 0.7, 0.7)), 0.0), 4.0) * (1.0 - depth) * 0.15;
   
-  // Subtle energy glints on warrior sword (right) and archer bow (left)
-  float swordGlint = smoothstep(0.72, 0.88, uv.x) * smoothstep(0.40, 0.70, uv.y) * depth;
-  vec3 swordAura = vec3(0.8, 0.9, 1.0) * swordGlint * (0.5 + 0.5 * sin(uTime * 4.0)) * 0.25;
+  // Subtle celestial energy glints on left archer bow and right archer bow
+  float leftBowGlint = smoothstep(0.16, 0.36, uv.x) * smoothstep(0.35, 0.70, uv.y) * depth;
+  vec3 leftBowAura = vec3(0.85, 0.92, 1.0) * leftBowGlint * (0.5 + 0.5 * cos(uTime * 3.5)) * 0.25;
   
-  float bowGlint = smoothstep(0.28, 0.12, uv.x) * smoothstep(0.40, 0.70, uv.y) * depth;
-  vec3 bowAura = vec3(0.85, 0.92, 1.0) * bowGlint * (0.5 + 0.5 * cos(uTime * 3.5)) * 0.25;
+  float rightBowGlint = smoothstep(0.78, 0.94, uv.x) * smoothstep(0.60, 0.85, uv.y) * depth;
+  vec3 rightBowAura = vec3(0.85, 0.92, 1.0) * rightBowGlint * (0.5 + 0.5 * sin(uTime * 4.0)) * 0.25;
 
   // Screen bloom / flare from portal activation
   vec3 flareColor = vec3(1.0, 1.0, 1.0) * uPortalFlare * atten * 2.2;
   
   // Final composite
-  vec3 finalColor = baseColor.rgb + portalIllum + specular + rimColor + vec3(moonRim) + swordAura + bowAura + flareColor;
+  vec3 finalColor = baseColor.rgb + portalIllum + specular + rimColor + vec3(moonRim) + leftBowAura + rightBowAura + flareColor;
   
   // AAA cinematic contrast
   finalColor = pow(finalColor, vec3(1.04));
@@ -119,10 +119,11 @@ export default function GothicCastleMesh({
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
+  const { viewport, camera } = useThree();
 
   const [texture, depthMap] = useTexture([
-    "/assets/citadel_v4.webp",
-    "/assets/citadel_v4_depth.webp",
+    "/assets/hero-citadel-archers.webp",
+    "/assets/hero-citadel-archers_depth.webp",
   ]);
 
   useMemo(() => {
@@ -138,10 +139,10 @@ export default function GothicCastleMesh({
     () => ({
       uTexture: { value: texture },
       uDepth: { value: depthMap },
-      uDisplacement: { value: reduced ? 0.12 : 0.42 },
+      uDisplacement: { value: reduced ? 0.08 : 0.32 },
       uTime: { value: 0 },
       uMouse: { value: new THREE.Vector2(0, 0) },
-      uPortalLightPos: { value: new THREE.Vector3(0.0, -0.45, -5.0) },
+      uPortalLightPos: { value: new THREE.Vector3(1.85, -1.08, -5.0) },
       uLightIntensity: { value: 1.0 },
       uPortalFlare: { value: 0 },
     }),
@@ -172,11 +173,26 @@ export default function GothicCastleMesh({
     );
   });
 
+  // Aspect-ratio cover positioning without stretching or distortion (exact 16:9)
+  const imageAspect = 16 / 9;
+  const vAtDepth = viewport.getCurrentViewport(camera, [0, 0, -5.2]);
+  const viewAspect = vAtDepth.width / vAtDepth.height;
+
+  let meshW = 21.33;
+  let meshH = 12.0;
+  if (viewAspect > imageAspect) {
+    meshW = vAtDepth.width * 1.01;
+    meshH = meshW / imageAspect;
+  } else {
+    meshH = vAtDepth.height * 1.01;
+    meshW = meshH * imageAspect;
+  }
+
   return (
     <mesh
       ref={meshRef}
       position={[0, 0, -5.2]}
-      scale={[21.33, 12.0, 1]}
+      scale={[meshW, meshH, 1]}
     >
       <planeGeometry args={[1, 1, reduced ? 48 : 160, reduced ? 32 : 110]} />
       <shaderMaterial
