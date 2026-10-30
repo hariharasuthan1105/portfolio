@@ -13,6 +13,7 @@ import BrandEmblem from "./components/ui/BrandEmblem";
 import { useMotionPreference } from "./hooks/useMotionPreference";
 import { useAtmosphericQuality } from "./components/3d/atmosphere/AtmosphericQualityController";
 import { PortalAnimationState } from "./components/3d/portalTransition/PortalTransitionManager";
+import { useKingdomAudio } from "./hooks/useKingdomAudio";
 
 const Portfolio = lazy(() => import("./sections/Portfolio"));
 const Vault = lazy(() => import("./features/intelligence-vault/Vault"));
@@ -36,7 +37,7 @@ export default function App() {
   const [active, setActive] = useState("home");
   const [portalState, setPortalState] = useState<PortalAnimationState>("IDLE");
   const [intro, setIntro] = useState(false);
-  const [muted, setMuted] = useState(true);
+  const { isPlaying: musicPlaying, toggle: toggleMusic } = useKingdomAudio();
 
   // Centralized Return-to-Home trigger
   const triggerReturnHome = useCallback(() => {
@@ -164,12 +165,25 @@ export default function App() {
           </button>
 
           <button
-            className="icon-button audio-toggle"
-            aria-label={muted ? "Sound muted" : "Sound active"}
-            title={muted ? "Sound muted" : "Sound active"}
-            onClick={() => setMuted(!muted)}
+            className={`icon-button audio-toggle ${musicPlaying ? "active" : ""}`}
+            aria-label={musicPlaying ? "Mute background music" : "Enable background music"}
+            title={musicPlaying ? "Mute background music" : "Enable background music"}
+            onClick={toggleMusic}
           >
-            {muted ? <VolumeX size={15} /> : <Volume2 size={15} />}
+            {musicPlaying ? (
+              <div className="audio-icon-wrapper active">
+                <Volume2 size={15} className="audio-speaker-icon" />
+                <span className="audio-eq-bars" aria-hidden="true">
+                  <span className="bar bar-1"></span>
+                  <span className="bar bar-2"></span>
+                  <span className="bar bar-3"></span>
+                </span>
+              </div>
+            ) : (
+              <div className="audio-icon-wrapper muted">
+                <VolumeX size={15} className="audio-speaker-icon" />
+              </div>
+            )}
           </button>
 
           <button

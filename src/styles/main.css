@@ -207,6 +207,77 @@ nav a[aria-current]:after {
 .icon-button span {
   font: 9px var(--mono);
 }
+/* Audio Toggle & Visualizer */
+.audio-toggle {
+  position: relative;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  border-radius: 4px;
+}
+.audio-toggle:hover {
+  color: #ffffff;
+}
+.audio-toggle.active {
+  color: #ffffff;
+}
+.audio-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+.audio-speaker-icon {
+  transition: transform 0.2s ease;
+}
+.audio-toggle:hover .audio-speaker-icon {
+  transform: scale(1.05);
+}
+.audio-eq-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 11px;
+  width: 9px;
+  margin-left: 1px;
+}
+.audio-eq-bars .bar {
+  width: 1.5px;
+  background: #ffffff;
+  border-radius: 1px;
+  opacity: 0.85;
+  animation: audio-eq-bounce 1.1s ease-in-out infinite alternate;
+}
+.audio-eq-bars .bar-1 {
+  height: 35%;
+  animation-delay: 0s;
+}
+.audio-eq-bars .bar-2 {
+  height: 75%;
+  animation-delay: 0.2s;
+}
+.audio-eq-bars .bar-3 {
+  height: 50%;
+  animation-delay: 0.4s;
+}
+@keyframes audio-eq-bounce {
+  0% {
+    height: 20%;
+    opacity: 0.45;
+  }
+  50% {
+    height: 90%;
+    opacity: 0.95;
+  }
+  100% {
+    height: 35%;
+    opacity: 0.6;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .audio-eq-bars .bar {
+    animation: none;
+    height: 60%;
+  }
+}
 .menu-toggle {
   display: none;
 }
