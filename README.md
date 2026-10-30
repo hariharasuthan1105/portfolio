@@ -1,4 +1,4 @@
-# Kingdom of Code V2
+# Code Kingdom V2
 
 A fresh monochrome portfolio for Hariharasuthan V: a cinematic gate, six professional portfolio sections, and a playable Intelligence Vault. Built from scratch with React, TypeScript, Vite, Three.js, React Three Fiber, Drei, Motion, and Lucide.
 

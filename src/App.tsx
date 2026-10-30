@@ -137,7 +137,7 @@ export default function App() {
         </Suspense>
       </main>
       <footer>
-        <a href="#home">KINGDOM OF CODE</a>
+        <a href="#home">CODE KINGDOM</a>
         <span>HARIHARASUTHAN V · BUILT WITH CURIOSITY</span>
         <a href="https://github.com/hariharasuthan1105/portfolio" target="_blank" rel="noreferrer">SOURCE CODE ↗</a>
         <a href="#vault">UNLOCK THE VAULT ↗</a>

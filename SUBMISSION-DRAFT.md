@@ -1,4 +1,4 @@
-# Kingdom of Code — submission draft
+# Code Kingdom — submission draft
 
 **Builder:** Hariharasuthan V
 **Challenge:** AWS Student Builder Challenge 2026 (name and deadline supplied by the user; eligibility/rules not independently audited)

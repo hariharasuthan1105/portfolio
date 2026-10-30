@@ -24,9 +24,9 @@ export default function Hero({
       <div className="hero-copy">
         <span className="eyebrow">[ WELCOME_TO_MY_REALM ]</span>
         <h1>
-          KINGDOM
+          CODE
           <br />
-          OF_CODE<span className="cursor">_</span>
+          KINGDOM<span className="cursor">_</span>
         </h1>
         <div className="identity">
           HARIHARASUTHAN V<span>AI & DATA SCIENCE DEVELOPER</span>
