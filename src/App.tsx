@@ -37,7 +37,7 @@ export default function App() {
   const [active, setActive] = useState("home");
   const [portalState, setPortalState] = useState<PortalAnimationState>("IDLE");
   const [intro, setIntro] = useState(false);
-  const { isPlaying: musicPlaying, toggle: toggleMusic } = useKingdomAudio();
+  const { isPlaying: musicPlaying, toggle: toggleMusic, play: playMusic } = useKingdomAudio();
 
   // Centralized Return-to-Home trigger
   const triggerReturnHome = useCallback(() => {
@@ -85,6 +85,9 @@ export default function App() {
           // If user scrolled back up to home section, trigger return reset
           if (current.id === "home") {
             triggerReturnHome();
+          } else {
+            // Visitor scrolled into portfolio sections
+            playMusic();
           }
         }
       });
@@ -97,6 +100,7 @@ export default function App() {
   }, [triggerReturnHome]);
 
   const enter = () => {
+    playMusic();
     if (reduced) {
       location.hash = "about";
       document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
@@ -112,6 +116,7 @@ export default function App() {
   };
 
   const skipToAbout = () => {
+    playMusic();
     setPortalState("INSIDE");
     setIntro(false);
     location.hash = "about";
@@ -122,12 +127,14 @@ export default function App() {
     setMenu(false);
     if (linkName.toLowerCase() === "home") {
       triggerReturnHome();
+    } else {
+      playMusic();
     }
   };
 
   return (
     <>
-      <a href="#about" className="skip-link">
+      <a href="#about" className="skip-link" onClick={() => playMusic()}>
         Skip to portfolio
       </a>
 

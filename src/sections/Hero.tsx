@@ -79,6 +79,7 @@ export default function Hero({
             <a
               className="hero-btn-explore mono"
               href="#projects"
+              onClick={() => enter()}
               aria-label="Explore Projects"
             >
               <span>EXPLORE PROJECTS</span>
