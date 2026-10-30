@@ -14,6 +14,13 @@ Use case: stylized-concept. Text-free cinematic environment background for dark 
 
 Use case: stylized-concept. Website project exhibit artwork, a triptych of THREE equally sized vertical panels across one wide 1536x1024 image, no gaps or borders. Strict black white charcoal silver monochrome. NO TEXT NO letters NO words NO UI. Left third: floating translucent document sheets at dramatic perspective, fine abstract printed lines without readable text, luminous horizontal OCR scanning light and delicate field bounding rectangles, dark gothic archive context. Center third: beautiful miniature futuristic gothic silver city with soaring central tower on circular obsidian platform, intricate glowing knowledge network arcs, cinematic white beam. Right third: exquisite connected translucent glass cubes with metallic frames floating at different depths on a dark spatial network, bright small cores, fine luminous connections. AAA cinematic technical concept art with photoreal materials, beautiful light, deep blacks. Three distinct balanced self-contained scenes occupying exactly equal thirds. These will be cropped into three project artwork backgrounds, not full web pages.
 
+## V4 Cinematic Citadel & Depth Field
+
+- `public/assets/citadel_v4.webp`: 2048×1152 (16:9) high-resolution clean environment texture derived from the reference artwork. Text overlays were cleanly inpainted using pavement reflection sampling, preserving the central gothic citadel, flying buttresses, waterfalls, explorer, archer, warrior, and holographic displays.
+- `public/assets/citadel_v4_depth.webp`: 2048×1152 (16:9) calibrated spatial depth map computed via Dark Channel Prior atmospheric transmission, quadratic perspective ramp, and horizon blending.
+- `src/components/ui/BrandEmblem.tsx`: Hand-crafted SVG crown monogram matching Reference Image A.
+- `src/components/ui/ProjectHolograms.tsx`: Interactive SVG wireframe holograms for DocRecon (document terminal & scanning core), Pathway AI (smart city spires & pulse rings), and HEFIN (decentralized tesseract cubes).
+
 ## Other assets
 
-IBM Plex Mono and Pixelify Sans are bundled through Fontsource packages, with their upstream license files retained in `licenses/`. Icons come from Lucide React, with its license retained there. Other dependencies retain their respective package licenses. The downloadable PDF comes from the user-selected resume; the phone number was redacted and the public copy re-opened and rendered for verification.
+IBM Plex Mono and Pixelify Sans are bundled through Fontsource packages (SIL Open Font License 1.1), with upstream licenses retained in `licenses/`. Icons come from Lucide React (ISC License), with license retained in `licenses/Lucide-LICENSE.txt`. Other dependencies retain their respective open-source package licenses. Downloadable resume PDF retains public professional credentials with sensitive contact details redacted.
