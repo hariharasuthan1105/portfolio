@@ -6,20 +6,23 @@ import {
 } from "lucide-react";
 import CastleGatewayScene from "../components/3d/CastleGatewayScene";
 import { QualityPreset } from "../components/3d/atmosphere/AtmosphericQualityController";
+import { PortalAnimationState } from "../components/3d/portalTransition/PortalTransitionManager";
 
 export default function Hero({
   enter,
   reduced,
   low,
   quality,
-  isEntering = false,
+  portalState = "IDLE",
+  onPortalStateChange,
   onFlyComplete,
 }: {
   enter: () => void;
   reduced: boolean;
   low: boolean;
   quality?: QualityPreset;
-  isEntering?: boolean;
+  portalState?: PortalAnimationState;
+  onPortalStateChange?: (state: PortalAnimationState) => void;
   onFlyComplete?: () => void;
 }) {
   return (
@@ -29,7 +32,8 @@ export default function Hero({
         reduced={reduced}
         low={low}
         quality={quality}
-        isEntering={isEntering}
+        portalState={portalState}
+        onPortalStateChange={onPortalStateChange}
         onEnterRealm={enter}
         onFlyComplete={onFlyComplete}
       />

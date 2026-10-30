@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { useCallback, lazy, Suspense, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
   Menu,
@@ -12,6 +12,7 @@ import Hero from "./sections/Hero";
 import BrandEmblem from "./components/ui/BrandEmblem";
 import { useMotionPreference } from "./hooks/useMotionPreference";
 import { useAtmosphericQuality } from "./components/3d/atmosphere/AtmosphericQualityController";
+import { PortalAnimationState } from "./components/3d/portalTransition/PortalTransitionManager";
 
 const Portfolio = lazy(() => import("./sections/Portfolio"));
 const Vault = lazy(() => import("./features/intelligence-vault/Vault"));
@@ -33,15 +34,40 @@ export default function App() {
   const low = quality === "low";
   const [menu, setMenu] = useState(false);
   const [active, setActive] = useState("home");
-  const [isEntering, setIsEntering] = useState(false);
+  const [portalState, setPortalState] = useState<PortalAnimationState>("IDLE");
   const [intro, setIntro] = useState(false);
   const [muted, setMuted] = useState(true);
+
+  // Centralized Return-to-Home trigger
+  const triggerReturnHome = useCallback(() => {
+    setPortalState((curr) => {
+      if (curr === "IDLE" || curr === "RETURNING") return curr;
+      return "RETURNING";
+    });
+  }, []);
+
+  // Listen for browser navigation (Back / Forward button, Hash changes)
+  useEffect(() => {
+    const handleNavigation = () => {
+      const hash = location.hash.toLowerCase();
+      if (!hash || hash === "#home" || hash === "#") {
+        triggerReturnHome();
+      }
+    };
+    window.addEventListener("hashchange", handleNavigation);
+    window.addEventListener("popstate", handleNavigation);
+    return () => {
+      window.removeEventListener("hashchange", handleNavigation);
+      window.removeEventListener("popstate", handleNavigation);
+    };
+  }, [triggerReturnHome]);
 
   useEffect(() => {
     document.documentElement.dataset.motion =
       reduced || low ? "reduced" : "full";
   }, [reduced, low]);
 
+  // Section scroll tracker
   useEffect(() => {
     let frame = 0;
     const update = () => {
@@ -53,7 +79,13 @@ export default function App() {
         const current = sections
           .filter((s) => s.getBoundingClientRect().top <= innerHeight * 0.45)
           .at(-1);
-        if (current) setActive(current.id);
+        if (current) {
+          setActive(current.id);
+          // If user scrolled back up to home section, trigger return reset
+          if (current.id === "home") {
+            triggerReturnHome();
+          }
+        }
       });
     };
     addEventListener("scroll", update, { passive: true });
@@ -61,7 +93,7 @@ export default function App() {
       removeEventListener("scroll", update);
       cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [triggerReturnHome]);
 
   const enter = () => {
     if (reduced) {
@@ -69,20 +101,27 @@ export default function App() {
       document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
       return;
     }
-    setIsEntering(true);
+    setPortalState("ACTIVATING");
   };
 
   const handleFlyComplete = () => {
-    setIsEntering(false);
+    setPortalState("INSIDE");
     location.hash = "about";
     document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const skipToAbout = () => {
-    setIsEntering(false);
+    setPortalState("INSIDE");
     setIntro(false);
     location.hash = "about";
     document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleNavClick = (linkName: string) => {
+    setMenu(false);
+    if (linkName.toLowerCase() === "home") {
+      triggerReturnHome();
+    }
   };
 
   return (
@@ -92,7 +131,7 @@ export default function App() {
       </a>
 
       <header className="topbar">
-        <a className="brand" href="#home">
+        <a className="brand" href="#home" onClick={() => handleNavClick("home")}>
           <BrandEmblem size={28} />
           <div className="brand-text">
             <span className="brand-name mono">HARIHARASUTHAN V</span>
@@ -104,7 +143,7 @@ export default function App() {
           {links.map((l, i) => (
             <a
               href={"#" + l.toLowerCase()}
-              onClick={() => setMenu(false)}
+              onClick={() => handleNavClick(l)}
               aria-current={active === l.toLowerCase() ? "location" : undefined}
               key={l}
             >
@@ -160,7 +199,8 @@ export default function App() {
           reduced={reduced}
           low={low}
           quality={quality}
-          isEntering={isEntering}
+          portalState={portalState}
+          onPortalStateChange={setPortalState}
           onFlyComplete={handleFlyComplete}
         />
 
@@ -171,7 +211,7 @@ export default function App() {
       </main>
 
       <footer>
-        <a href="#home">KINGDOM OF CODE</a>
+        <a href="#home" onClick={() => handleNavClick("home")}>KINGDOM OF CODE</a>
         <span>HARIHARASUTHAN V · BUILT WITH CURIOSITY</span>
         <a
           href="https://github.com/hariharasuthan1105/portfolio"
@@ -185,13 +225,13 @@ export default function App() {
 
       {/* Fly-Through Flash Bloom Overlay */}
       <AnimatePresence>
-        {isEntering && (
+        {(portalState === "ACTIVATING" || portalState === "ENTERING") && (
           <motion.div
             className="portal-flash-overlay"
             initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0.2, 0.85, 0] }}
+            animate={{ opacity: [0, 0.15, 0.85, 0] }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.4, times: [0, 0.4, 0.85, 1.0] }}
+            transition={{ duration: 1.45, times: [0, 0.35, 0.85, 1.0] }}
           />
         )}
       </AnimatePresence>

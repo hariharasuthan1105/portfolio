@@ -6,19 +6,22 @@ import PortalGateway from "./PortalGateway";
 import AtmosphericCloudSystem from "./atmosphere/AtmosphericCloudSystem";
 import CinematicCamera from "./CinematicCamera";
 import { QualityPreset } from "./atmosphere/AtmosphericQualityController";
+import { PortalAnimationState } from "./portalTransition/PortalTransitionManager";
 
 export default function CastleGatewayScene({
   reduced = false,
   low = false,
   quality,
-  isEntering = false,
+  portalState = "IDLE",
+  onPortalStateChange,
   onEnterRealm,
   onFlyComplete,
 }: {
   reduced?: boolean;
   low?: boolean;
   quality?: QualityPreset;
-  isEntering?: boolean;
+  portalState?: PortalAnimationState;
+  onPortalStateChange?: (state: PortalAnimationState) => void;
   onEnterRealm?: () => void;
   onFlyComplete?: () => void;
 }) {
@@ -41,7 +44,8 @@ export default function CastleGatewayScene({
         }}
       >
         <CinematicCamera
-          isEntering={isEntering}
+          portalState={portalState}
+          onStateChange={onPortalStateChange}
           onFlyComplete={onFlyComplete}
           onFlareUpdate={setPortalFlare}
           reduced={reduced}
@@ -82,7 +86,7 @@ export default function CastleGatewayScene({
         />
       </Canvas>
       {/* Interactive Portal Hint */}
-      {hovered && !isEntering && (
+      {hovered && portalState === "IDLE" && (
         <div className="portal-hover-indicator mono">
           <span>[ CLICK GATEWAY TO ENTER ]</span>
         </div>
