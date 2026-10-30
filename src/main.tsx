@@ -1,8 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import '@fontsource/pixelify-sans/400.css';
-import '@fontsource/pixelify-sans/600.css';
-import '@fontsource/ibm-plex-mono/400.css';
-import App from './App';
-import './styles/global.css';
-ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);
+import React from "react";
+import { createRoot } from "react-dom/client";
+import "@fontsource/ibm-plex-mono/latin-400.css";
+import "@fontsource/ibm-plex-mono/latin-500.css";
+import "@fontsource/pixelify-sans/latin-500.css";
+import App from "./App";
+import "./styles/main.css";
+createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);

@@ -1,103 +1,100 @@
-# Kingdom of Code
+# Kingdom of Code V2
 
-Hariharasuthan V’s monochrome React + TypeScript portfolio. Built from the factual content in the supplied brief. The supplied warrior-and-castle artwork is the default hero backdrop, displayed in grayscale to preserve the requested monochrome style. Explore in 3D switches to the separate procedural castle. The image is clearly an artwork view, not a 3D model.
+A fresh monochrome portfolio for Hariharasuthan V: a cinematic gate, six professional portfolio sections, and a playable Intelligence Vault. Built from scratch with React, TypeScript, Vite, Three.js, React Three Fiber, Drei, Motion, and Lucide.
+
+Source: [hariharasuthan1105/portfolio](https://github.com/hariharasuthan1105/portfolio).
 
 ## Run locally
 
-Use Node.js 22.12+ (tested with Node 24) and npm. From this directory:
+Requires Node.js 22.12+ (verified here with Node 24).
 
 ```sh
 npm ci
 npm run dev
-npm run typecheck
+npm test
 npm run build
-npx vitest run
 npm run preview
 ```
 
-Open the local URL printed by Vite. `dist/` is the production output. No environment variables, API keys, or paid APIs are required.
-
-## Structure
-
-```text
-src/
-  App.tsx                 Navigation and semantic portfolio sections
-  main.tsx                React entry and locally bundled fonts
-  data/profile.ts         Editable profile, project links, skills, experience
-  experience/Castle.tsx   Lazy-loaded React Three Fiber procedural castle
-  features/Vault.tsx      Three local interactive demonstrations
-  features/Vault.test.tsx Interaction regression tests
-  styles/global.css      Responsive layout and reduced-motion styling
-public/
-  favicon.svg
-  assets/social-preview.svg
-amplify.yml               AWS Amplify build configuration
-index.html                SEO metadata
-vite.config.ts
-tsconfig.json
-package.json
-package-lock.json
-```
-
-## Editing content
-
-Edit `src/data/profile.ts`. Each project has `repo`, `demo`, and `screenshot` fields; empty links are deliberately not shown. Add real URLs only. No resume PDF was supplied; the pasted resume facts are the factual source. Phone number is not published.
+Vite serves the local application at the URL printed in the terminal. The production output is `dist/`. Navigation uses fragment identifiers, so direct section links do not require server routing rules. Fonts and artwork are served locally. No API keys, paid APIs, analytics, or backend services are required.
 
 ## Implemented experience
 
-- Real procedural castle meshes, eclipse, stone platform, towers, windows, instanced rocks and battlements, particles, depth fog, pointer parallax, clickable gate, and entry camera transition.
-- Persistent section navigation, mobile menu, skip link, skip intro, lightweight control, visible focus states and reduced-motion styles.
-- Offscreen scene unmounting, capped device pixel ratio, lazy-loaded 3D, no real-time shadow maps.
-- Perception: three fictional fields with simulated confidence values. Reasoning: two predefined scenarios with staged evidence retrieval. Connection: four ordered nodes. Collecting all keys reveals a personal narrative; restart clears the state and timer.
-- Local fonts, semantic sections, GitHub/LinkedIn/email links, configurable projects, social preview artwork and favicon.
+- Gate: original text-free citadel art with live DOM navigation, clickable entrance, skippable cinematic overlay, project shortcuts, and an obvious Vault hint.
+- Origin: introduction, verified education and interests, and a downloadable resume with the phone number removed.
+- Forge: category filters, selectable skill descriptions, an accessible complete list, and a rotatable Three.js sphere on supported desktop devices.
+- Archive: three distinct cinematic exhibits and native modal dialogs with project descriptions, features, technologies, and technical challenges.
+- Journey: dated internship timeline.
+- Honor: three achievements and five expandable certifications.
+- Portal: email, LinkedIn, GitHub profile, and Copy Email with success/failure feedback.
+- Vault: scanner range control, two sample retrieval workflows, a four-node graph challenge, independent completion state, final reveal, and replay.
 
-The non-hero sections use readable panels and CSS depth rather than separate WebGL rooms. There are no rigged warriors, live AI services, or custom GLB assets. A transparent GLSL overlay approximates moving smoke, ground fog, and clouds; it is not a fluid simulation or a depth-aware volumetric renderer. The 3D scene is stylized geometry, not a photorealistic reproduction of the reference. WebGL failure leaves portfolio content accessible; lightweight mode avoids the canvas. Quest progress is session-local and resets on reload.
+The Vault intentionally runs entirely in the browser. Its OCR and RAG examples are explicitly labeled simulations. The network is illustrative, not a blockchain client. No uploads, OCR inference, LLM calls, or transactions occur. Progress lasts for the current page session; replay clears it.
 
-## GitHub setup
+## Honest rendering inventory
 
-Create an empty repository in your GitHub account. In this project directory:
+This is a **hybrid 2.5D/3D implementation**, not a fully modeled castle or a navigable AAA game world.
 
-```sh
-git init
-git add .
-git commit -m "Build Kingdom of Code portfolio"
-git branch -M main
-git remote add origin https://github.com/YOUR_ACCOUNT/YOUR_REPOSITORY.git
-git push -u origin main
+| Layer | Implementation |
+| --- | --- |
+| Citadel, archer, warrior, eclipse, waterfalls, reflective architecture | Original AI-generated raster environment art, converted to WebP |
+| Interior chamber and traveler | Original AI-generated raster environment art |
+| Project exhibits | Original AI-generated triptych with three CSS-selected regions |
+| Orbital rings, skill sphere, dust | Actual Three.js geometry and Drei particles |
+| Soft noise smoke | Animated GLSL fragment shader with layered noise |
+| Foreground fog, portal pulse, scan line | CSS animation |
+| Entry transition | Motion overlay and navigation; not a 3D camera flight |
+| Navigation, copy, dialogs, filters, Vault | Real accessible DOM controls and React state |
+
+The castle itself is not a mesh. Character cloth, waterfall flow, storm-cloud motion, physically simulated water, and character-specific volumetric smoke are not implemented. The original design reference is not used as a website texture. No third-party architectural models were downloaded. `public/models/README.md` records this explicitly.
+
+## Content and privacy
+
+`src/data/profile.ts` is the editable source for profile, skills, projects, experience, and achievements. Content was checked against the user-selected `resume h.pdf`. Certifications match that resume. Technical challenge descriptions explain the supplied project architecture; they are not invented measured results. No proficiency percentages, unsupported results, project repository URLs, or demo links are shown.
+
+The public resume is a redacted copy; its original phone text and telephone link were removed. The original PDF is not in this repository. Only the professional contact details explicitly requested by the user appear in the app.
+
+## Accessibility and performance
+
+- Semantic headings, links, buttons, labels, range and select controls.
+- Visible keyboard focus, skip link, native dialog Escape/focus behavior.
+- Keyboard-accessible Vault; slider supports arrow keys and End.
+- Mobile layout at 390 × 844 and desktop checks at 1536 × 1024.
+- `prefers-reduced-motion` disables decorative animation.
+- HQ/Lite control persists the selected quality locally.
+- Mobile uses a static orbital fallback; desktop scenes load only near the viewport.
+- Lazy-loaded section and Three.js bundles, pixel ratio capped at 1.5, no real-time shadows.
+- WebGL canvas fallback and React error boundary preserve portfolio controls.
+- WebP environment assets and bundled Latin fonts avoid third-party font requests.
+
+See `QA.md` for actual verification and limits. This is not a claim of a formal accessibility audit or measured Lighthouse score.
+
+## AWS Amplify Hosting
+
+The repository includes `amplify.yml`, with `npm ci`, `npm run build`, and `dist` artifacts. Configuration follows the [AWS Amplify build settings documentation](https://docs.aws.amazon.com/amplify/latest/userguide/build-settings.html). React 19 is paired with R3F 9 per the [official compatibility guidance](https://r3f.docs.pmnd.rs/getting-started/introduction).
+
+1. Sign in to AWS Amplify Hosting.
+2. Create a new app and choose GitHub as the source.
+3. Authorize the intended repository and select its `main` branch.
+4. Keep the repository-root application directory and detected `amplify.yml`.
+5. Deploy, then verify the issued HTTPS URL, assets, navigation, resume, and Vault.
+
+No AWS service has been provisioned or verified at the time this file was prepared. AWS sign-in is required to finish deployment. There are no AWS account identifiers or credentials in the source. Do not describe AWS hosting as complete until the public URL is verified. No Amplify backend, Cognito, Bedrock, Lambda, or database is used.
+
+## Source layout
+
+```text
+src/components/ui/          UI and scene fallback boundary
+src/components/3d/          Rings, sphere, particles, smoke shader
+src/sections/               Hero and portfolio sections
+src/features/intelligence-vault/  Gameplay and pure graph logic
+src/data/                  Editable professional data
+src/hooks/                 Motion preference
+src/styles/                Responsive design system
+public/assets/             Optimized art and public resume
+public/models/             Rendering scope note
+tests/                     Vault logic tests
+screenshots/               Actual captured desktop/mobile views
 ```
 
-Replace the account and repository placeholders with your real repository. `node_modules`, `dist`, logs, and local environment files are ignored. Source repository: https://github.com/hariharasuthan1105/portfolio.
-
-## Deploy to AWS Amplify Hosting
-
-1. Sign into your AWS account and open **AWS Amplify**. Choose **Create new app** / **Host web app**, select GitHub, and authorize access to the repository you created.
-2. Select the repository and `main` branch. Use this directory as the repository root. If using a monorepo, select the application subdirectory explicitly.
-3. Keep the checked-in `amplify.yml`: `npm ci`, then `npm run build`, with artifact directory `dist`. Select a supported Node 22 or 24 build runtime if the console offers a runtime selector.
-4. This application uses section hashes (`/#projects`), so the server always receives `/`; no client route rewrite is necessary. If you later add path routing, configure Amplify’s documented SPA rewrite to `/index.html`, excluding asset file extensions.
-5. Save and deploy. Wait for a successful build, then open the actual Amplify HTTPS URL on desktop and mobile. Verify the gate, all vault keys, links and refresh behavior.
-6. Set `og:url` and an absolute `og:image` URL in `index.html` after the real domain is known. Convert the supplied SVG social artwork to a 1200×630 PNG for broad social-crawler support, then update `og:image`. Confirm the preview with the target platform before sharing.
-7. Record the real URL and repository in `SUBMISSION.md` only after verification.
-
-AWS service intended: **Amplify Hosting** for build, static hosting, CDN delivery and HTTPS. No Lambda, Bedrock, database, or Amplify backend is required or provisioned. Nothing has been deployed to AWS in this session; AWS account authorization and repository connection remain user steps.
-
-Official references: [Deploy Vite with Amplify](https://docs.amplify.aws/gen1/javascript/deploy-and-host/frameworks/deploy-vite-site/) and [Amplify Hosting](https://docs.amplify.aws/react/deploy-and-host/amplify-hosting/).
-
-## Costs and budget alerts
-
-Review the current [Amplify pricing](https://aws.amazon.com/amplify/pricing/) before deployment. Build minutes, stored assets, traffic and optional domain registration can incur charges. This project needs only static hosting; do not enable unrelated backend resources. No claim of zero cost is made.
-
-In **Billing and Cost Management → Budgets → Create budget**, create a monthly cost budget with an amount you are comfortable spending. Add your email for actual-spend alerts (for example 80% and 100%) and a forecasted-spend alert at 100%. Review the budget scope and notification delivery. Alerts are not a spending cap and can arrive after costs accrue. See [AWS Budgets guidance](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-best-practices.html).
-
-## Verification and release checklist
-
-See `QA.md` for executed checks and pending browser checks. Do not present this as an AWS-hosted submission until the deployed URL is verified. Confirm the current challenge rules and deadline directly with the organizer; those supplied in the brief were not independently verified.
-
-## Assets and licenses
-
-The castle and SVG artwork are original procedural/vector source in this project. Fonts are bundled through Fontsource; retain their upstream license files when redistributing. Dependency packages retain their respective licenses. The user-supplied reference image is included as public/assets/eclipse-citadel.png, as requested, with its original pixels intact. CSS applies grayscale at display time.
-
-## Animated atmosphere update
-
-`src/experience/VolumetricSmoke.tsx` supplies time-driven fractal noise and domain-warped curls with four independently paced plumes around the character positions, lateral ground mist, and slower upper cloud drift. Pointer position gently bends the smoke. A transparent canvas leaves links and buttons clickable. The effect is unmounted offscreen, paused on hidden tabs, and omitted for reduced-motion users. Pixel ratio is capped at 1. The original image remains static; the live smoke is a separate shader overlay. Characters are artwork representations, while the optional castle view retains real geometry.
-
-The new image is `public/assets/eclipse-citadel.png`. Full rigged characters, flowing waterfalls, depth-aware smoke occlusion, an integrated photorealistic 3D environment, measured 60 FPS, and staged eclipse/arrow animation remain unimplemented or unverified.
+See `ASSETS.md` for image provenance and generation prompts, and `SUBMISSION-DRAFT.md` for the submission narrative and unfilled deployment fields.
