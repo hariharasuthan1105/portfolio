@@ -12,16 +12,20 @@ import {
   HefinHologram,
 } from "../components/ui/ProjectHolograms";
 
+import { QualityPreset } from "../components/3d/atmosphere/AtmosphericQualityController";
+
 export default function Hero({
   enter,
   reduced,
   low,
+  quality,
   isEntering = false,
   onFlyComplete,
 }: {
   enter: () => void;
   reduced: boolean;
   low: boolean;
+  quality?: QualityPreset;
   isEntering?: boolean;
   onFlyComplete?: () => void;
 }) {
@@ -31,6 +35,7 @@ export default function Hero({
       <CastleGatewayScene
         reduced={reduced}
         low={low}
+        quality={quality}
         isEntering={isEntering}
         onEnterRealm={enter}
         onFlyComplete={onFlyComplete}

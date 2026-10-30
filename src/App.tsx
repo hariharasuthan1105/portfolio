@@ -11,6 +11,7 @@ import {
 import Hero from "./sections/Hero";
 import BrandEmblem from "./components/ui/BrandEmblem";
 import { useMotionPreference } from "./hooks/useMotionPreference";
+import { useAtmosphericQuality } from "./components/3d/atmosphere/AtmosphericQualityController";
 
 const Portfolio = lazy(() => import("./sections/Portfolio"));
 const Vault = lazy(() => import("./features/intelligence-vault/Vault"));
@@ -27,9 +28,8 @@ const links = [
 
 export default function App() {
   const reduced = useMotionPreference();
-  const [low, setLow] = useState(
-    () => localStorage.getItem("kingdom-quality") === "low",
-  );
+  const { quality, cycleQuality } = useAtmosphericQuality(reduced);
+  const low = quality === "low";
   const [menu, setMenu] = useState(false);
   const [active, setActive] = useState("home");
   const [isEntering, setIsEntering] = useState(false);
@@ -39,7 +39,6 @@ export default function App() {
   useEffect(() => {
     document.documentElement.dataset.motion =
       reduced || low ? "reduced" : "full";
-    localStorage.setItem("kingdom-quality", low ? "low" : "high");
   }, [reduced, low]);
 
   useEffect(() => {
@@ -135,18 +134,12 @@ export default function App() {
 
           <button
             className="icon-button quality-toggle"
-            aria-label={
-              low ? "Enable cinematic effects" : "Enable low quality mode"
-            }
-            title={
-              low
-                ? "Lite mode · click for cinematic"
-                : "Cinematic · click for lite mode"
-            }
-            onClick={() => setLow(!low)}
+            aria-label={`Atmospheric VFX quality: ${quality.toUpperCase()}`}
+            title={`VFX Quality: ${quality.toUpperCase()} (Click to toggle HIGH / MED / LOW)`}
+            onClick={cycleQuality}
           >
             <SlidersHorizontal size={15} />
-            <span>{low ? "LITE" : "HQ"}</span>
+            <span>{quality === "high" ? "HQ" : quality === "medium" ? "MED" : "LITE"}</span>
           </button>
 
           <button
@@ -165,6 +158,7 @@ export default function App() {
           enter={enter}
           reduced={reduced}
           low={low}
+          quality={quality}
           isEntering={isEntering}
           onFlyComplete={handleFlyComplete}
         />
