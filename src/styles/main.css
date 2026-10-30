@@ -245,9 +245,9 @@ nav a[aria-current]:after {
   z-index: 2;
   pointer-events: none;
   background:
-    radial-gradient(circle at 50% 50%, transparent 40%, rgba(2, 3, 5, 0.4) 75%, rgba(1, 2, 3, 0.88) 100%),
+    radial-gradient(circle at 50% 50%, transparent 40%, rgba(2, 3, 5, 0.38) 75%, rgba(1, 2, 3, 0.86) 100%),
     linear-gradient(180deg, rgba(3, 3, 5, 0.65) 0%, transparent 16%, transparent 75%, rgba(2, 2, 4, 0.94) 100%),
-    linear-gradient(90deg, rgba(2, 3, 4, 0.68) 0%, rgba(2, 3, 4, 0.22) 28%, transparent 50%);
+    linear-gradient(90deg, rgba(2, 3, 4, 0.78) 0%, rgba(2, 3, 4, 0.42) 28%, rgba(2, 3, 4, 0.12) 42%, transparent 58%);
 }
 .hero-hud-panel {
   position: absolute;
@@ -1689,7 +1689,7 @@ footer a:first-child {
   z-index: 70;
   background:
     linear-gradient(#0007, #0009),
-    url("/assets/citadel.webp") 63% 65%/180% auto;
+    url("/assets/hero-citadel-archers.webp") center/cover no-repeat;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2545,29 +2545,17 @@ html[data-motion="reduced"] *:after {
 
 @media (max-width: 900px) {
   .hero-bottom-strip {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
     bottom: 12px;
   }
-  .hero-project-cards {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    overflow-x: auto;
-    padding-bottom: 4px;
-  }
-  .hero-project-card {
-    min-width: 150px;
-  }
   .status-badge {
-    align-self: center;
+    align-self: flex-start;
   }
   .scroll-cue {
-    display: none;
-  }
-  .hero-vault-btn {
-    bottom: 150px;
+    display: inline-flex;
   }
 }
 

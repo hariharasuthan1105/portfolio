@@ -26,14 +26,14 @@ export default function CastleGatewayScene({
   const [portalFlare, setPortalFlare] = useState(0);
 
   const resolvedQuality: QualityPreset = quality ?? (low ? "low" : "high");
-  const portalPos = new THREE.Vector3(0, -0.45, -5.05);
+  const portalPos = new THREE.Vector3(1.85, -1.08, -5.05);
 
   return (
     <div className="castle-gateway-canvas-wrap" aria-hidden="true">
       <Canvas
         dpr={resolvedQuality === "low" ? [1, 1] : resolvedQuality === "medium" ? [1, 1.25] : [1, 1.5]}
         frameloop={reduced ? "demand" : "always"}
-        camera={{ position: [0, 0, 5], fov: 48, near: 0.1, far: 50 }}
+        camera={{ position: [0, 0, 5], fov: 52, near: 0.1, far: 50 }}
         gl={{
           alpha: true,
           antialias: resolvedQuality !== "low",

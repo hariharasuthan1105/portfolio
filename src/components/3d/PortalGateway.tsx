@@ -63,7 +63,7 @@ void main() {
   // Silver celestial gradient (pure silver white core to subtle ether blue rim)
   vec3 col = mix(vec3(0.7, 0.8, 1.0), vec3(1.0, 1.0, 1.0), core * 0.8 + ring * 0.5);
   
-  gl_FragColor = vec4(col * brightness, edge * (0.85 + uHover * 0.15));
+  gl_FragColor = vec4(col * brightness * 0.5, edge * (0.35 + uHover * 0.45));
 }
 `;
 
@@ -184,7 +184,7 @@ export default function PortalGateway({
   });
 
   return (
-    <group position={[0, -0.45, -5.05]}>
+    <group position={[1.85, -1.08, -5.05]}>
       {/* 3D Dynamic Point Light */}
       <pointLight
         ref={lightRef}
@@ -197,7 +197,7 @@ export default function PortalGateway({
       {/* Outer Gothic Rune Torus Ring */}
       <group ref={outerRingRef}>
         <mesh>
-          <torusGeometry args={[0.85, 0.018, 16, 72]} />
+          <torusGeometry args={[1.08, 0.016, 16, 72]} />
           <meshStandardMaterial
             color="#ffffff"
             emissive="#c8d6ff"
@@ -211,8 +211,8 @@ export default function PortalGateway({
           <mesh
             key={i}
             position={[
-              Math.cos((i * Math.PI) / 6) * 0.85,
-              Math.sin((i * Math.PI) / 6) * 0.85,
+              Math.cos((i * Math.PI) / 6) * 1.08,
+              Math.sin((i * Math.PI) / 6) * 1.08,
               0,
             ]}
             rotation={[0, 0, (i * Math.PI) / 6]}
@@ -230,7 +230,7 @@ export default function PortalGateway({
       {/* Inner Counter-Rotating Ring */}
       <group ref={innerRingRef}>
         <mesh>
-          <torusGeometry args={[0.74, 0.014, 16, 64]} />
+          <torusGeometry args={[0.94, 0.012, 16, 64]} />
           <meshStandardMaterial
             color="#e2e8f5"
             emissive="#ffffff"
@@ -243,8 +243,8 @@ export default function PortalGateway({
           <mesh
             key={i}
             position={[
-              Math.cos((i * Math.PI) / 4) * 0.74,
-              Math.sin((i * Math.PI) / 4) * 0.74,
+              Math.cos((i * Math.PI) / 4) * 0.94,
+              Math.sin((i * Math.PI) / 4) * 0.94,
               0,
             ]}
             rotation={[0, 0, (i * Math.PI) / 4]}
@@ -261,7 +261,7 @@ export default function PortalGateway({
 
       {/* Swirling Luminous Vortex Disc */}
       <mesh position={[0, 0, 0.01]}>
-        <circleGeometry args={[0.70, 54]} />
+        <circleGeometry args={[0.88, 54]} />
         <shaderMaterial
           ref={vortexMatRef}
           vertexShader={vortexVertex}

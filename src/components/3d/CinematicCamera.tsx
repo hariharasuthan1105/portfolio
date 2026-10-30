@@ -19,7 +19,7 @@ export default function CinematicCamera({
   const hasTriggeredCompleteRef = useRef(false);
 
   // Calibrated target portal coordinates in 3D space
-  const portalTarget = useRef(new THREE.Vector3(0, -0.45, -4.7));
+  const portalTarget = useRef(new THREE.Vector3(1.85, -1.08, -4.7));
 
   useEffect(() => {
     if (isEntering) {
@@ -47,8 +47,8 @@ export default function CinematicCamera({
 
       // Camera tilts slightly upward towards the portal light
       const lookTarget = new THREE.Vector3(
-        0,
-        -0.45 + (1.0 - p) * 0.2,
+        1.85,
+        -1.08 + (1.0 - p) * 0.2,
         -10.0,
       );
       camera.lookAt(lookTarget);
@@ -56,8 +56,8 @@ export default function CinematicCamera({
       // FOV dynamically expands for cinematic rush effect
       if ("fov" in camera) {
         (camera as THREE.PerspectiveCamera).fov = THREE.MathUtils.lerp(
-          48,
-          76,
+          52,
+          78,
           warp,
         );
         camera.updateProjectionMatrix();
@@ -82,22 +82,27 @@ export default function CinematicCamera({
     const breathX = Math.sin(time * 0.6) * 0.05;
     const breathY = Math.cos(time * 0.45) * 0.035;
 
-    const targetX = ptrX * 0.85 + breathX;
-    const targetY = ptrY * 0.45 + breathY + 0.08;
+    const aspect = state.viewport.aspect;
+    const targetZ = aspect < 0.8 ? 6.2 : aspect < 1.3 ? 5.4 : 5.0;
+    const targetFov = aspect < 0.8 ? 60 : aspect < 1.3 ? 54 : 50;
+    const centerOffsetX = aspect < 0.8 ? 0.95 : 0.0;
+
+    const targetX = centerOffsetX + ptrX * 0.7 + breathX;
+    const targetY = ptrY * 0.35 + breathY + 0.04;
 
     camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, 0.045);
     camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.045);
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, 5.0, 0.045);
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.045);
 
-    // Camera look-at target with subtle yaw & pitch
-    const lookAtX = -ptrX * 0.4;
-    const lookAtY = -ptrY * 0.25;
+    // Camera look-at target with subtle yaw & pitch, framed on citadel gateway
+    const lookAtX = centerOffsetX - ptrX * 0.35;
+    const lookAtY = -ptrY * 0.2 - 0.15;
     camera.lookAt(lookAtX, lookAtY, -8.0);
 
     if ("fov" in camera) {
       (camera as THREE.PerspectiveCamera).fov = THREE.MathUtils.lerp(
         (camera as THREE.PerspectiveCamera).fov,
-        48,
+        targetFov,
         0.05,
       );
       camera.updateProjectionMatrix();

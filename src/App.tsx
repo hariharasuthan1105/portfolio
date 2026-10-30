@@ -23,6 +23,7 @@ const links = [
   "Projects",
   "Experience",
   "Achievements",
+  "Vault",
   "Contact",
 ];
 
