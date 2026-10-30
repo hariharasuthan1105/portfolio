@@ -16,9 +16,10 @@ void main() {
   float d = texture2D(uDepth, uv).r;
   vDepth = d;
   
-  // Real geometric depth displacement along Z
+  // Real geometric depth displacement along Z and subtle panoramic curve
   vec3 pos = position;
   pos.z += (d - 0.5) * uDisplacement;
+  pos.z += (position.x * position.x) * -0.005;
   
   vec4 worldPos = modelMatrix * vec4(pos, 1.0);
   vWorldPosition = worldPos.xyz;
@@ -47,23 +48,23 @@ void main() {
   vec3 viewDir = normalize(vViewPosition);
   float depth = texture2D(uDepth, vUv).r;
   
-  // Micro-parallax for tactile relief without stretching
-  vec2 parallax = viewDir.xy * (depth - 0.5) * 0.025;
+  // Smooth parallax relief
+  vec2 parallax = viewDir.xy * (depth - 0.5) * 0.015;
   vec2 uv = clamp(vUv + parallax, 0.001, 0.999);
   
   vec4 baseColor = texture2D(uTexture, uv);
   
-  // 3D Portal Gateway Light calculation
+  // Symmetrical Central 3D Portal Gateway Light calculation
   vec3 lightVec = uPortalLightPos - vWorldPosition;
   float distToLight = length(lightVec);
   vec3 lightDir = normalize(lightVec);
   
-  // Inverse square attenuation with soft radius
-  float atten = 1.0 / (1.0 + distToLight * 0.16 + distToLight * distToLight * 0.05);
+  // Soft inverse-square attenuation
+  float atten = 1.0 / (1.0 + distToLight * 0.2 + distToLight * distToLight * 0.06);
   
   // Pulsing gateway illumination
-  float pulse = 0.88 + 0.12 * sin(uTime * 2.8);
-  vec3 portalIllum = vec3(0.92, 0.95, 1.0) * atten * uLightIntensity * pulse * 0.7;
+  float pulse = 0.92 + 0.08 * sin(uTime * 2.6);
+  vec3 portalIllum = vec3(0.92, 0.96, 1.0) * atten * uLightIntensity * pulse * 0.4;
   
   // Finite difference bump normal from depth map (portable across all WebGL)
   vec2 texel = vec2(0.001, 0.0015);
@@ -71,30 +72,37 @@ void main() {
   float dL = texture2D(uDepth, uv - vec2(texel.x, 0.0)).r;
   float dU = texture2D(uDepth, uv + vec2(0.0, texel.y)).r;
   float dD = texture2D(uDepth, uv - vec2(0.0, texel.y)).r;
-  float dX = (dR - dL) * 6.0;
-  float dY = (dU - dD) * 6.0;
+  float dX = (dR - dL) * 5.0;
+  float dY = (dU - dD) * 5.0;
   vec3 bumpNormal = normalize(vec3(-dX, -dY, 1.0));
   
   // Wet stone & waterfall specular highlights
   float specAngle = max(dot(reflect(-lightDir, bumpNormal), viewDir), 0.0);
-  float specPower = pow(specAngle, 18.0);
-  vec3 specular = vec3(0.85, 0.92, 1.0) * specPower * atten * 0.6;
+  float specPower = pow(specAngle, 16.0);
+  vec3 specular = vec3(0.88, 0.94, 1.0) * specPower * atten * 0.45;
   
-  // Atmospheric rim light on silhouettes (archer, knight, spires)
+  // Atmospheric rim light on silhouettes (archer, warrior, spires)
   float rim = pow(1.0 - max(dot(viewDir, bumpNormal), 0.0), 3.0);
-  vec3 rimColor = vec3(0.82, 0.88, 1.0) * rim * (0.15 + 0.35 * depth);
+  vec3 rimColor = vec3(0.85, 0.90, 1.0) * rim * (0.12 + 0.25 * depth);
   
-  // Moon backlighting from upper eclipse
+  // Moon backlighting from central eclipse
   float moonRim = pow(max(dot(viewDir, vec3(0.0, 0.7, 0.7)), 0.0), 4.0) * (1.0 - depth) * 0.15;
   
+  // Subtle energy glints on warrior sword (right) and archer bow (left)
+  float swordGlint = smoothstep(0.72, 0.88, uv.x) * smoothstep(0.40, 0.70, uv.y) * depth;
+  vec3 swordAura = vec3(0.8, 0.9, 1.0) * swordGlint * (0.5 + 0.5 * sin(uTime * 4.0)) * 0.25;
+  
+  float bowGlint = smoothstep(0.28, 0.12, uv.x) * smoothstep(0.40, 0.70, uv.y) * depth;
+  vec3 bowAura = vec3(0.85, 0.92, 1.0) * bowGlint * (0.5 + 0.5 * cos(uTime * 3.5)) * 0.25;
+
   // Screen bloom / flare from portal activation
   vec3 flareColor = vec3(1.0, 1.0, 1.0) * uPortalFlare * atten * 2.2;
   
   // Final composite
-  vec3 finalColor = baseColor.rgb + portalIllum + specular + rimColor + vec3(moonRim) + flareColor;
+  vec3 finalColor = baseColor.rgb + portalIllum + specular + rimColor + vec3(moonRim) + swordAura + bowAura + flareColor;
   
-  // Deep gothic contrast enhancement
-  finalColor = pow(finalColor, vec3(1.08));
+  // AAA cinematic contrast
+  finalColor = pow(finalColor, vec3(1.04));
   
   gl_FragColor = vec4(finalColor, baseColor.a);
 }
@@ -113,8 +121,8 @@ export default function GothicCastleMesh({
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
   const [texture, depthMap] = useTexture([
-    "/assets/citadel.webp",
-    "/assets/citadel_depth.webp",
+    "/assets/citadel_v4.webp",
+    "/assets/citadel_v4_depth.webp",
   ]);
 
   useMemo(() => {
@@ -130,10 +138,10 @@ export default function GothicCastleMesh({
     () => ({
       uTexture: { value: texture },
       uDepth: { value: depthMap },
-      uDisplacement: { value: reduced ? 0.35 : 1.95 },
+      uDisplacement: { value: reduced ? 0.12 : 0.42 },
       uTime: { value: 0 },
       uMouse: { value: new THREE.Vector2(0, 0) },
-      uPortalLightPos: { value: new THREE.Vector3(2.76, -2.23, -4.8) },
+      uPortalLightPos: { value: new THREE.Vector3(0.0, -0.45, -5.0) },
       uLightIntensity: { value: 1.0 },
       uPortalFlare: { value: 0 },
     }),
@@ -145,7 +153,7 @@ export default function GothicCastleMesh({
     const timeDelta = reduced ? 0 : delta;
     materialRef.current.uniforms.uTime.value += timeDelta;
 
-    const targetIntensity = portalHovered ? 2.4 : 1.2;
+    const targetIntensity = portalHovered ? 2.6 : 1.3;
     materialRef.current.uniforms.uLightIntensity.value = THREE.MathUtils.lerp(
       materialRef.current.uniforms.uLightIntensity.value,
       targetIntensity,
@@ -168,7 +176,7 @@ export default function GothicCastleMesh({
     <mesh
       ref={meshRef}
       position={[0, 0, -5.2]}
-      scale={[21.0, 14.0, 1]}
+      scale={[21.33, 12.0, 1]}
     >
       <planeGeometry args={[1, 1, reduced ? 48 : 160, reduced ? 32 : 110]} />
       <shaderMaterial

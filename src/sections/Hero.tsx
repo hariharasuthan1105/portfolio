@@ -1,4 +1,3 @@
-import { useState, useCallback } from "react";
 import {
   ArrowRight,
   ChevronDown,
@@ -7,6 +6,11 @@ import {
   ExternalLink,
 } from "lucide-react";
 import CastleGatewayScene from "../components/3d/CastleGatewayScene";
+import {
+  DocReconHologram,
+  PathwayAIHologram,
+  HefinHologram,
+} from "../components/ui/ProjectHolograms";
 
 export default function Hero({
   enter,
@@ -35,128 +39,177 @@ export default function Hero({
       {/* Cinematic Vignette & Atmospheric Shadows */}
       <div className="hero-vignette" />
 
-      {/* Glassmorphic Hero Left HUD Panel */}
+      {/* Left Hero HUD Area (Matching Reference Image A) */}
       <div className="hero-hud-panel">
-        <div className="eyebrow-badge mono">
-          <span className="blink-dot" />
-          [ WELCOME_TO_MY_REALM ]
-        </div>
+        <div className="hero-hud-frame">
+          <div className="eyebrow-badge mono">
+            <span className="blink-dot" />
+            <span>:WELCOME TO MY REALM : • • • • •</span>
+          </div>
 
-        <h1 className="hero-title">
-          KINGDOM
-          <br />
-          <span className="hero-subtext">OF_CODE</span>
-        </h1>
+          <h1 className="hero-title">
+            KINGDOM
+            <br />
+            <span className="hero-subtext">OF CODE</span>
+          </h1>
 
-        <div className="identity-block">
-          <div className="identity-name">HARIHARASUTHAN V</div>
-          <div className="identity-role mono">AI & DATA SCIENCE DEVELOPER</div>
-        </div>
+          <div className="identity-block">
+            <div className="identity-name">HARIHARASUTHAN V</div>
+            <div className="identity-role mono">AI &amp; DATA SCIENCE DEVELOPER</div>
+          </div>
 
-        <p className="hero-desc">
-          Turning complex information
-          <br />
-          into intelligent systems.
-        </p>
+          <p className="hero-desc">
+            Turning complex information
+            <br />
+            into intelligent systems.
+          </p>
 
-        <div className="hero-actions">
-          <button
-            className="button primary hero-btn-enter"
-            onClick={enter}
-            aria-label="Enter the Kingdom"
-          >
-            <span>ENTER THE KINGDOM</span>
-            <ArrowRight size={16} />
-          </button>
+          <div className="hero-actions">
+            <button
+              className="hero-btn-enter"
+              onClick={enter}
+              aria-label="Enter the Kingdom"
+            >
+              <span>ENTER THE KINGDOM</span>
+              <ArrowRight size={15} />
+            </button>
 
-          <a
-            className="button secondary hero-btn-explore"
-            href="#projects"
-            aria-label="Explore Projects"
-          >
-            <span>EXPLORE PROJECTS</span>
-            <ExternalLink size={14} />
-          </a>
+            <a
+              className="hero-btn-explore mono"
+              href="#projects"
+              aria-label="Explore Projects"
+            >
+              <span>EXPLORE PROJECTS</span>
+              <ExternalLink size={13} />
+            </a>
+          </div>
         </div>
       </div>
 
-      {/* Bottom Featured Projects Strip (matching Reference Image 1 & 3) */}
+      {/* Center-Lower Secret Vault Trigger (Direct access to Intelligence Vault) */}
+      <a
+        className="hero-vault-btn mono"
+        href="#vault"
+        aria-label="Unlock the Secret Vault: Three Keys, One Intelligence"
+      >
+        <LockKeyhole size={14} className="vault-icon" />
+        <div className="vault-btn-copy">
+          <span className="vault-btn-title">THE SECRET VAULT</span>
+          <span className="vault-btn-sub">THREE KEYS. ONE INTELLIGENCE.</span>
+        </div>
+        <ArrowRight size={13} className="vault-arrow" />
+      </a>
+
+      {/* Bottom Interface: Location Badge, 3 Featured Project Cards, Scroll Cue */}
       <div className="hero-bottom-strip">
+        {/* Left: Location & Status */}
         <div className="status-badge mono">
-          <MapPin size={13} className="pin-icon" />
+          <MapPin size={12} className="pin-icon" />
           <span>COIMBATORE, INDIA</span>
-          <span className="status-dot" />
+          <span className="status-separator">•</span>
           <span className="status-text">OPEN TO OPPORTUNITIES</span>
         </div>
 
-        <div className="featured-projects-cards">
-          <a href="#projects" className="feat-card">
-            <span className="feat-num mono">01</span>
-            <div className="feat-info">
-              <span className="feat-name">DocRecon</span>
-              <span className="feat-desc">Document Intelligence & Field Extraction</span>
+        {/* Center: 3 Featured Project Cards (Matching Reference Image A) */}
+        <div className="hero-project-cards">
+          <a href="#projects" className="hero-project-card" aria-label="View DocRecon Project">
+            <div className="project-card-hologram">
+              <DocReconHologram />
+            </div>
+            <div className="project-card-footer">
+              <div className="project-card-info">
+                <span className="project-card-title">DocRecon</span>
+                <span className="project-card-desc">Document Intelligence</span>
+              </div>
+              <div className="project-card-circle-btn">
+                <ArrowRight size={13} />
+              </div>
             </div>
           </a>
 
-          <a href="#projects" className="feat-card">
-            <span className="feat-num mono">02</span>
-            <div className="feat-info">
-              <span className="feat-name">Pathway AI</span>
-              <span className="feat-desc">RAG for Smart Urban Management</span>
+          <a href="#projects" className="hero-project-card" aria-label="View Pathway AI Project">
+            <div className="project-card-hologram">
+              <PathwayAIHologram />
+            </div>
+            <div className="project-card-footer">
+              <div className="project-card-info">
+                <span className="project-card-title">Pathway AI</span>
+                <span className="project-card-desc">RAG for Smart Cities</span>
+              </div>
+              <div className="project-card-circle-btn">
+                <ArrowRight size={13} />
+              </div>
             </div>
           </a>
 
-          <a href="#projects" className="feat-card">
-            <span className="feat-num mono">03</span>
-            <div className="feat-info">
-              <span className="feat-name">HEFIN</span>
-              <span className="feat-desc">Decentralized AI Chatbot</span>
+          <a href="#projects" className="hero-project-card" aria-label="View HEFIN Project">
+            <div className="project-card-hologram">
+              <HefinHologram />
+            </div>
+            <div className="project-card-footer">
+              <div className="project-card-info">
+                <span className="project-card-title">HEFIN</span>
+                <span className="project-card-desc">Decentralized AI Chatbot</span>
+              </div>
+              <div className="project-card-circle-btn">
+                <ArrowRight size={13} />
+              </div>
             </div>
           </a>
         </div>
 
-        <div className="hero-motto mono">
-          SOME BUILD SYSTEMS.
-          <br />
-          <strong>I BUILD POSSIBILITIES.</strong>
+        {/* Right: Mouse Scroll Indicator */}
+        <a href="#about" className="scroll-cue mono" aria-label="Scroll down to explore portfolio">
+          <div className="scroll-mouse-icon">
+            <div className="scroll-wheel-dot" />
+          </div>
+          <span>SCROLL TO EXPLORE</span>
+          <ChevronDown size={13} />
+        </a>
+      </div>
+
+      {/* Right HUD Telemetry Indicators (Matching Image A) */}
+      <div className="hero-telemetry mono" aria-hidden="true">
+        <div className="telemetry-row">
+          <span>DISCIPLINE</span>
+          <div className="telemetry-slider">
+            <div className="telemetry-track" />
+            <div className="telemetry-pip pip-85" />
+          </div>
+        </div>
+        <div className="telemetry-row">
+          <span>CREATIVITY</span>
+          <div className="telemetry-slider">
+            <div className="telemetry-track" />
+            <div className="telemetry-pip pip-92" />
+          </div>
+        </div>
+        <div className="telemetry-row">
+          <span>ANALYSIS</span>
+          <div className="telemetry-slider">
+            <div className="telemetry-track" />
+            <div className="telemetry-pip pip-78" />
+          </div>
+        </div>
+        <div className="telemetry-row">
+          <span>INNOVATION</span>
+          <div className="telemetry-slider">
+            <div className="telemetry-track" />
+            <div className="telemetry-pip pip-95" />
+          </div>
+        </div>
+        <div className="telemetry-row">
+          <span>IMPACT</span>
+          <div className="telemetry-slider">
+            <div className="telemetry-track" />
+            <div className="telemetry-pip pip-90" />
+          </div>
         </div>
       </div>
 
-      {/* Secret Vault Discovery Hint Badge */}
-      <a className="vault-hint" href="#vault" aria-label="Discover Secret Vault">
-        <LockKeyhole size={16} />
-        <div>
-          <span className="vault-label">THE SECRET VAULT</span>
-          <small>THREE KEYS. ONE INTELLIGENCE.</small>
-        </div>
-        <ArrowRight size={14} />
-      </a>
-
-      {/* Right HUD Telemetry Values */}
-      <div className="hero-values mono" aria-hidden="true">
-        <span>DISCIPLINE</span>
-        <i />
-        <span>CREATIVITY</span>
-        <i />
-        <span>ANALYSIS</span>
-        <i />
-        <span>INNOVATION</span>
-        <i />
-        <span>IMPACT</span>
-      </div>
-
-      {/* Bottom Right Scroll Cue */}
-      <a href="#about" className="scroll-cue mono" aria-label="Scroll to explore">
-        <div className="scroll-mouse-icon">
-          <div className="scroll-wheel-dot" />
-        </div>
-        <span>SCROLL TO EXPLORE</span>
-        <ChevronDown size={14} />
-      </a>
-
-      {/* Technical Corner Crosshairs */}
-      <div className="corner-reticle top-left" aria-hidden="true" />
-      <div className="corner-reticle bottom-right" aria-hidden="true" />
+      {/* Corner Technical Framing Marks */}
+      <div className="corner-bracket top-left" aria-hidden="true" />
+      <div className="corner-bracket bottom-right" aria-hidden="true" />
     </section>
   );
 }

@@ -184,7 +184,7 @@ export default function PortalGateway({
   });
 
   return (
-    <group position={[2.76, -2.23, -4.85]}>
+    <group position={[0, -0.45, -5.05]}>
       {/* 3D Dynamic Point Light */}
       <pointLight
         ref={lightRef}

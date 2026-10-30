@@ -19,7 +19,7 @@ export default function CinematicCamera({
   const hasTriggeredCompleteRef = useRef(false);
 
   // Calibrated target portal coordinates in 3D space
-  const portalTarget = useRef(new THREE.Vector3(2.76, -2.23, -4.6));
+  const portalTarget = useRef(new THREE.Vector3(0, -0.45, -4.7));
 
   useEffect(() => {
     if (isEntering) {
@@ -47,8 +47,8 @@ export default function CinematicCamera({
 
       // Camera tilts slightly upward towards the portal light
       const lookTarget = new THREE.Vector3(
-        2.76,
-        -2.23 + (1.0 - p) * 0.2,
+        0,
+        -0.45 + (1.0 - p) * 0.2,
         -10.0,
       );
       camera.lookAt(lookTarget);

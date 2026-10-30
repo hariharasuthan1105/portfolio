@@ -130,7 +130,7 @@ function SmokePlume({
   const uniforms = useMemo(
     () => ({
       uTime: { value: Math.random() * 50 },
-      uLightPos: { value: new THREE.Vector3(2.37, -1.91, -4.8) },
+      uLightPos: { value: new THREE.Vector3(0, -0.45, -5.0) },
       uOpacity: { value: opacity },
       uDrift: { value: new THREE.Vector2(driftSpeed[0], driftSpeed[1]) },
       uDensity: { value: density },
@@ -170,25 +170,25 @@ export default function SilverSmoke({
     <group position={[0, 0, 0]}>
       {/* 1. Low rolling ground mist on the stone bridge deck */}
       <SmokePlume
-        position={[2.0, -2.4, -4.2]}
-        scale={[6.5, 2.2, 1]}
-        driftSpeed={[-0.04, 0.01]}
-        opacity={0.38}
-        density={1.2}
+        position={[0.0, -2.5, -4.2]}
+        scale={[6.8, 2.4, 1]}
+        driftSpeed={[-0.03, 0.01]}
+        opacity={0.36}
+        density={1.1}
         reduced={reduced}
       />
       <SmokePlume
-        position={[1.6, -2.8, -2.8]}
+        position={[0.0, -2.9, -2.8]}
         scale={[7.5, 2.6, 1]}
         driftSpeed={[0.035, 0.012]}
-        opacity={0.32}
+        opacity={0.30}
         density={1.0}
         reduced={reduced}
       />
       <SmokePlume
-        position={[0.8, -3.2, -1.2]}
+        position={[0.0, -3.3, -1.2]}
         scale={[8.8, 3.0, 1]}
-        driftSpeed={[-0.03, 0.01]}
+        driftSpeed={[-0.025, 0.01]}
         opacity={0.28}
         density={0.9}
         reduced={reduced}
@@ -199,25 +199,25 @@ export default function SilverSmoke({
         <>
           {/* Swirling silver clouds right around the portal gateway */}
           <SmokePlume
-            position={[2.4, -1.4, -4.6]}
-            scale={[4.2, 3.2, 1]}
+            position={[0.0, -0.35, -4.6]}
+            scale={[4.8, 3.5, 1]}
             driftSpeed={[0.02, 0.025]}
-            opacity={0.25}
-            density={0.85}
-            reduced={reduced}
-          />
-          {/* Left cliff mist curling around the archer's crags */}
-          <SmokePlume
-            position={[-3.6, -2.1, -3.4]}
-            scale={[5.5, 3.8, 1]}
-            driftSpeed={[-0.025, 0.015]}
             opacity={0.22}
             density={0.8}
             reduced={reduced}
           />
-          {/* Right cliff mist curling past the knight */}
+          {/* Left cliff mist & waterfall spray near archer */}
           <SmokePlume
-            position={[4.6, -1.8, -3.2]}
+            position={[-3.8, -2.0, -3.4]}
+            scale={[5.5, 3.8, 1]}
+            driftSpeed={[-0.025, 0.015]}
+            opacity={0.24}
+            density={0.8}
+            reduced={reduced}
+          />
+          {/* Right cliff mist & waterfall spray past warrior */}
+          <SmokePlume
+            position={[3.8, -1.9, -3.2]}
             scale={[5.2, 3.5, 1]}
             driftSpeed={[0.028, 0.012]}
             opacity={0.24}

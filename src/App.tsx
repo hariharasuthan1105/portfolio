@@ -4,9 +4,12 @@ import {
   Menu,
   X,
   SlidersHorizontal,
-  ArrowRight,
+  FastForward,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 import Hero from "./sections/Hero";
+import BrandEmblem from "./components/ui/BrandEmblem";
 import { useMotionPreference } from "./hooks/useMotionPreference";
 
 const Portfolio = lazy(() => import("./sections/Portfolio"));
@@ -31,6 +34,7 @@ export default function App() {
   const [active, setActive] = useState("home");
   const [isEntering, setIsEntering] = useState(false);
   const [intro, setIntro] = useState(false);
+  const [muted, setMuted] = useState(true);
 
   useEffect(() => {
     document.documentElement.dataset.motion =
@@ -89,8 +93,11 @@ export default function App() {
 
       <header className="topbar">
         <a className="brand" href="#home">
-          <span className="brand-name mono">HARIHARASUTHAN V</span>
-          <span className="brand-role mono">[ AI & DATA SCIENCE ]</span>
+          <BrandEmblem size={28} />
+          <div className="brand-text">
+            <span className="brand-name mono">HARIHARASUTHAN V</span>
+            <span className="brand-role mono">[ AI &amp; DATA SCIENCE ]</span>
+          </div>
         </a>
 
         <nav aria-label="Main navigation" className={menu ? "open" : ""}>
@@ -113,10 +120,18 @@ export default function App() {
             onClick={skipToAbout}
             aria-label="Skip to portfolio about section"
           >
-            SKIP INTRO
+            <FastForward size={11} className="skip-icon" />
+            <span>SKIP INTRO</span>
           </button>
 
-          <span className="signal" aria-hidden="true">▂▃▅▇</span>
+          <button
+            className="icon-button audio-toggle"
+            aria-label={muted ? "Sound muted" : "Sound active"}
+            title={muted ? "Sound muted" : "Sound active"}
+            onClick={() => setMuted(!muted)}
+          >
+            {muted ? <VolumeX size={15} /> : <Volume2 size={15} />}
+          </button>
 
           <button
             className="icon-button quality-toggle"
@@ -130,7 +145,7 @@ export default function App() {
             }
             onClick={() => setLow(!low)}
           >
-            <SlidersHorizontal size={16} />
+            <SlidersHorizontal size={15} />
             <span>{low ? "LITE" : "HQ"}</span>
           </button>
 
