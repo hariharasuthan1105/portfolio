@@ -21,6 +21,8 @@ import {
   Calendar,
   ChevronLeft,
   ChevronRight,
+  Brain,
+  Target,
 } from "lucide-react";
 import {
   profile,
@@ -136,161 +138,175 @@ export default function Portfolio({
 
   return (
     <>
-      {/* 02 / ABOUT ME */}
+      {/* 02 / ABOUT ME - CINEMATIC 3D REDESIGN */}
       <section id="about" className="section about chamber about-enhanced-chamber">
-        {/* Real-time 3D Rotating Floor Mechanism & Depth Layer */}
-        <div className="about-scene-container" aria-hidden="false">
-          <ChamberPlatformScene
-            activeConceptIndex={activeConceptIndex}
-            rippleTrigger={platformRippleTrigger}
-            reduced={reduced}
-            onPlatformHover={() => setPlatformRippleTrigger((prev) => prev + 1)}
-          />
-          {/* Cloaked Figure Cutout Grounded upon the Rotating 3D Dais */}
-          <div className="about-character-stand" aria-hidden="true">
-            <img
-              src="/assets/chamber_character.png"
-              alt="Cloaked explorer standing in gothic chamber"
-              className="about-character-cutout"
-            />
-            <div className="about-character-base-mist" />
-          </div>
-        </div>
+        {/* Content Container with Non-Overflowing 3-Zone CSS Grid */}
+        <div className="about-container">
+          <div className="about-grid">
+            {/* LEFT ZONE (30%): Label, Headline, Bio, Education Card, Desktop Resume */}
+            <div className="about-left-col">
+              <div className="about-eyebrow mono">[ 02 / ABOUT ]</div>
+              
+              <h2 className="about-main-heading">
+                CURIOSITY IS WHERE<br />
+                EVERYTHING BEGINS.
+              </h2>
 
-        {/* Thin Connecting Visual Logic between Right Cards & Center Mechanism */}
-        <svg
-          className="about-connecting-circuits"
-          aria-hidden="true"
-          viewBox="0 0 1440 900"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id="circuitGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="rgba(255,255,255,0.85)" />
-              <stop offset="100%" stopColor="rgba(255,255,255,0.12)" />
-            </linearGradient>
-          </defs>
-          <path
-            className={`circuit-line circuit-1 ${activeConceptIndex === 0 ? "active" : ""}`}
-            d="M 980 435 L 880 435 L 825 790 L 768 815"
-          />
-          <path
-            className={`circuit-line circuit-2 ${activeConceptIndex === 1 ? "active" : ""}`}
-            d="M 980 545 L 880 545 L 820 825 L 768 840"
-          />
-          <path
-            className={`circuit-line circuit-3 ${activeConceptIndex === 2 ? "active" : ""}`}
-            d="M 980 655 L 880 655 L 815 855 L 768 865"
-          />
-        </svg>
+              <div className="about-intro-copy">
+                <p>
+                  I'm Hariharasuthan, an AI &amp; Data Science undergraduate exploring
+                  how complex information transforms into dependable, intelligent decisions.
+                </p>
+                <p>
+                  My focus lies at the confluence of artificial intelligence,
+                  quantitative finance, probability, optimization, and real-time decision architectures.
+                </p>
+              </div>
 
-        <div className="section-inner about-inner">
-          <Heading n="02" title="THE ORIGIN." sub="ABOUT ME" />
-          <div className="about-layout">
-            {/* LEFT ZONE: Bio & Premium Glassmorphism Data Pedestal */}
-            <div className="about-copy">
-              <p className="lead display-lead">
-                Curiosity is where
-                <br />
-                everything begins.
-              </p>
-              <p className="body-copy">
-                I'm Hariharasuthan, an AI &amp; Data Science undergraduate exploring
-                how complex information transforms into dependable, intelligent decisions.
-              </p>
-              <p className="body-copy">
-                My focus lies at the confluence of artificial intelligence,
-                quantitative finance, probability, optimization, and real-time decision architectures.
-              </p>
-
-              {/* Data Pedestal Card */}
-              <div className="education data-pedestal glass">
-                <div className="pedestal-header mono">
-                  <span className="pedestal-tag">[ PEDESTAL // 01 ]</span>
-                  <span className="pedestal-status">
-                    <span className="status-dot-pulse" />
-                    ACCREDITED
+              {/* B.Tech Education Panel (Dark Smoked Glass) */}
+              <div className="about-education-card glass">
+                <div className="edu-top-row">
+                  <div className="edu-icon-wrap" aria-hidden="true">
+                    <GraduationCap size={22} className="edu-icon" />
+                  </div>
+                  <span className="edu-badge mono">
+                    <span className="edu-dot" />
+                    UNDERGRADUATE
                   </span>
                 </div>
-                <div className="pedestal-body">
-                  <div className="pedestal-icon-wrapper">
-                    <GraduationCap size={24} className="pedestal-icon" />
+
+                <div className="edu-body">
+                  <h3 className="edu-degree">{profile.education.degree}</h3>
+                  <p className="edu-college">{profile.education.college}</p>
+                </div>
+
+                <div className="edu-cgpa-track">
+                  <div className="cgpa-label-row mono">
+                    <span>ACADEMIC INDEX</span>
+                    <strong>CGPA {profile.education.cgpa}</strong>
                   </div>
-                  <div className="pedestal-info">
-                    <span className="mono pedestal-years">{profile.education.years}</span>
-                    <h3 className="subsection-heading">{profile.education.degree}</h3>
-                    <p className="pedestal-college">{profile.education.college}</p>
-                    <div className="pedestal-cgpa-track">
-                      <div className="cgpa-label-row mono">
-                        <span>ACADEMIC INDEX</span>
-                        <strong>CGPA {profile.education.cgpa} / 10.00</strong>
-                      </div>
-                      <div className="cgpa-meter-bar" aria-hidden="true">
-                        <div className="cgpa-meter-fill" style={{ width: "82.5%" }} />
-                      </div>
-                    </div>
+                  <div className="cgpa-bar-bg" aria-hidden="true">
+                    <div className="cgpa-bar-fill" style={{ width: "82.5%" }} />
                   </div>
                 </div>
               </div>
 
-              <a
-                className="text-link mono download-resume-btn"
-                href="/assets/hariharasuthan-resume.pdf"
-                download
-              >
-                DOWNLOAD RESUME <ArrowRight size={16} />
-              </a>
+              {/* Download Resume Action (Desktop) */}
+              <div className="about-resume-wrap desktop-resume">
+                <a
+                  className="about-resume-btn mono"
+                  href="/assets/hariharasuthan-resume.pdf"
+                  download
+                  aria-label="Download Hariharasuthan resume PDF"
+                >
+                  <span className="bracket-left">┌</span>
+                  <span className="btn-label">DOWNLOAD RESUME</span>
+                  <ArrowRight size={14} className="btn-arrow" />
+                  <span className="bracket-right">┘</span>
+                </a>
+              </div>
             </div>
 
-            {/* RIGHT ZONE: Interactive Concept Cards with Staggered Reveal */}
-            <div className="principles concept-cards-group">
-              {[
-                {
-                  num: "01",
-                  title: "CURIOSITY",
-                  tag: "FIRST PRINCIPLES",
-                  desc: "Drives continuous inquiry, structural questioning, and first-principles exploration.",
-                  ring: "OUTER RING SYNC",
-                },
-                {
-                  num: "02",
-                  title: "INTELLIGENCE",
-                  tag: "GROUNDED LOGIC",
-                  desc: "Architects verified, grounded algorithmic solutions with mathematical rigor.",
-                  ring: "ARCANE GEAR SYNC",
-                },
-                {
-                  num: "03",
-                  title: "IMPACT",
-                  tag: "CRITICAL DEPLOYMENT",
-                  desc: "Empowers real-world human decisions across high-consequence AI architectures.",
-                  ring: "CORE CONDUIT SYNC",
-                },
-              ].map((concept, idx) => (
+            {/* CENTER ZONE (40%): Scenic Corridor with Real 3D Rotating Floor Mechanism & Explorer */}
+            <div className="about-center-corridor">
+              <div className="about-scene-container" aria-hidden="false">
+                <ChamberPlatformScene
+                  activeConceptIndex={activeConceptIndex}
+                  rippleTrigger={platformRippleTrigger}
+                  reduced={reduced}
+                  onPlatformHover={() => setPlatformRippleTrigger((prev) => prev + 1)}
+                />
+
+              </div>
+            </div>
+
+            {/* RIGHT ZONE (30%): Three Vertically Aligned Smoked-Glass Value Panels */}
+            <div className="about-right-col">
+              <div className="about-values-stack">
+                {/* 01 CURIOSITY */}
                 <div
-                  key={concept.num}
-                  className={`concept-card ${activeConceptIndex === idx ? "active-glow" : ""}`}
+                  className={`about-value-card ${activeConceptIndex === 0 ? "active-glow" : ""}`}
                   onMouseEnter={() => {
-                    setActiveConceptIndex(idx);
+                    setActiveConceptIndex(0);
                     setPlatformRippleTrigger((prev) => prev + 1);
                   }}
                   onMouseLeave={() => setActiveConceptIndex(null)}
-                  style={{ animationDelay: `${0.15 * (idx + 1)}s` }}
                 >
-                  <div className="concept-card-top mono">
-                    <span className="concept-num">{concept.num}</span>
-                    <span className="concept-tag">[{concept.tag}]</span>
+                  <div className="value-icon-box" aria-hidden="true">
+                    <Lightbulb size={22} className="value-icon" />
                   </div>
-                  <h3 className="subsection-heading">{concept.title}</h3>
-                  <p>{concept.desc}</p>
-                  <div className="concept-telemetry mono" aria-hidden="true">
-                    <span className="telemetry-bracket">[</span>
-                    <span className="telemetry-value">{concept.ring}</span>
-                    <span className="telemetry-bracket">]</span>
-                    <span className="telemetry-indicator" />
+                  <div className="value-info">
+                    <div className="value-header">
+                      <h3 className="value-title">CURIOSITY</h3>
+                      <span className="value-number mono">01</span>
+                    </div>
+                    <p className="value-desc">
+                      DRIVES CONTINUOUS INQUIRY AND FIRST-PRINCIPLES EXPLORATION.
+                    </p>
                   </div>
                 </div>
-              ))}
+
+                {/* 02 INTELLIGENCE */}
+                <div
+                  className={`about-value-card ${activeConceptIndex === 1 ? "active-glow" : ""}`}
+                  onMouseEnter={() => {
+                    setActiveConceptIndex(1);
+                    setPlatformRippleTrigger((prev) => prev + 1);
+                  }}
+                  onMouseLeave={() => setActiveConceptIndex(null)}
+                >
+                  <div className="value-icon-box" aria-hidden="true">
+                    <Brain size={22} className="value-icon" />
+                  </div>
+                  <div className="value-info">
+                    <div className="value-header">
+                      <h3 className="value-title">INTELLIGENCE</h3>
+                      <span className="value-number mono">02</span>
+                    </div>
+                    <p className="value-desc">
+                      ARCHITECTS VERIFIED, GROUNDED ALGORITHMIC SOLUTIONS.
+                    </p>
+                  </div>
+                </div>
+
+                {/* 03 IMPACT */}
+                <div
+                  className={`about-value-card ${activeConceptIndex === 2 ? "active-glow" : ""}`}
+                  onMouseEnter={() => {
+                    setActiveConceptIndex(2);
+                    setPlatformRippleTrigger((prev) => prev + 1);
+                  }}
+                  onMouseLeave={() => setActiveConceptIndex(null)}
+                >
+                  <div className="value-icon-box" aria-hidden="true">
+                    <Target size={22} className="value-icon" />
+                  </div>
+                  <div className="value-info">
+                    <div className="value-header">
+                      <h3 className="value-title">IMPACT</h3>
+                      <span className="value-number mono">03</span>
+                    </div>
+                    <p className="value-desc">
+                      EMPOWERS REAL-WORLD HUMAN DECISIONS IN CRITICAL SYSTEMS.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Download Resume Action (Mobile fallback at end of section) */}
+              <div className="about-resume-wrap mobile-resume">
+                <a
+                  className="about-resume-btn mono"
+                  href="/assets/hariharasuthan-resume.pdf"
+                  download
+                  aria-label="Download Hariharasuthan resume PDF"
+                >
+                  <span className="bracket-left">┌</span>
+                  <span className="btn-label">DOWNLOAD RESUME</span>
+                  <ArrowRight size={14} className="btn-arrow" />
+                  <span className="bracket-right">┘</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
