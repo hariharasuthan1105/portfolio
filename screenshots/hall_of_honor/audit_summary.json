@@ -1,0 +1,77 @@
+[
+  {
+    "name": "Achievements section exists",
+    "pass": true,
+    "note": "#achievements mounted"
+  },
+  {
+    "name": "Capture 01 Default Hall of Honor 1536x1024",
+    "pass": true,
+    "note": "Saved 01_hall_of_honor_default_1536x1024.png"
+  },
+  {
+    "name": "Three Award Panels Present",
+    "pass": true,
+    "note": "Found 3 panels"
+  },
+  {
+    "name": "Award 01 Citation Dialog Opens",
+    "pass": true,
+    "note": "Dialog open is true"
+  },
+  {
+    "name": "Capture 02 Convolve 4.0 Selected",
+    "pass": true,
+    "note": "Saved 02_hall_award_01_convolve_selected.png"
+  },
+  {
+    "name": "Escape Closes Citation Dialog",
+    "pass": true,
+    "note": "Closed cleanly via Escape"
+  },
+  {
+    "name": "Capture 03 Pathway AI Selected",
+    "pass": true,
+    "note": "Saved 03_hall_award_02_pathway_selected.png"
+  },
+  {
+    "name": "Capture 04 WCHL Selected",
+    "pass": true,
+    "note": "Saved 04_hall_award_03_wchl_selected.png"
+  },
+  {
+    "name": "Certifications toggle button present",
+    "pass": true,
+    "note": "Button found"
+  },
+  {
+    "name": "Certifications Cards Count",
+    "pass": true,
+    "note": "Found 5 verified certificates"
+  },
+  {
+    "name": "Capture 05 Certifications Expanded",
+    "pass": true,
+    "note": "Saved 05_hall_certifications_expanded_1536x1024.png"
+  },
+  {
+    "name": "Capture 06 Hall of Honor Laptop 1366x768",
+    "pass": true,
+    "note": "Saved 06_hall_of_honor_laptop_1366x768.png"
+  },
+  {
+    "name": "Mobile Zero Horizontal Overflow",
+    "pass": true,
+    "note": "scrollWidth: 390px, clientWidth: 390px"
+  },
+  {
+    "name": "Capture 07 Mobile Hall of Honor 390x844",
+    "pass": true,
+    "note": "Saved 07_hall_of_honor_mobile_390x844.png"
+  },
+  {
+    "name": "Capture 08 Mobile Certifications Expanded",
+    "pass": true,
+    "note": "Saved 08_hall_mobile_certifications_390x844.png"
+  }
+]
