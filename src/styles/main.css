@@ -1,13 +1,111 @@
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Pixelify Sans Variable", "Pixelify Sans", monospace;
+  --font-technical: "IBM Plex Mono", monospace;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --pixel: var(--font-display);
+  --mono: var(--font-technical);
+  font-family: var(--font-body);
   color: #e9e9eb;
   background: #030303;
   font-synthesis: none;
   --silver: #a7a7ad;
   --line: #ffffff26;
-  --mono: "IBM Plex Mono", monospace;
   scroll-behavior: smooth;
   scroll-padding-top: 76px;
+}
+
+/* ==========================================================================
+   CENTRAL TYPOGRAPHY SYSTEM
+   Retro Pixel x Modern Apple Spacing x IBM Technical Precision
+   ========================================================================== */
+
+.display-heading {
+  font-family: var(--font-display) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+}
+
+.section-heading,
+.section-heading-text,
+.section-heading > h2,
+h2.section-heading {
+  font-family: var(--font-display) !important;
+  font-weight: 700 !important;
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+  letter-spacing: 0.02em;
+  line-height: 1.08;
+}
+
+.subsection-heading {
+  font-family: var(--font-display) !important;
+  font-weight: 600 !important;
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.card-heading {
+  font-family: var(--font-display) !important;
+  font-weight: 600 !important;
+  font-size: clamp(1.25rem, 1.6vw, 1.65rem);
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+}
+
+.modal-heading {
+  font-family: var(--font-display) !important;
+  font-weight: 700 !important;
+  font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+
+.technical-label {
+  font-family: var(--font-technical) !important;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.body-copy {
+  font-family: var(--font-body) !important;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+/* Base Headings Default Display */
+h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  margin-top: 0;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  margin-top: 0;
+}
+
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  margin-top: 0;
 }
 * {
   box-sizing: border-box;
@@ -390,11 +488,11 @@ nav a[aria-current]:after {
   50% { opacity: 0.3; transform: scale(0.8); }
 }
 .hero-title {
-  font-family: "Pixelify Sans", sans-serif;
-  font-size: clamp(44px, 4.8vw, 76px);
-  font-weight: 600;
-  line-height: 0.92;
-  letter-spacing: -1.5px;
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 6vw, 6rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
   margin: 0 0 16px;
   color: #ffffff;
   text-shadow: 0 2px 25px rgba(255, 255, 255, 0.25), 0 4px 40px rgba(0, 0, 0, 0.95);
@@ -863,7 +961,12 @@ nav a[aria-current]:after {
   font-weight: 300;
 }
 .about-copy .lead {
-  font-size: 26px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  color: #ffffff;
   margin-bottom: 22px;
 }
 .glass {
@@ -885,8 +988,12 @@ nav a[aria-current]:after {
   color: #9d9da3;
 }
 .education h3 {
-  font-size: 15px;
-  line-height: 1.5;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  color: #ffffff;
   margin: 10px 0;
 }
 .education p {
@@ -919,7 +1026,11 @@ nav a[aria-current]:after {
   color: #929298;
 }
 .principles h3 {
-  font: 17px var(--mono);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  color: #ffffff;
   margin: 0 0 9px;
 }
 .principles p {
@@ -1204,8 +1315,12 @@ nav a[aria-current]:after {
 .project-body {
   padding: 26px;
 }
-.project-body h3 {
-  font-size: 29px;
+.project-body h3, .project-card h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.8vw, 1.65rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #ffffff;
   margin-bottom: 15px;
 }
 .project-body > p {
@@ -1392,8 +1507,8 @@ nav a[aria-current]:after {
 }
 
 .hall-main-title {
-  font-family: var(--pixel), "Pixelify Sans", monospace;
-  font-size: clamp(30px, 3.4vw, 44px);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
   font-weight: 700;
   color: #ffffff;
   line-height: 1.08;
@@ -1554,9 +1669,9 @@ nav a[aria-current]:after {
 }
 
 .award-panel-title {
-  font-family: var(--pixel), "Pixelify Sans", monospace;
-  font-size: 20px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.5vw, 1.45rem);
+  font-weight: 600;
   color: #ffffff;
   letter-spacing: 0.03em;
   margin: 0 0 6px;
@@ -1710,9 +1825,11 @@ nav a[aria-current]:after {
 }
 
 .cert-item-name {
-  font-size: 12.5px;
+  font-family: var(--font-display);
+  font-size: 13px;
   color: #f0f0f0;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   line-height: 1.35;
   margin: 0;
 }
@@ -1784,8 +1901,10 @@ nav a[aria-current]:after {
 }
 
 .citation-title {
-  font-family: var(--pixel), "Pixelify Sans", monospace;
-  font-size: 24px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  letter-spacing: 0.02em;
   color: #ffffff;
   margin: 0 0 4px;
 }
@@ -2045,8 +2164,8 @@ nav a[aria-current]:after {
 }
 
 .portal-main-title {
-  font-family: var(--pixel), "Pixelify Sans", monospace;
-  font-size: clamp(34px, 3.8vw, 52px);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
   font-weight: 700;
   color: #ffffff;
   line-height: 1.05;
@@ -2249,9 +2368,9 @@ nav a[aria-current]:after {
 }
 
 .portal-card-value {
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 14.5px;
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.3vw, 1.35rem);
+  font-weight: 600;
   color: #ffffff;
   line-height: 1.35;
   white-space: nowrap;
@@ -2431,8 +2550,11 @@ nav a[aria-current]:after {
   margin-top: 25px;
 }
 .project-dialog h3 {
-  font: 11px var(--mono);
-  letter-spacing: 1px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: #ffffff;
   margin-top: 28px;
 }
 .project-dialog p,
@@ -2552,8 +2674,8 @@ nav a[aria-current]:after {
 }
 
 .vault-main-title {
-  font-family: var(--pixel), "Pixelify Sans", monospace;
-  font-size: clamp(28px, 3.2vw, 42px);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
   font-weight: 700;
   color: #ffffff;
   line-height: 1.1;
@@ -2754,8 +2876,10 @@ nav a[aria-current]:after {
 }
 
 .challenge header h3 {
-  font-size: 15px;
-  letter-spacing: 0.12em;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.15rem, 1.5vw, 1.45rem);
+  letter-spacing: 0.04em;
   color: #ffffff;
   margin: 0 0 3px 0;
 }
@@ -3204,8 +3328,8 @@ input[type="range"] {
 }
 
 .superpower-heading {
-  font-family: var(--pixel), "Pixelify Sans", monospace;
-  font-size: clamp(26px, 3.2vw, 40px);
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.04em;
@@ -4524,10 +4648,13 @@ html[data-motion="reduced"] *:after {
 .dialog-header {
   margin-bottom: 24px;
 }
-.dialog-header h2 {
-  font-size: clamp(24px, 3.2vw, 36px);
+.dialog-header h2, .project-dialog h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.2vw, 2.25rem);
   margin: 8px 0 6px;
   color: #ffffff;
+  letter-spacing: 0.02em;
 }
 .dialog-headline {
   font-size: 13px;
@@ -5171,8 +5298,9 @@ html[data-motion="reduced"] *:after {
 }
 
 .forge-heading {
-  font-family: var(--pixel, "Pixelify Sans", sans-serif);
-  font-size: 48px;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+  font-weight: 700;
   line-height: 1;
   color: #ffffff;
   margin: 0 0 6px 0;
@@ -5181,9 +5309,11 @@ html[data-motion="reduced"] *:after {
 }
 
 .forge-subheading {
-  font-size: 11px;
-  color: #969696;
-  letter-spacing: 2px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  color: #dadada;
+  letter-spacing: 0.04em;
   margin: 0;
 }
 
@@ -5415,11 +5545,12 @@ html[data-motion="reduced"] *:after {
 }
 
 .inspector-title {
-  font-size: 20px;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.6vw, 1.65rem);
+  font-weight: 600;
   color: #ffffff;
   margin: 0 0 4px 0;
-  letter-spacing: 1.5px;
-  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .inspector-category {
@@ -5680,8 +5811,9 @@ html[data-motion="reduced"] *:after {
 }
 
 .archive-heading {
-  font-family: var(--pixel, "Pixelify Sans", sans-serif);
-  font-size: 46px;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+  font-weight: 700;
   line-height: 1.05;
   color: #ffffff;
   margin: 0 0 8px 0;
@@ -5690,9 +5822,11 @@ html[data-motion="reduced"] *:after {
 }
 
 .archive-subhead {
-  font-size: 11px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
   color: #dadada;
-  letter-spacing: 2px;
+  letter-spacing: 0.04em;
   margin: 0 0 14px 0;
 }
 
@@ -6064,8 +6198,9 @@ html[data-motion="reduced"] *:after {
 }
 
 .journey-heading {
-  font-family: var(--pixel, "Pixelify Sans", sans-serif);
-  font-size: 46px;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+  font-weight: 700;
   line-height: 1.05;
   color: #ffffff;
   margin: 0 0 8px 0;
@@ -6074,9 +6209,11 @@ html[data-motion="reduced"] *:after {
 }
 
 .journey-subhead {
+  font-family: var(--font-display);
+  font-weight: 600;
   font-size: 13px;
   color: #ffffff;
-  letter-spacing: 2px;
+  letter-spacing: 0.04em;
   margin: 0 0 4px 0;
 }
 
@@ -6462,3 +6599,40 @@ html[data-motion="reduced"] *:after {
   }
 }
 
+
+/* ==========================================================================
+   GLOBAL PIXEL TYPOGRAPHY RESPONSIVE SYSTEM
+   ========================================================================== */
+@media (max-width: 768px) {
+  .hero-title,
+  .display-heading {
+    font-size: clamp(2.25rem, 9vw, 3.5rem) !important;
+  }
+  .section-heading,
+  .section-heading-text,
+  .section-heading > h2,
+  h2.section-heading,
+  .forge-heading,
+  .archive-heading,
+  .journey-heading,
+  .hall-main-title,
+  .portal-main-title,
+  .vault-main-title {
+    font-size: clamp(2rem, 7vw, 3rem) !important;
+  }
+  .card-heading,
+  .project-body h3,
+  .project-card h3,
+  .award-panel-title,
+  .portal-card-value,
+  .challenge header h3 {
+    font-size: clamp(1.1rem, 4vw, 1.35rem) !important;
+  }
+  .subsection-heading,
+  .inspector-title,
+  .forge-subheading,
+  .journey-subhead,
+  .citation-title {
+    font-size: clamp(1rem, 3.5vw, 1.25rem) !important;
+  }
+}

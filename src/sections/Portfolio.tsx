@@ -54,7 +54,7 @@ function Heading({ n, title, sub }: { n: string; title: string; sub: string }) {
       <span className="eyebrow">
         [ {n} / {sub} ]
       </span>
-      <h2>{title}</h2>
+      <h2 className="section-heading-text">{title}</h2>
     </div>
   );
 }
@@ -156,7 +156,7 @@ export default function Portfolio({
                 <GraduationCap size={25} />
                 <div>
                   <span className="mono">{profile.education.years}</span>
-                  <h3>{profile.education.degree}</h3>
+                  <h3 className="subsection-heading">{profile.education.degree}</h3>
                   <p>{profile.education.college}</p>
                   <strong>CGPA {profile.education.cgpa}</strong>
                 </div>
@@ -172,17 +172,17 @@ export default function Portfolio({
             <div className="principles">
               <div>
                 <span>01</span>
-                <h3>CURIOSITY</h3>
+                <h3 className="subsection-heading">CURIOSITY</h3>
                 <p>Drives continuous inquiry and first-principles exploration.</p>
               </div>
               <div>
                 <span>02</span>
-                <h3>INTELLIGENCE</h3>
+                <h3 className="subsection-heading">INTELLIGENCE</h3>
                 <p>Architects verified, grounded algorithmic solutions.</p>
               </div>
               <div>
                 <span>03</span>
-                <h3>IMPACT</h3>
+                <h3 className="subsection-heading">IMPACT</h3>
                 <p>Empowers real-world human decisions in critical systems.</p>
               </div>
             </div>
@@ -264,7 +264,7 @@ export default function Portfolio({
               <aside className="forge-inspector glass" aria-live="polite">
                 <div className="inspector-header">
                   <span className="eyebrow mono">FORGE TELEMETRY // 03</span>
-                  <h4 className="inspector-title">{currentNode?.name || selected}</h4>
+                  <h4 className="inspector-title card-heading">{currentNode?.name || selected}</h4>
                   <span className="inspector-category mono">{currentNode?.category || category}</span>
                 </div>
 
@@ -340,7 +340,7 @@ export default function Portfolio({
             <div className="archive-left-hud">
               <div className="archive-title-block">
                 <span className="eyebrow mono">[ THE ARCHIVE ]</span>
-                <h2 className="archive-heading">THE ARCHIVE<br />OF CREATIONS</h2>
+                <h2 className="archive-heading section-heading-text">THE ARCHIVE<br />OF CREATIONS</h2>
                 <p className="archive-subhead mono">REAL PROJECTS. INTELLIGENT WORLDS.</p>
                 <p className="archive-desc">
                   A collection of AI-powered systems, built for a smarter, more connected future.
@@ -415,7 +415,7 @@ export default function Portfolio({
                   0{i + 1} <span>{p.type}</span>
                 </div>
                 <div className="project-body">
-                  <h3>{p.shortName}</h3>
+                  <h3 className="card-heading">{p.shortName}</h3>
                   <p className="project-headline">{p.headline}</p>
                   <div className="tags">
                     {p.tags.map((t) => (
@@ -499,7 +499,7 @@ export default function Portfolio({
                     <span className="inspector-year mono">{currentMilestone.year}</span>
                     <span className="inspector-sub mono">{currentMilestone.subtitle}</span>
                   </div>
-                  <h4 className="inspector-title">{currentMilestone.title}</h4>
+                  <h4 className="inspector-title card-heading">{currentMilestone.title}</h4>
                   <span className="inspector-org mono">{currentMilestone.organization}</span>
                   <span className="inspector-date mono">
                     <Calendar size={11} /> {currentMilestone.dateRange}
@@ -657,7 +657,7 @@ export default function Portfolio({
 
                   {/* Body */}
                   <div className="award-panel-body">
-                    <h3 className="award-panel-title">{award.name}</h3>
+                    <h3 className="award-panel-title card-heading">{award.name}</h3>
                     <span className="award-panel-organizer mono">{award.organizer}</span>
                     <p className="award-panel-summary">{award.description}</p>
                   </div>
@@ -699,7 +699,7 @@ export default function Portfolio({
                         </div>
                         <div className="cert-item-info">
                           <span className="mono cert-item-issuer">{cert.issuer}</span>
-                          <h4 className="cert-item-name">{cert.title}</h4>
+                          <h4 className="cert-item-name subsection-heading">{cert.title}</h4>
                           <span className="mono cert-item-category">{cert.category} · VERIFIED</span>
                         </div>
                       </div>
@@ -748,7 +748,7 @@ export default function Portfolio({
             <div className="portal-left-zone">
               <div className="portal-header-block">
                 <span className="eyebrow mono">[ 07 / THE PORTAL ]</span>
-                <h2 className="portal-main-title">
+                <h2 className="portal-main-title section-heading-text">
                   LET'S BUILD<br />SOMETHING<br />MEANINGFUL.
                 </h2>
                 <p className="portal-lead-quote">
@@ -895,7 +895,7 @@ export default function Portfolio({
               <span className="eyebrow mono">
                 SYSTEM 0{detail + 1} / TECHNICAL SPECIFICATION
               </span>
-              <h2>{projects[detail].name}</h2>
+              <h2 className="modal-heading">{projects[detail].name}</h2>
               <p className="dialog-headline">{projects[detail].headline}</p>
             </div>
 
@@ -1011,7 +1011,7 @@ export default function Portfolio({
               </div>
               <div className="citation-title-row">
                 <div>
-                  <h3 id="citation-title" className="citation-title">
+                  <h3 id="citation-title" className="citation-title modal-heading">
                     {currentAward.name}
                   </h3>
                   <span className="mono citation-org">{currentAward.organizer}</span>
