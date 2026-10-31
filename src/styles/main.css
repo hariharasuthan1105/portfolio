@@ -7534,3 +7534,201 @@ html[data-motion="reduced"] *:after {
     font-size: clamp(1rem, 3.5vw, 1.25rem) !important;
   }
 }
+
+/* ==========================================================================
+   02 / ABOUT V3 — CINEMATIC 3D FINAL (Cathedral Environment + Orbital Sphere)
+   ========================================================================== */
+
+/* Cathedral background override for v3 — cleaner center clearance */
+.about-cinematic-v3.chamber:before {
+  background: url("/assets/chamber.webp") center 28% / cover no-repeat;
+  filter: saturate(0) contrast(1.22) brightness(0.88);
+  opacity: 0.68;
+}
+
+/* Stronger lateral vignette to protect left/right panels */
+.about-cinematic-v3.chamber:after {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3, 3, 3, 0.97) 0%,
+      rgba(3, 3, 3, 0.82) 18%,
+      rgba(3, 3, 3, 0.08) 38%,
+      rgba(3, 3, 3, 0.08) 62%,
+      rgba(3, 3, 3, 0.82) 82%,
+      rgba(3, 3, 3, 0.97) 100%
+    ),
+    linear-gradient(
+      0deg,
+      #030303 0%,
+      rgba(3, 3, 3, 0.55) 12%,
+      transparent 30%,
+      transparent 70%,
+      rgba(3, 3, 3, 0.65) 88%,
+      #030303 100%
+    );
+}
+
+/* Subtle cathedral bg accent div (secondary overlay for panel clarity) */
+.about-cathedral-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 60% 70% at 50% 52%,
+    rgba(12, 12, 18, 0) 0%,
+    rgba(3, 3, 3, 0.38) 60%,
+    rgba(3, 3, 3, 0.72) 100%
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Center corridor: taller to accommodate orbital sphere above platform */
+.about-cinematic-v3 .about-center-corridor {
+  height: 720px;
+}
+
+/* Entrance animation base state: elements start invisible and offset */
+.about-animate-in {
+  opacity: 0;
+  transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-animate-left {
+  transform: translateX(-40px);
+}
+
+.about-animate-right {
+  transform: translateX(40px);
+}
+
+.about-animate-up {
+  transform: translateY(36px);
+}
+
+/* When section is visible — triggered by IntersectionObserver via js class */
+.about-cinematic-v3 .about-animate-in.in-view {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+}
+
+/* Stagger right cards reveal */
+.about-cinematic-v3 .about-animate-right.in-view {
+  transition-delay: 0.2s;
+}
+
+.about-cinematic-v3 .about-animate-up.in-view {
+  transition-delay: 0.1s;
+}
+
+/* Value card entrance pulse on hover — more vivid */
+.about-value-card {
+  transition:
+    border-color 0.28s ease,
+    box-shadow 0.28s ease,
+    background 0.28s ease,
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-value-card:hover,
+.about-value-card.active-glow {
+  transform: translateX(4px);
+}
+
+/* Pulsing dot on value-icon when active */
+@keyframes about-icon-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.35); }
+  50% { box-shadow: 0 0 0 5px rgba(255, 255, 255, 0); }
+}
+
+.about-value-card.active-glow .value-icon-box {
+  animation: about-icon-pulse 1.6s ease-in-out infinite;
+}
+
+/* Responsive adjustments for orbital sphere extra height */
+@media (max-width: 1024px) {
+  .about-cinematic-v3 .about-center-corridor {
+    height: 640px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-cinematic-v3 .about-center-corridor {
+    height: 380px;
+  }
+
+  .about-cinematic-v3.chamber:after {
+    background:
+      linear-gradient(
+        0deg,
+        #030303 0%,
+        rgba(3, 3, 3, 0.35) 18%,
+        transparent 40%,
+        transparent 60%,
+        rgba(3, 3, 3, 0.55) 85%,
+        #030303 100%
+      );
+  }
+}
+
+
+/* ==========================================================================
+   Card Rim Illumination & Laptop Viewport Optimization (Reference Matching)
+   ========================================================================== */
+.about-cinematic-v3 .about-education-card {
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.about-cinematic-v3 .about-value-card {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.65), 0 0 16px rgba(255, 255, 255, 0.04);
+}
+
+.about-cinematic-v3 .about-value-card:hover,
+.about-cinematic-v3 .about-value-card.active-glow {
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.8), 0 0 28px rgba(255, 255, 255, 0.22), inset 0 0 14px rgba(255, 255, 255, 0.06);
+}
+
+/* Perfect Viewport Fit for Laptops and Shorter Displays (<= 850px height) */
+@media (max-height: 850px) and (min-width: 901px) {
+  .about-cinematic-v3 {
+    padding: 30px 0 25px;
+    min-height: 100vh;
+  }
+
+  .about-cinematic-v3 .about-center-corridor {
+    height: 560px;
+    min-height: 520px;
+  }
+
+  .about-cinematic-v3 .about-character-stand {
+    bottom: 105px;
+  }
+
+  .about-cinematic-v3 .about-main-heading {
+    font-size: clamp(1.5rem, 1.9vw, 2.2rem);
+    margin-bottom: 10px;
+  }
+
+  .about-cinematic-v3 .about-intro-copy {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .about-cinematic-v3 .about-education-card {
+    padding: 14px;
+    margin-bottom: 12px;
+    gap: 8px;
+  }
+
+  .about-cinematic-v3 .about-values-stack {
+    gap: 10px;
+  }
+
+  .about-cinematic-v3 .about-value-card {
+    padding: 13px 16px;
+    gap: 12px;
+  }
+}
