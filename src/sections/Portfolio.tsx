@@ -38,6 +38,9 @@ import ArchiveGalleryScene from "../components/3d/ArchiveGalleryScene";
 import JourneyTimelineScene, {
   MILESTONES,
 } from "../components/3d/JourneyTimelineScene";
+import HallOfHonorScene from "../components/3d/HallOfHonorScene";
+import { ACHIEVEMENTS, CERTIFICATIONS } from "../data/achievements";
+import { LaurelEmblem, GeometricEmblem, GlobeEmblem } from "../components/ui/AwardEmblems";
 import {
   DocReconHologram,
   PathwayAIHologram,
@@ -83,6 +86,23 @@ export default function Portfolio({
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
+  const awardDialog = useRef<HTMLDialogElement>(null);
+  const [selectedAwardIndex, setSelectedAwardIndex] = useState<number | null>(null);
+  const [awardModalIndex, setAwardModalIndex] = useState<number | null>(null);
+  const [certificationsOpen, setCertificationsOpen] = useState(false);
+
+  const openAwardModal = (i: number) => {
+    setAwardModalIndex(i);
+    setSelectedAwardIndex(i);
+    awardDialog.current?.showModal();
+  };
+
+  const closeAwardModal = () => {
+    awardDialog.current?.close();
+    setAwardModalIndex(null);
+  };
+
+  const currentAward = awardModalIndex !== null ? ACHIEVEMENTS[awardModalIndex] : null;
 
   const currentNode =
     FORGE_NODES.find((n) => n.id === selectedNodeId) || FORGE_NODES[0];
@@ -572,37 +592,140 @@ export default function Portfolio({
         </div>
       </section>
 
-      {/* 06 / ACHIEVEMENTS */}
-      <section id="achievements" className="section awards-section">
-        <div className="section-inner">
-          <Heading n="06" title="THE HALL OF HONOR." sub="ACHIEVEMENTS" />
-          <div className="awards-grid">
-            {awards.map((a, i) => (
-              <article className="award" key={a}>
-                <span className="mono">0{i + 1} / COMPETITION</span>
-                <div className="award-symbol" aria-hidden="true">
-                  <Trophy strokeWidth={0.7} />
-                </div>
-                <p className="eyebrow mono">{a.split("|")[1]}</p>
-                <h3>{a.split("|")[0]}</h3>
-              </article>
-            ))}
+      {/* 06 / ACHIEVEMENTS — THE HALL OF HONOR */}
+      <section id="achievements" className="section awards-section hall-of-honor-section">
+        {/* Atmospheric 3D Hall of Honor Scene (God Rays, Ground Mist, 3D Trophies) */}
+        <div className="hall-scene-container" aria-hidden="false">
+          <HallOfHonorScene
+            selectedAwardIndex={selectedAwardIndex}
+            onSelectAward={(i) => {
+              setSelectedAwardIndex(i);
+              openAwardModal(i);
+            }}
+            reduced={reduced}
+          />
+        </div>
+
+        <div className="section-inner hall-inner">
+          {/* TOP-LEFT — SECTION HEADING */}
+          <div className="hall-header-block">
+            <span className="eyebrow mono">[ 06 / ACHIEVEMENTS ]</span>
+            <h2 className="hall-main-title">
+              THE HALL<br />OF HONOR
+            </h2>
+            <p className="hall-lead-quote">
+              "Milestones earned through curiosity, persistence, and engineering."
+            </p>
           </div>
-          <details className="certifications">
-            <summary className="mono">
-              VERIFIED CREDENTIALS <span>05 CERTIFICATIONS +</span>
-            </summary>
+
+          {/* LOWER AREA — THREE AWARD PANELS */}
+          <div className="hall-awards-container">
+            <div className="hall-awards-grid" role="region" aria-label="Authentic Engineering Honors">
+              {ACHIEVEMENTS.map((award, i) => (
+                <article
+                  key={award.id}
+                  className={`hall-award-panel ${selectedAwardIndex === i ? "active-award" : ""}`}
+                  onClick={() => {
+                    setSelectedAwardIndex(i);
+                    openAwardModal(i);
+                  }}
+                  tabIndex={0}
+                  role="button"
+                  aria-pressed={selectedAwardIndex === i}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelectedAwardIndex(i);
+                      openAwardModal(i);
+                    }
+                  }}
+                >
+                  {/* Top Bar: Number & Status */}
+                  <div className="award-panel-meta">
+                    <span className="mono award-index">0{i + 1} // COMPETITION</span>
+                    <span className="mono award-badge">{award.status}</span>
+                  </div>
+
+                  {/* Dimensional Monochrome Emblem */}
+                  <div className="award-panel-emblem" aria-hidden="true">
+                    {award.emblemType === "laurel" && <LaurelEmblem className="award-svg-emblem" />}
+                    {award.emblemType === "geometric" && <GeometricEmblem className="award-svg-emblem" />}
+                    {award.emblemType === "globe" && <GlobeEmblem className="award-svg-emblem" />}
+                  </div>
+
+                  {/* Body */}
+                  <div className="award-panel-body">
+                    <h3 className="award-panel-title">{award.name}</h3>
+                    <span className="award-panel-organizer mono">{award.organizer}</span>
+                    <p className="award-panel-summary">{award.description}</p>
+                  </div>
+
+                  {/* Action Bar */}
+                  <div className="award-panel-action mono">
+                    <span>[ VIEW CITATION ]</span>
+                    <ArrowUpRight size={13} />
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {/* EXPANDABLE CERTIFICATIONS PANEL */}
+            <div className="hall-certifications-wrapper">
+              <button
+                type="button"
+                className="certifications-toggle-btn mono"
+                onClick={() => setCertificationsOpen((prev) => !prev)}
+                aria-expanded={certificationsOpen}
+                aria-controls="hall-certifications-drawer"
+              >
+                <div className="cert-toggle-left">
+                  <span className="cert-eyebrow">VERIFIED CREDENTIALS</span>
+                  <span className="cert-count-pill">05 CERTIFICATIONS</span>
+                </div>
+                <div className="cert-toggle-right">
+                  <span>{certificationsOpen ? "[ COLLAPSE CREDENTIALS − ]" : "[ VIEW CERTIFICATIONS + ]"}</span>
+                </div>
+              </button>
+
+              {certificationsOpen && (
+                <div id="hall-certifications-drawer" className="certifications-drawer" role="region" aria-label="Verified Certifications">
+                  <div className="certifications-grid-inner">
+                    {CERTIFICATIONS.map((cert) => (
+                      <div key={cert.title} className="cert-item-card">
+                        <div className="cert-item-badge" aria-hidden="true">
+                          <Check size={14} />
+                        </div>
+                        <div className="cert-item-info">
+                          <span className="mono cert-item-issuer">{cert.issuer}</span>
+                          <h4 className="cert-item-name">{cert.title}</h4>
+                          <span className="mono cert-item-category">{cert.category} · VERIFIED</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Accessible Semantic Fallback for Screen Readers & Tests */}
+        <div className="sr-only-focusable">
+          <h3>Engineering Honors &amp; Hackathons</h3>
+          <ul>
+            {ACHIEVEMENTS.map((a) => (
+              <li key={a.id}>
+                <strong>{a.name}</strong> - {a.organizer}: {a.status}. {a.description}
+              </li>
+            ))}
+          </ul>
+          <details className="certifications" open={certificationsOpen}>
+            <summary className="mono">VERIFIED CREDENTIALS <span>05 CERTIFICATIONS +</span></summary>
             <ul>
-              {[
-                "Programming in Java — NPTEL",
-                "Cloud Computing — NPTEL",
-                "Cloud Computing Fundamentals — IBM SkillsBuild",
-                "Data Analytics Job Simulation — Deloitte",
-                "6-Week Data Science and Machine Learning Program — IIT Guwahati",
-              ].map((c) => (
-                <li key={c}>
+              {CERTIFICATIONS.map((c) => (
+                <li key={c.title}>
                   <Check size={16} />
-                  <span>{c}</span>
+                  <span>{c.title} — {c.issuer}</span>
                 </li>
               ))}
             </ul>
@@ -784,6 +907,91 @@ export default function Portfolio({
                 <ArrowRight size={14} />
               </a>
             </div>
+          </div>
+        )}
+      </dialog>
+
+      {/* FOCUSED ACHIEVEMENT CITATION DIALOG */}
+      <dialog
+        ref={awardDialog}
+        className="award-citation-dialog glass"
+        onCancel={closeAwardModal}
+        onClick={(e) => {
+          if (e.target === awardDialog.current) closeAwardModal();
+        }}
+        aria-labelledby="citation-title"
+        aria-modal="true"
+      >
+        {currentAward && (
+          <div className="citation-dialog-inner">
+            <header className="citation-dialog-header">
+              <div className="citation-meta-row">
+                <span className="mono citation-eyebrow">
+                  CITATION {currentAward.number} // TECHNICAL RECOGNITION
+                </span>
+                <span className="mono citation-badge">{currentAward.status}</span>
+              </div>
+              <div className="citation-title-row">
+                <div>
+                  <h3 id="citation-title" className="citation-title">
+                    {currentAward.name}
+                  </h3>
+                  <span className="mono citation-org">{currentAward.organizer}</span>
+                </div>
+                <button
+                  type="button"
+                  className="dialog-close-btn"
+                  onClick={closeAwardModal}
+                  aria-label="Close citation details"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+            </header>
+
+            <div className="citation-dialog-body">
+              <div className="citation-banner-emblem" aria-hidden="true">
+                {currentAward.emblemType === "laurel" && <LaurelEmblem className="citation-big-emblem" />}
+                {currentAward.emblemType === "geometric" && <GeometricEmblem className="citation-big-emblem" />}
+                {currentAward.emblemType === "globe" && <GlobeEmblem className="citation-big-emblem" />}
+              </div>
+
+              <div className="citation-grid-details">
+                <div className="citation-box">
+                  <span className="mono citation-box-label">COMPETITION TIER</span>
+                  <p>{currentAward.tier}</p>
+                </div>
+                <div className="citation-box">
+                  <span className="mono citation-box-label">VERIFIED RECOGNITION</span>
+                  <p>{currentAward.status}</p>
+                </div>
+                <div className="citation-box full-width">
+                  <span className="mono citation-box-label">TECHNICAL CONTRIBUTION &amp; FOCUS</span>
+                  <p>{currentAward.technicalFocus}</p>
+                </div>
+                <div className="citation-box full-width">
+                  <span className="mono citation-box-label">VERIFIED COMPETITION SCOPE</span>
+                  <p>{currentAward.verifiedScope}</p>
+                </div>
+                {currentAward.projectConnection && (
+                  <div className="citation-box full-width citation-highlight-box">
+                    <span className="mono citation-box-label">RELEVANT PORTFOLIO SYSTEM</span>
+                    <h4>{currentAward.projectConnection.name}</h4>
+                    <p>{currentAward.projectConnection.description}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <footer className="citation-dialog-footer">
+              <button
+                type="button"
+                className="citation-close-action mono"
+                onClick={closeAwardModal}
+              >
+                [ CLOSE CITATION ]
+              </button>
+            </footer>
           </div>
         )}
       </dialog>

@@ -1291,78 +1291,650 @@ nav a[aria-current]:after {
 .timeline p {
   font-size: 14px;
 }
-.awards-section {
-  background: radial-gradient(ellipse at 50% 65%, #1b1b1e, #050506 70%);
+/* ==========================================================================
+   06 / ACHIEVEMENTS — THE HALL OF HONOR (CEREMONIAL 3D MONOCHROME)
+   ========================================================================== */
+.awards-section.hall-of-honor-section {
+  position: relative;
+  min-height: 100vh;
+  background-color: #000000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
 }
-.awards-grid {
+
+/* Hall of Honor High-Resolution Architectural Background */
+.awards-section.hall-of-honor-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/assets/hall-of-honor-environment.webp") center bottom / cover no-repeat;
+  filter: saturate(0) contrast(1.08) brightness(0.94);
+  opacity: 0.96;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Subtle Vignettes at Top & Bottom Edges only (Preserves Statues & Central Stairs) */
+.awards-section.hall-of-honor-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.1) 12%,
+    transparent 28%,
+    transparent 68%,
+    rgba(0, 0, 0, 0.5) 86%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Real-Time Three.js Canvas Container */
+.hall-scene-container {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hall-canvas-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.hall-three-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: auto;
+}
+
+/* Inner Layout Container */
+.hall-inner {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 56px 40px 48px;
+  box-sizing: border-box;
+}
+
+/* Top-Left Section Heading Block */
+.hall-header-block {
+  max-width: 480px;
+  background: linear-gradient(135deg, rgba(7, 7, 7, 0.82) 0%, rgba(18, 18, 20, 0.45) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 2px solid #ffffff;
+  padding: 22px 26px;
+  border-radius: 2px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+}
+
+.hall-header-block .eyebrow {
+  color: #999999;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.hall-main-title {
+  font-family: var(--pixel), "Pixelify Sans", monospace;
+  font-size: clamp(30px, 3.4vw, 44px);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.08;
+  letter-spacing: 0.04em;
+  margin: 0 0 12px 0;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95);
+}
+
+.hall-lead-quote {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #b0b0b0;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Lower Area — Three Award Panels */
+.hall-awards-container {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 32px;
+}
+
+.hall-awards-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
+  gap: 24px;
+  max-width: 1380px;
+  margin: 0 auto;
 }
-.award {
-  padding: 28px;
-  border-top: 1px solid #ffffff50;
-  border-bottom: 1px solid #ffffff20;
-  background: linear-gradient(0deg, #ffffff04, transparent);
-  text-align: center;
+
+/* Individual Obsidian Award Plinth Panel */
+.hall-award-panel {
+  background: linear-gradient(180deg, rgba(14, 14, 18, 0.84) 0%, rgba(6, 6, 8, 0.94) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 26px 24px 22px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease,
+              box-shadow 0.28s ease;
 }
-.award > .mono {
-  font-size: 8px;
-  letter-spacing: 2px;
-  color: #7d7d84;
+
+/* Hairline Top Light Accent */
+.hall-award-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
 }
-.award-symbol {
-  margin: 20px auto;
-  width: 140px;
-  height: 140px;
+
+/* Surface Light Sweep Effect on Hover */
+.hall-award-panel::after {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  background: linear-gradient(
+    115deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 58%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+
+.hall-award-panel:hover::after,
+.hall-award-panel:focus-visible::after {
+  transform: translateX(100%);
+}
+
+.hall-award-panel:hover,
+.hall-award-panel:focus-visible {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.85), 0 0 24px rgba(255, 255, 255, 0.08);
+}
+
+.hall-award-panel.active-award {
+  border-color: #ffffff;
+  box-shadow: 0 26px 54px rgba(0, 0, 0, 0.9), 0 0 32px rgba(255, 255, 255, 0.18);
+  background: linear-gradient(180deg, rgba(22, 22, 28, 0.9) 0%, rgba(8, 8, 12, 0.96) 100%);
+}
+
+/* Panel Header */
+.award-panel-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.award-index {
+  font-size: 9.5px;
+  color: #888888;
+  letter-spacing: 0.14em;
+}
+
+.award-badge {
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #dddddd;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.hall-award-panel:hover .award-badge,
+.hall-award-panel.active-award .award-badge {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+/* Emblem Container */
+.award-panel-emblem {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
   display: grid;
   place-items: center;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffffff10, transparent 67%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.award-symbol svg {
-  width: 80px;
-  height: 80px;
-  filter: drop-shadow(0 0 13px #fff4);
+
+.hall-award-panel:hover .award-panel-emblem,
+.hall-award-panel.active-award .award-panel-emblem {
+  transform: translateY(-3px) scale(1.06);
 }
-.award .eyebrow {
-  font-size: 9px;
-  text-transform: uppercase;
-  line-height: 1.7;
+
+.award-svg-emblem {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.15));
 }
-.award h3 {
-  font-size: 19px;
-  line-height: 1.5;
+
+/* Panel Body */
+.award-panel-body {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.award-panel-title {
+  font-family: var(--pixel), "Pixelify Sans", monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.03em;
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.award-panel-organizer {
+  display: block;
+  font-size: 10.5px;
+  color: #999999;
+  letter-spacing: 0.1em;
   margin-bottom: 10px;
+  text-transform: uppercase;
 }
-.certifications {
-  margin-top: 42px;
-  border: 1px solid #ffffff25;
-  padding: 23px 27px;
+
+.award-panel-summary {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #a8a8b2;
+  margin: 0;
 }
-.certifications summary {
-  font: 11px var(--mono);
+
+/* Panel Footer Action */
+.award-panel-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  color: #888888;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  transition: color 0.2s ease;
+}
+
+.hall-award-panel:hover .award-panel-action,
+.hall-award-panel.active-award .award-panel-action {
+  color: #ffffff;
+}
+
+/* Expandable Certifications Drawer */
+.hall-certifications-wrapper {
+  max-width: 1380px;
+  margin: 20px auto 0;
+}
+
+.certifications-toggle-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 10, 14, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 13px 22px;
+  border-radius: 2px;
   cursor: pointer;
+  color: #dadada;
+  transition: all 0.2s ease;
 }
-.certifications summary span {
-  float: right;
-  color: #999;
+
+.certifications-toggle-btn:hover,
+.certifications-toggle-btn:focus-visible {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(16, 16, 22, 0.85);
+  color: #ffffff;
+}
+
+.cert-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cert-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: #ffffff;
+}
+
+.cert-count-pill {
   font-size: 9px;
+  letter-spacing: 0.12em;
+  padding: 2px 7px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 2px;
+  color: #b0b0b0;
 }
-.certifications ul {
-  list-style: none;
-  padding: 10px 0 0;
+
+.cert-toggle-right {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #999999;
+}
+
+.certifications-drawer {
+  margin-top: 12px;
+  background: rgba(8, 8, 12, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 18px 22px;
+  border-radius: 2px;
+}
+
+.certifications-grid-inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.cert-item-card {
+  background: rgba(16, 16, 22, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-radius: 2px;
+  transition: border-color 0.2s ease;
+}
+
+.cert-item-card:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.cert-item-badge {
+  color: #ffffff;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.cert-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cert-item-issuer {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: #888888;
+  text-transform: uppercase;
+}
+
+.cert-item-name {
+  font-size: 12.5px;
+  color: #f0f0f0;
+  font-weight: 500;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.cert-item-category {
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  color: #777777;
+}
+
+/* FOCUSED ACHIEVEMENT CITATION DIALOG */
+.award-citation-dialog {
+  max-width: 660px;
+  width: 90vw;
+  background: rgba(8, 8, 12, 0.95);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 4px;
+  color: #ffffff;
+  padding: 0;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 40px rgba(255, 255, 255, 0.08);
+}
+
+.award-citation-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.86);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.citation-dialog-inner {
+  padding: 30px;
+}
+
+.citation-dialog-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+}
+
+.citation-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.citation-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: #888888;
+}
+
+.citation-badge {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  background: #ffffff;
+  color: #000000;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+.citation-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.citation-title {
+  font-family: var(--pixel), "Pixelify Sans", monospace;
+  font-size: 24px;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.citation-org {
+  font-size: 11px;
+  color: #999999;
+  letter-spacing: 0.1em;
+}
+
+.citation-dialog-body {
+  margin-bottom: 24px;
+}
+
+.citation-banner-emblem {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 20px;
+  display: grid;
+  place-items: center;
+}
+
+.citation-big-emblem {
+  width: 100%;
+  height: 100%;
+}
+
+.citation-grid-details {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 14px;
 }
-.certifications li {
+
+.citation-box {
+  background: rgba(18, 18, 24, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px 16px;
+  border-radius: 2px;
+}
+
+.citation-box.full-width {
+  grid-column: 1 / -1;
+}
+
+.citation-box-label {
+  display: block;
+  font-size: 9px;
+  color: #777777;
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+}
+
+.citation-box p {
   font-size: 13px;
-  color: #b8b8c0;
-  display: flex;
-  gap: 12px;
-  align-items: center;
+  line-height: 1.5;
+  color: #d0d0d0;
+  margin: 0;
 }
+
+.citation-highlight-box {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(28, 28, 36, 0.7);
+}
+
+.citation-highlight-box h4 {
+  font-size: 14px;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.citation-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.citation-close-action {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  padding: 9px 18px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.citation-close-action:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUTS FOR SECTION 06
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hall-inner {
+    padding: 48px 30px 40px;
+  }
+  .hall-awards-grid {
+    gap: 16px;
+  }
+  .hall-award-panel {
+    padding: 22px 18px 18px;
+    min-height: 260px;
+  }
+  .award-panel-title {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .awards-section.hall-of-honor-section {
+    min-height: auto;
+  }
+  .hall-inner {
+    min-height: auto;
+    padding: 36px 20px 48px;
+  }
+  .hall-header-block {
+    max-width: 100%;
+    margin-bottom: 24px;
+  }
+  .hall-scene-container {
+    position: relative;
+    height: 320px;
+    margin-bottom: 20px;
+  }
+  .hall-awards-container {
+    padding-top: 0;
+  }
+  .hall-awards-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .hall-award-panel {
+    min-height: auto;
+  }
+  .certifications-grid-inner {
+    grid-template-columns: 1fr;
+  }
+  .citation-grid-details {
+    grid-template-columns: 1fr;
+  }
+}
+
 .contact-layout {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
@@ -2707,7 +3279,6 @@ html[data-motion="reduced"] *:after {
   top: 99%;
 }
 .skills-section:before,
-.awards-section:before,
 .vault-section:before {
   content: "";
   position: absolute;
