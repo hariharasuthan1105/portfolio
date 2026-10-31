@@ -14,9 +14,10 @@ export const profile = {
 export const skills: Record<string, string[]> = {
   Programming: ["Python", "Java", "JavaScript"],
   "AI / ML": ["TensorFlow", "Scikit-learn", "CatBoost", "NumPy", "Pandas"],
-  Backend: ["FastAPI", "Django", "Node.js", "Express.js"],
+  "Web Development": ["FastAPI", "React", "Django", "Node.js", "Express.js"],
   Databases: ["MongoDB", "SQL"],
-  Tools: ["Git", "GitHub", "React", "Streamlit", "Qiskit"],
+  "Tools & Cloud": ["AWS Amplify", "Git", "GitHub", "Streamlit"],
+  Other: ["Qiskit", "Quantum Circuits", "Algorithms"],
 };
 
 export const descriptions: Record<string, string> = {
@@ -35,11 +36,14 @@ export const descriptions: Record<string, string> = {
   "Express.js": "Minimalist HTTP routing, middleware pipelines, and REST service interfaces.",
   MongoDB: "Document-oriented NoSQL database for flexible JSON-style schema design.",
   SQL: "Relational database querying, schema normalization, multi-table joins, and data integrity.",
+  "AWS Amplify": "Serverless continuous deployment, global CloudFront edge distribution, and managed HTTPS hosting.",
   Git: "Distributed version control, atomic commits, branching strategies, and repository management.",
   GitHub: "Collaborative source code hosting, code review workflows, and CI/CD automation.",
   React: "Declarative component-driven user interfaces with reactive state and hook architecture.",
   Streamlit: "Rapid prototyping and deployment of interactive data science and machine learning dashboards.",
   Qiskit: "Quantum circuit design, gate simulation, and quantum algorithm experimentation.",
+  "Quantum Circuits": "Unitary transformation matrices, superposition state modeling, and quantum gate simulation.",
+  Algorithms: "Graph traversal, dynamic programming, algorithmic complexity optimization, and probabilistic models.",
 };
 
 export interface ProjectData {

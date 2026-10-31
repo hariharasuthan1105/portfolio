@@ -13,7 +13,7 @@
     "C": {
       "title": "Castle entrance warp animation completes and transitions to about",
       "passed": true,
-      "details": "ScrollY: 853"
+      "details": "ScrollY: 932"
     },
     "D": {
       "title": "Portal lighting and camera smoothly reset upon returning home",

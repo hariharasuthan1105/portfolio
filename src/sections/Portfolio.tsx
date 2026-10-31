@@ -26,6 +26,9 @@ import {
   awards,
 } from "../data/profile";
 import { Scene } from "../components/ui/Scene";
+import ForgeOfIntelligenceScene, {
+  FORGE_NODES,
+} from "../components/3d/ForgeOfIntelligenceScene";
 import {
   DocReconHologram,
   PathwayAIHologram,
@@ -64,13 +67,17 @@ export default function Portfolio({
 }) {
   const [category, setCategory] = useState("All skills");
   const [selected, setSelected] = useState("Python");
+  const [selectedNodeId, setSelectedNodeId] = useState("python");
   const [detail, setDetail] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
 
+  const currentNode =
+    FORGE_NODES.find((n) => n.id === selectedNodeId) || FORGE_NODES[0];
+
   const visible =
-    category === "All skills" ? Object.values(skills).flat() : skills[category];
+    category === "All skills" ? Object.values(skills).flat() : skills[category] || [];
 
   const copy = async () => {
     try {
@@ -147,59 +154,121 @@ export default function Portfolio({
         </div>
       </section>
 
-      {/* 03 / SKILLS */}
-      <section id="skills" className="section skills-section">
-        <div className="section-inner">
-          <Heading n="03" title="THE FORGE." sub="SKILLS" />
-          <div className="skills-layout">
-            <div className="skill-sidebar">
-              <p>
-                The engineering tools behind
-                <br />
-                the intelligence.
-              </p>
-              <div className="filters" aria-label="Filter skills">
-                {["All skills", ...Object.keys(skills)].map((c) => (
-                  <button
-                    key={c}
-                    aria-pressed={c === category}
-                    onClick={() => setCategory(c)}
-                  >
-                    {c}
-                    <ArrowUpRight size={14} />
-                  </button>
-                ))}
-              </div>
+      {/* 03 / SKILLS: THE FORGE OF INTELLIGENCE */}
+      <section id="skills" className="section forge-section">
+        {/* Environment Background Layer */}
+        <div className="forge-background-layer" aria-hidden="true" />
+
+        <div className="forge-container">
+          {/* Top Gothic Details & Hanging Banner */}
+          <div className="forge-top-bar" aria-hidden="true">
+            <div className="forge-banner-emblem">
+              <span className="banner-icon">♆</span>
+              <span className="banner-text mono">KNOWLEDGE FUELS A BRIGHTER TOMORROW.</span>
             </div>
-            <div className="skill-orbit">
-              <Scene sphere reduced={reduced} low={low} />
-              <div className="orbit-label mono">
-                INTELLIGENCE CORE<small>SELECT A TOOL</small>
-              </div>
-              <div className="orbital-skills">
-                {visible.slice(0, 8).map((s, i) => (
-                  <button
-                    key={s}
-                    style={{
-                      left: `${50 + 43 * Math.cos((i / Math.min(visible.length, 8)) * Math.PI * 2)}%`,
-                      top: `${49 + 40 * Math.sin((i / Math.min(visible.length, 8)) * Math.PI * 2)}%`,
-                    }}
-                    className={selected === s ? "selected" : ""}
-                    onClick={() => setSelected(s)}
-                  >
-                    <span>◇</span>
-                    {s}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <aside className="skill-detail glass" aria-live="polite">
-              <span className="eyebrow mono">TOOL INSIGHT</span>
-              <h3>{selected}</h3>
-              <p>{descriptions[selected]}</p>
-              <span className="mono">EXPLORE · BUILD · DEPLOY</span>
-            </aside>
           </div>
+
+          <div className="forge-main-grid">
+            {/* Left HUD: Title & Filter Nav */}
+            <div className="forge-left-hud">
+              <div className="forge-title-block">
+                <span className="eyebrow mono">[ 03 ]</span>
+                <h2 className="forge-heading">SKILLS</h2>
+                <h3 className="forge-subheading mono">THE FORGE OF INTELLIGENCE</h3>
+              </div>
+
+              <div className="forge-category-nav" role="tablist" aria-label="Skill Categories">
+                {["All skills", ...Object.keys(skills)].map((c) => {
+                  const isActive = category.toLowerCase() === c.toLowerCase();
+                  return (
+                    <button
+                      key={c}
+                      role="tab"
+                      aria-selected={isActive}
+                      className={`forge-cat-btn ${isActive ? "active" : ""}`}
+                      onClick={() => {
+                        setCategory(c);
+                        const match = FORGE_NODES.find(
+                          (n) => c === "All skills" || n.category.toLowerCase() === c.toLowerCase()
+                        );
+                        if (match) {
+                          setSelectedNodeId(match.id);
+                          setSelected(match.skills[0] || selected);
+                        }
+                      }}
+                    >
+                      <span className="cat-name mono">{c.toUpperCase()}</span>
+                      <ArrowRight size={13} className="cat-arrow" />
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="forge-tagline mono">
+                TECHNOLOGIES THAT POWER MY KINGDOM.
+              </div>
+            </div>
+
+            {/* Center 3D Stage: Intelligence Core & Orbital Nodes */}
+            <div className="forge-stage">
+              <ForgeOfIntelligenceScene
+                activeCategory={category}
+                selectedNodeId={selectedNodeId}
+                onSelectNode={(node) => {
+                  setSelectedNodeId(node.id);
+                  setSelected(node.skills[0] || node.name);
+                }}
+                reduced={reduced}
+              />
+            </div>
+
+            {/* Right HUD: Selected Tech Inspector & Realities Card */}
+            <div className="forge-right-hud">
+              {/* Detailed Tool Inspector Glass Card */}
+              <aside className="forge-inspector glass" aria-live="polite">
+                <div className="inspector-header">
+                  <span className="eyebrow mono">FORGE TELEMETRY // 03</span>
+                  <h4 className="inspector-title">{currentNode?.name || selected}</h4>
+                  <span className="inspector-category mono">{currentNode?.category || category}</span>
+                </div>
+
+                <p className="inspector-desc">{descriptions[selected] || currentNode?.description}</p>
+
+                <div className="inspector-subskills">
+                  <span className="subskills-label mono">VERIFIED CAPABILITIES:</span>
+                  <div className="subskills-pills">
+                    {(currentNode?.skills || visible).map((s) => (
+                      <button
+                        key={s}
+                        className={`subskill-pill mono ${selected === s ? "active" : ""}`}
+                        onClick={() => setSelected(s)}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="inspector-footer mono">
+                  <span>EXPLORE · BUILD · DEPLOY</span>
+                </div>
+              </aside>
+
+              {/* Bottom Right Floating Card */}
+              <div className="forge-quote-card glass" aria-hidden="true">
+                <div className="quote-globe-icon">
+                  <span className="globe-symbol">◈</span>
+                </div>
+                <div className="quote-text mono">
+                  SKILLS COMBINE<br />
+                  TO BUILD<br />
+                  BIGGER REALITIES.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Accessible Index for keyboard and screen readers */}
           <details className="skill-list" open>
             <summary className="mono">Accessible skill index · {visible.length} verified technologies</summary>
             <div>
@@ -207,7 +276,14 @@ export default function Portfolio({
                 <button
                   key={s}
                   aria-pressed={selected === s}
-                  onClick={() => setSelected(s)}
+                  onClick={() => {
+                    setSelected(s);
+                    // Match corresponding node if exists
+                    const matchingNode = FORGE_NODES.find((n) =>
+                      n.skills.includes(s)
+                    );
+                    if (matchingNode) setSelectedNodeId(matchingNode.id);
+                  }}
                 >
                   {s}
                 </button>
