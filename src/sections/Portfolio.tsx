@@ -42,6 +42,7 @@ import HallOfHonorScene from "../components/3d/HallOfHonorScene";
 import { ACHIEVEMENTS, CERTIFICATIONS } from "../data/achievements";
 import { LaurelEmblem, GeometricEmblem, GlobeEmblem } from "../components/ui/AwardEmblems";
 import ContactPortalScene from "../components/3d/ContactPortalScene";
+import ChamberPlatformScene from "../components/3d/ChamberPlatformScene";
 import {
   DocReconHologram,
   PathwayAIHologram,
@@ -92,6 +93,8 @@ export default function Portfolio({
   const [awardModalIndex, setAwardModalIndex] = useState<number | null>(null);
   const [certificationsOpen, setCertificationsOpen] = useState(false);
   const [activeContactCard, setActiveContactCard] = useState<number | null>(null);
+  const [activeConceptIndex, setActiveConceptIndex] = useState<number | null>(null);
+  const [platformRippleTrigger, setPlatformRippleTrigger] = useState(0);
 
   const openAwardModal = (i: number) => {
     setAwardModalIndex(i);
@@ -134,57 +137,160 @@ export default function Portfolio({
   return (
     <>
       {/* 02 / ABOUT ME */}
-      <section id="about" className="section about chamber">
-        <div className="section-inner">
+      <section id="about" className="section about chamber about-enhanced-chamber">
+        {/* Real-time 3D Rotating Floor Mechanism & Depth Layer */}
+        <div className="about-scene-container" aria-hidden="false">
+          <ChamberPlatformScene
+            activeConceptIndex={activeConceptIndex}
+            rippleTrigger={platformRippleTrigger}
+            reduced={reduced}
+            onPlatformHover={() => setPlatformRippleTrigger((prev) => prev + 1)}
+          />
+          {/* Cloaked Figure Cutout Grounded upon the Rotating 3D Dais */}
+          <div className="about-character-stand" aria-hidden="true">
+            <img
+              src="/assets/chamber_character.png"
+              alt="Cloaked explorer standing in gothic chamber"
+              className="about-character-cutout"
+            />
+            <div className="about-character-base-mist" />
+          </div>
+        </div>
+
+        {/* Thin Connecting Visual Logic between Right Cards & Center Mechanism */}
+        <svg
+          className="about-connecting-circuits"
+          aria-hidden="true"
+          viewBox="0 0 1440 900"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="circuitGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(255,255,255,0.85)" />
+              <stop offset="100%" stopColor="rgba(255,255,255,0.12)" />
+            </linearGradient>
+          </defs>
+          <path
+            className={`circuit-line circuit-1 ${activeConceptIndex === 0 ? "active" : ""}`}
+            d="M 980 435 L 880 435 L 825 790 L 768 815"
+          />
+          <path
+            className={`circuit-line circuit-2 ${activeConceptIndex === 1 ? "active" : ""}`}
+            d="M 980 545 L 880 545 L 820 825 L 768 840"
+          />
+          <path
+            className={`circuit-line circuit-3 ${activeConceptIndex === 2 ? "active" : ""}`}
+            d="M 980 655 L 880 655 L 815 855 L 768 865"
+          />
+        </svg>
+
+        <div className="section-inner about-inner">
           <Heading n="02" title="THE ORIGIN." sub="ABOUT ME" />
           <div className="about-layout">
+            {/* LEFT ZONE: Bio & Premium Glassmorphism Data Pedestal */}
             <div className="about-copy">
-              <p className="lead">
+              <p className="lead display-lead">
                 Curiosity is where
                 <br />
                 everything begins.
               </p>
-              <p>
-                I’m Hariharasuthan, an AI &amp; Data Science undergraduate exploring
+              <p className="body-copy">
+                I'm Hariharasuthan, an AI &amp; Data Science undergraduate exploring
                 how complex information transforms into dependable, intelligent decisions.
               </p>
-              <p>
+              <p className="body-copy">
                 My focus lies at the confluence of artificial intelligence,
                 quantitative finance, probability, optimization, and real-time decision architectures.
               </p>
-              <div className="education glass">
-                <GraduationCap size={25} />
-                <div>
-                  <span className="mono">{profile.education.years}</span>
-                  <h3 className="subsection-heading">{profile.education.degree}</h3>
-                  <p>{profile.education.college}</p>
-                  <strong>CGPA {profile.education.cgpa}</strong>
+
+              {/* Data Pedestal Card */}
+              <div className="education data-pedestal glass">
+                <div className="pedestal-header mono">
+                  <span className="pedestal-tag">[ PEDESTAL // 01 ]</span>
+                  <span className="pedestal-status">
+                    <span className="status-dot-pulse" />
+                    ACCREDITED
+                  </span>
+                </div>
+                <div className="pedestal-body">
+                  <div className="pedestal-icon-wrapper">
+                    <GraduationCap size={24} className="pedestal-icon" />
+                  </div>
+                  <div className="pedestal-info">
+                    <span className="mono pedestal-years">{profile.education.years}</span>
+                    <h3 className="subsection-heading">{profile.education.degree}</h3>
+                    <p className="pedestal-college">{profile.education.college}</p>
+                    <div className="pedestal-cgpa-track">
+                      <div className="cgpa-label-row mono">
+                        <span>ACADEMIC INDEX</span>
+                        <strong>CGPA {profile.education.cgpa} / 10.00</strong>
+                      </div>
+                      <div className="cgpa-meter-bar" aria-hidden="true">
+                        <div className="cgpa-meter-fill" style={{ width: "82.5%" }} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+
               <a
-                className="text-link mono"
+                className="text-link mono download-resume-btn"
                 href="/assets/hariharasuthan-resume.pdf"
                 download
               >
                 DOWNLOAD RESUME <ArrowRight size={16} />
               </a>
             </div>
-            <div className="principles">
-              <div>
-                <span>01</span>
-                <h3 className="subsection-heading">CURIOSITY</h3>
-                <p>Drives continuous inquiry and first-principles exploration.</p>
-              </div>
-              <div>
-                <span>02</span>
-                <h3 className="subsection-heading">INTELLIGENCE</h3>
-                <p>Architects verified, grounded algorithmic solutions.</p>
-              </div>
-              <div>
-                <span>03</span>
-                <h3 className="subsection-heading">IMPACT</h3>
-                <p>Empowers real-world human decisions in critical systems.</p>
-              </div>
+
+            {/* RIGHT ZONE: Interactive Concept Cards with Staggered Reveal */}
+            <div className="principles concept-cards-group">
+              {[
+                {
+                  num: "01",
+                  title: "CURIOSITY",
+                  tag: "FIRST PRINCIPLES",
+                  desc: "Drives continuous inquiry, structural questioning, and first-principles exploration.",
+                  ring: "OUTER RING SYNC",
+                },
+                {
+                  num: "02",
+                  title: "INTELLIGENCE",
+                  tag: "GROUNDED LOGIC",
+                  desc: "Architects verified, grounded algorithmic solutions with mathematical rigor.",
+                  ring: "ARCANE GEAR SYNC",
+                },
+                {
+                  num: "03",
+                  title: "IMPACT",
+                  tag: "CRITICAL DEPLOYMENT",
+                  desc: "Empowers real-world human decisions across high-consequence AI architectures.",
+                  ring: "CORE CONDUIT SYNC",
+                },
+              ].map((concept, idx) => (
+                <div
+                  key={concept.num}
+                  className={`concept-card ${activeConceptIndex === idx ? "active-glow" : ""}`}
+                  onMouseEnter={() => {
+                    setActiveConceptIndex(idx);
+                    setPlatformRippleTrigger((prev) => prev + 1);
+                  }}
+                  onMouseLeave={() => setActiveConceptIndex(null)}
+                  style={{ animationDelay: `${0.15 * (idx + 1)}s` }}
+                >
+                  <div className="concept-card-top mono">
+                    <span className="concept-num">{concept.num}</span>
+                    <span className="concept-tag">[{concept.tag}]</span>
+                  </div>
+                  <h3 className="subsection-heading">{concept.title}</h3>
+                  <p>{concept.desc}</p>
+                  <div className="concept-telemetry mono" aria-hidden="true">
+                    <span className="telemetry-bracket">[</span>
+                    <span className="telemetry-value">{concept.ring}</span>
+                    <span className="telemetry-bracket">]</span>
+                    <span className="telemetry-indicator" />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
