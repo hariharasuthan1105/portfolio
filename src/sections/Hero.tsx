@@ -86,6 +86,26 @@ export default function Hero({
               <ExternalLink size={13} />
             </a>
           </div>
+
+          {/* Visible Homepage Vault Hint */}
+          <div className="hero-vault-hint-card mono">
+            <div className="vault-hint-header">
+              <span className="blink-dot" />
+              <span className="vault-hint-label">CHAMBER OBJECTIVE</span>
+            </div>
+            <p className="vault-hint-text">
+              THREE KEYS. ONE INTELLIGENCE. UNLOCK MY SUPERPOWER.
+            </p>
+            <a
+              href="#vault"
+              className="vault-hint-link"
+              onClick={() => enter()}
+              aria-label="Jump directly to the Intelligence Vault"
+            >
+              <span>ACCESS THE VAULT</span>
+              <ArrowRight size={11} />
+            </a>
+          </div>
         </div>
       </div>
 

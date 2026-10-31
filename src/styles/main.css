@@ -2633,61 +2633,73 @@ html[data-motion="reduced"] *:after {
 @media (max-width: 600px) {
   .hero {
     min-height: 100vh;
-    padding-top: 60px;
+    height: auto;
+    padding-top: 76px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
   }
   .hero-hud-panel {
-    left: 4%;
-    right: 4%;
-    top: 10%;
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin: 4px 14px 16px;
     width: auto;
+    padding: 0;
   }
   .hero-hud-frame {
-    padding: 16px 18px;
+    padding: 16px 16px;
   }
   .hero-title {
-    font-size: clamp(36px, 9vw, 48px);
-    margin-bottom: 10px;
+    font-size: clamp(30px, 8vw, 42px);
+    margin-bottom: 8px;
+    line-height: 1.05;
   }
-  .hero-desc {
-    font-size: 12px;
-    margin-bottom: 16px;
+  .identity-block {
+    margin-bottom: 8px;
   }
-  .hero-btn-enter {
-    padding: 10px 20px;
-    font-size: 10px;
+  .identity-name {
+    font-size: 13px;
   }
-  .hero-vault-btn {
-    bottom: 140px;
-    padding: 6px 14px;
-  }
-  .vault-btn-title {
+  .identity-role {
     font-size: 9px;
   }
-  .vault-btn-sub {
-    font-size: 6.5px;
+  .hero-desc {
+    font-size: 11px;
+    margin-bottom: 14px;
+    line-height: 1.5;
   }
-  .hero-bottom-strip {
-    bottom: 8px;
-    left: 2%;
-    right: 2%;
+  .hero-actions {
+    gap: 8px;
+    flex-wrap: wrap;
   }
-  .hero-project-card {
-    min-width: 120px;
-    width: auto;
-    padding: 4px 8px 6px;
-  }
-  .project-card-hologram {
-    height: 38px;
-  }
-  .project-card-title {
+  .hero-btn-enter {
+    padding: 10px 16px;
     font-size: 9.5px;
   }
-  .project-card-desc {
-    display: none;
+  .hero-btn-explore {
+    padding: 10px 14px;
+    font-size: 9px;
+  }
+  .hero-vault-hint-card {
+    margin-top: 14px;
+    padding: 10px 12px;
+  }
+  .vault-hint-text {
+    font-size: 9.5px;
+  }
+  .hero-bottom-strip {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    margin: 12px 14px 20px;
+    padding-bottom: 12px;
   }
   .status-badge {
     font-size: 7.5px;
-    padding: 5px 10px;
+    padding: 5px 8px;
   }
 }
 /* Final atmospheric and readability refinements. */
@@ -2763,9 +2775,48 @@ html[data-motion="reduced"] *:after {
     center,
     100% 45%;
 }
-.exhibit > div,
-.exhibit > svg {
-  display: none;
+.exhibit {
+  height: 260px;
+  background-image:
+    linear-gradient(0deg, #09090b, transparent 40%),
+    url("/assets/projects.webp");
+  background-size:
+    100% 100%,
+    300% auto;
+  background-position:
+    center,
+    0 45%;
+  filter: grayscale(1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.exhibit-1 {
+  background-position:
+    center,
+    50% 47%;
+}
+.exhibit-2 {
+  background-position:
+    center,
+    100% 45%;
+}
+.exhibit-hologram-stage {
+  width: 85%;
+  max-width: 220px;
+  height: auto;
+  z-index: 2;
+  filter: drop-shadow(0 0 16px rgba(180, 210, 255, 0.45));
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+.project-card:hover .exhibit-hologram-stage {
+  transform: translateY(-4px) scale(1.04);
+  filter: drop-shadow(0 0 24px rgba(255, 255, 255, 0.75));
+}
+.project-card:hover .exhibit {
+  filter: grayscale(0.85) brightness(1.15);
 }
 .exhibit-0:after {
   content: "";
@@ -2777,7 +2828,617 @@ html[data-motion="reduced"] *:after {
   background: #fff9;
   box-shadow: 0 0 22px 2px #fff5;
   animation: scan 5s infinite alternate;
+  pointer-events: none;
 }
-.project-card:hover .exhibit {
-  filter: grayscale(1) brightness(1.12);
+
+/* ========================================================
+   HOMEPAGE VAULT HINT CARD (PHASE 3)
+   ======================================================== */
+.hero-vault-hint-card {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: rgba(14, 14, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-left: 3px solid #ffffff;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: fadeIn 1s ease-out;
 }
+.vault-hint-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vault-hint-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #a5a5af;
+}
+.vault-hint-text {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  color: #f0f0f5;
+  margin: 2px 0 6px;
+  line-height: 1.4;
+}
+.vault-hint-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  text-decoration: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 6px;
+  transition: color 0.25s, gap 0.25s;
+}
+.vault-hint-link:hover {
+  color: #c4d6ff;
+  gap: 10px;
+}
+
+/* ========================================================
+   PROJECT DETAILED SPECIFICATION MODAL (PHASE 4)
+   ======================================================== */
+.project-dialog {
+  max-width: 860px;
+  width: 92vw;
+  max-height: 88vh;
+  background: rgba(10, 10, 14, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(28px);
+  color: #e9e9eb;
+  padding: 36px 32px;
+  border-radius: 4px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85);
+  overflow-y: auto;
+}
+.project-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+}
+.dialog-header {
+  margin-bottom: 24px;
+}
+.dialog-header h2 {
+  font-size: clamp(24px, 3.2vw, 36px);
+  margin: 8px 0 6px;
+  color: #ffffff;
+}
+.dialog-headline {
+  font-size: 13px;
+  color: #a0a0ab;
+  line-height: 1.5;
+  margin: 0;
+}
+.dialog-hologram-stage {
+  height: 90px;
+  margin: 16px 0 24px;
+  padding: 10px;
+  background: radial-gradient(ellipse at center, rgba(140, 180, 255, 0.08), transparent 75%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dialog-specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.spec-card {
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.spec-card.full-width {
+  grid-column: 1 / -1;
+}
+.spec-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #c0c0ca;
+  margin-bottom: 8px;
+}
+.spec-card p {
+  font-size: 12px;
+  line-height: 1.65;
+  color: #d0d0d8;
+  margin: 0;
+}
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.tech-tag {
+  font-size: 8.5px;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+.spec-features-list {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.spec-features-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: #d0d0d8;
+}
+.bullet-check {
+  color: #a0c4ff;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.dialog-actions-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 20px;
+}
+.button-subtle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #f0f0f5;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.button-subtle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
+}
+.button-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: #ffffff;
+  color: #030303;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-decoration: none;
+}
+.button-accent:hover {
+  background: #d8e2ff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+/* ========================================================
+   INTELLIGENCE VAULT ENHANCEMENTS (PHASE 2)
+   ======================================================== */
+.vault-heading {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.vault-title-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px 0 6px;
+}
+.vault-subheading {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #a0a0aa;
+  margin: 0;
+}
+.key-progress {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.key-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  color: #888892;
+  transition: all 0.35s ease;
+}
+.key-chip.complete {
+  background: #ffffff;
+  color: #030303;
+  border-color: #ffffff;
+  box-shadow: 0 0 22px rgba(255, 255, 255, 0.5);
+}
+.key-chip.complete small {
+  color: #333339;
+}
+.key-spin {
+  animation: keyTwist 2s ease-in-out infinite;
+}
+@keyframes keyTwist {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(15deg); }
+}
+
+/* Challenge Cards */
+.challenge-index {
+  font-size: 20px;
+  font-weight: 600;
+  color: #777785;
+}
+.challenge-status {
+  margin-left: auto;
+}
+.key-unlocked-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: #ffffff;
+  color: #030303;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.6);
+}
+
+/* Challenge 1: Document Viewport */
+.doc-meta-bar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: #555560;
+  margin-bottom: 8px;
+}
+.doc-ocr-tag {
+  background: rgba(0, 0, 0, 0.12);
+  padding: 2px 5px;
+  border-radius: 2px;
+}
+.doc-field-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 8px;
+  margin-bottom: 5px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px dashed rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+}
+.doc-field-row.scanned {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #000000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.field-name {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: #33333c;
+  text-transform: uppercase;
+}
+.field-value-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.conf-pill {
+  font-size: 7px;
+  padding: 1px 4px;
+  background: #111115;
+  color: #ffffff;
+  border-radius: 2px;
+}
+.scanner-control-strip {
+  margin-top: 14px;
+}
+.scanner-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #a5a5b2;
+  margin-bottom: 6px;
+}
+.result-success {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #ffffff;
+  font-size: 10px;
+}
+.check-icon {
+  color: #a5c8ff;
+}
+
+/* Challenge 2: RAG Stepper */
+.rag-steps {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin: 16px 0;
+}
+.rag-step-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font: 7px var(--mono);
+  color: #777785;
+}
+.rag-step-chip.active {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #ffffff;
+  color: #ffffff;
+}
+.evidence-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.sim-badge {
+  font-size: 7.5px;
+  padding: 2px 6px;
+  background: rgba(140, 190, 255, 0.15);
+  border: 1px solid rgba(140, 190, 255, 0.4);
+  color: #c4d8ff;
+}
+.grounded-answer-box {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+.grounded-answer-box .eyebrow {
+  color: #c4d8ff;
+  font-size: 8px;
+}
+
+/* Challenge 3: Network Board */
+.network-board {
+  height: 230px;
+  position: relative;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.06), transparent 75%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+.network-line {
+  stroke-dasharray: 4 2;
+  animation: lineDashPulse 1.5s linear infinite;
+}
+@keyframes lineDashPulse {
+  to { stroke-dashoffset: -12; }
+}
+.node-button {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  background: #111115;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.7);
+  transition: all 0.25s ease;
+}
+.node-button:hover {
+  border-color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
+}
+.node-button.selected {
+  background: #ffffff;
+  color: #030303;
+  border-color: #ffffff;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.7);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.network-board.invalid-pulse {
+  animation: shakeWarning 0.4s ease;
+  border-color: #ff9999;
+}
+@keyframes shakeWarning {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* ========================================================
+   GRAND FINALE — THE INTELLIGENCE REVEAL
+   ======================================================== */
+.vault-reveal {
+  margin: 48px auto 0;
+  max-width: 960px;
+  padding: 44px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(10, 10, 14, 0.85);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+.vault-reveal.unlocked {
+  border-color: rgba(255, 255, 255, 0.8);
+  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.16), rgba(8, 8, 12, 0.95));
+  box-shadow: 0 0 60px rgba(255, 255, 255, 0.18), inset 0 0 40px rgba(255, 255, 255, 0.08);
+}
+.chamber-rings-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.align-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.4);
+}
+.outer-ring {
+  width: 136px;
+  height: 136px;
+  border-color: rgba(255, 255, 255, 0.5);
+  animation: ringSpinClockwise 12s linear infinite;
+}
+.mid-ring {
+  width: 104px;
+  height: 104px;
+  border-color: rgba(255, 255, 255, 0.35);
+  animation: ringSpinCounter 8s linear infinite;
+}
+.inner-ring {
+  width: 74px;
+  height: 74px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  animation: ringSpinClockwise 5s linear infinite;
+}
+@keyframes ringSpinClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes ringSpinCounter {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+.orbiting-keys-group {
+  position: absolute;
+  inset: 0;
+  animation: ringSpinClockwise 6s linear infinite;
+}
+.orbit-key {
+  position: absolute;
+  color: #ffffff;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+}
+.orbit-key.k1 {
+  top: 4px;
+  left: 62px;
+}
+.orbit-key.k2 {
+  bottom: 12px;
+  left: 18px;
+}
+.orbit-key.k3 {
+  bottom: 12px;
+  right: 18px;
+}
+.center-core-glow {
+  position: relative;
+  z-index: 3;
+  color: #ffffff;
+  filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.95));
+}
+.reveal-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.superpower-heading {
+  font-family: "Pixelify Sans", sans-serif;
+  font-size: clamp(26px, 4vw, 42px);
+  line-height: 1.25;
+  color: #ffffff;
+  margin: 0 0 28px;
+  text-shadow: 0 0 24px rgba(255, 255, 255, 0.35);
+}
+.superpower-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 0 auto 28px;
+  max-width: 860px;
+  text-align: left;
+}
+.pillar-card {
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 2px solid #ffffff;
+}
+.pillar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.pillar-tag {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  font-weight: 600;
+}
+.pillar-project {
+  font-size: 8.5px;
+  color: #a0c4ff;
+  background: rgba(160, 196, 255, 0.12);
+  padding: 2px 6px;
+}
+.pillar-detail {
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: #c8c8d2;
+  margin: 0;
+}
+.superpower-synthesis {
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #e0e0e8;
+}
+.vault-actions-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .superpower-pillars {
+    grid-template-columns: 1fr;
+  }
+  .dialog-specs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

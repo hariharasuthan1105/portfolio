@@ -1,0 +1,135 @@
+{
+  "timestamp": "2026-10-31T06:13:48.071Z",
+  "local": {
+    "url": "http://127.0.0.1:4173/",
+    "label": "local_preview",
+    "consoleErrors": [
+      {
+        "viewport": "desktop_1536x1024",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "viewport": "desktop_1536x1024",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "viewport": "mobile_390x844",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      }
+    ],
+    "failedRequests": [],
+    "navigationCheck": {
+      "#about": {
+        "found": true,
+        "visible": true
+      },
+      "#skills": {
+        "found": true,
+        "visible": true
+      },
+      "#projects": {
+        "found": true,
+        "visible": true
+      },
+      "#experience": {
+        "found": true,
+        "visible": true
+      },
+      "#achievements": {
+        "found": true,
+        "visible": true
+      },
+      "#vault": {
+        "found": true,
+        "visible": true
+      },
+      "#contact": {
+        "found": true,
+        "visible": true
+      },
+      "#home": {
+        "found": true,
+        "visible": true
+      }
+    },
+    "interactions": {
+      "scannerCompleted": true,
+      "ragCompleted": true,
+      "networkCompleted": true,
+      "vaultUnlocked": true,
+      "replayResetState": true
+    },
+    "viewportScreenshots": [
+      "local_preview_desktop_1536x1024_home.png",
+      "local_preview_laptop_1366x768_home.png",
+      "local_preview_tablet_768x1024_home.png",
+      "local_preview_mobile_390x844_home.png"
+    ]
+  },
+  "live": {
+    "url": "https://main.d3r0wa5wh6oirj.amplifyapp.com/",
+    "label": "live_amplify",
+    "consoleErrors": [
+      {
+        "viewport": "desktop_1536x1024",
+        "text": "Failed to load resource: the server responded with a status of 404 ()"
+      },
+      {
+        "viewport": "desktop_1536x1024",
+        "text": "Failed to load resource: the server responded with a status of 404 ()"
+      },
+      {
+        "viewport": "mobile_390x844",
+        "text": "Failed to load resource: the server responded with a status of 404 ()"
+      }
+    ],
+    "failedRequests": [],
+    "navigationCheck": {
+      "#about": {
+        "found": true,
+        "visible": true
+      },
+      "#skills": {
+        "found": true,
+        "visible": true
+      },
+      "#projects": {
+        "found": true,
+        "visible": true
+      },
+      "#experience": {
+        "found": true,
+        "visible": true
+      },
+      "#achievements": {
+        "found": true,
+        "visible": true
+      },
+      "#vault": {
+        "found": true,
+        "visible": true
+      },
+      "#contact": {
+        "found": true,
+        "visible": true
+      },
+      "#home": {
+        "found": true,
+        "visible": true
+      }
+    },
+    "interactions": {
+      "scannerCompleted": true,
+      "ragCompleted": true,
+      "networkCompleted": true,
+      "vaultUnlocked": true,
+      "replayResetState": true
+    },
+    "viewportScreenshots": [
+      "live_amplify_desktop_1536x1024_home.png",
+      "live_amplify_laptop_1366x768_home.png",
+      "live_amplify_tablet_768x1024_home.png",
+      "live_amplify_mobile_390x844_home.png"
+    ]
+  }
+}

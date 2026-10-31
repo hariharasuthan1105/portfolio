@@ -85,9 +85,6 @@ export default function App() {
           // If user scrolled back up to home section, trigger return reset
           if (current.id === "home") {
             triggerReturnHome();
-          } else {
-            // Visitor scrolled into portfolio sections
-            playMusic();
           }
         }
       });

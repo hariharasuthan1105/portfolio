@@ -1,0 +1,98 @@
+{
+  "tests": {
+    "A": {
+      "title": "Homepage loads with valid title and hero section",
+      "passed": true,
+      "details": "Title: Code Kingdom — Hariharasuthan V"
+    },
+    "B": {
+      "title": "All topbar navigation links navigate cleanly",
+      "passed": true,
+      "details": ""
+    },
+    "C": {
+      "title": "Castle entrance warp animation completes and transitions to about",
+      "passed": true,
+      "details": "ScrollY: 853"
+    },
+    "D": {
+      "title": "Portal lighting and camera smoothly reset upon returning home",
+      "passed": true,
+      "details": "ScrollY: 0"
+    },
+    "E": {
+      "title": "Portal entrance animation is repeatable without freeze",
+      "passed": true,
+      "details": ""
+    },
+    "F": {
+      "title": "Skip Intro button immediately forwards to portfolio",
+      "passed": true,
+      "details": ""
+    },
+    "G": {
+      "title": "DocRecon perception scanner extracts 3/3 fields and unlocks Key 01",
+      "passed": true,
+      "details": ""
+    },
+    "H": {
+      "title": "Pathway AI reasoning pipeline retrieves context, shows evidence, and unlocks Key 02",
+      "passed": true,
+      "details": ""
+    },
+    "I": {
+      "title": "HEFIN connection challenge connects decentralized nodes and unlocks Key 03",
+      "passed": true,
+      "details": ""
+    },
+    "J": {
+      "title": "All three keys unlock the Vault Grand Finale with superpower statement and 3 project pillars",
+      "passed": true,
+      "details": ""
+    },
+    "K": {
+      "title": "Replay resets vault keys, slider, stages, and network edges",
+      "passed": true,
+      "details": ""
+    },
+    "L": {
+      "title": "Verified contact links exist for Email, LinkedIn, and GitHub",
+      "passed": true,
+      "details": ""
+    },
+    "M": {
+      "title": "Project architecture modal opens with authentic specs and closes via Escape",
+      "passed": true,
+      "details": ""
+    },
+    "N": {
+      "title": "Keyboard End key successfully moves scanner to 100% and unlocks Key 01",
+      "passed": true,
+      "details": ""
+    },
+    "O": {
+      "title": "Audio toggle button toggles playback and mute state on demand",
+      "passed": true,
+      "details": ""
+    },
+    "P": {
+      "title": "System respects prefers-reduced-motion media query and sets dataset.motion=\"reduced\"",
+      "passed": true,
+      "details": ""
+    },
+    "Q": {
+      "title": "Production build succeeded and verified dist output",
+      "passed": true,
+      "details": ""
+    },
+    "R": {
+      "title": "No browser console errors encountered during user journey",
+      "passed": true,
+      "details": ""
+    }
+  },
+  "summary": {
+    "passed": 18,
+    "failed": 0
+  }
+}

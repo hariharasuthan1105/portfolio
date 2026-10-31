@@ -46,6 +46,15 @@ class KingdomAudioManager {
     if (typeof window !== 'undefined') {
       // Document visibility change listener
       document.addEventListener('visibilitychange', this.handleVisibilityChange);
+
+      // Warm up audio buffer on first interaction so audio starts instantly on click
+      const warmUp = () => {
+        window.removeEventListener('pointerdown', warmUp);
+        window.removeEventListener('keydown', warmUp);
+        this.preload().catch(() => {});
+      };
+      window.addEventListener('pointerdown', warmUp, { passive: true, once: true });
+      window.addEventListener('keydown', warmUp, { passive: true, once: true });
     }
   }
 
@@ -139,11 +148,25 @@ class KingdomAudioManager {
     }
   }
 
+  public isExplicitlyMuted(): boolean {
+    if (typeof window === 'undefined') return true;
+    try {
+      return sessionStorage.getItem('kingdom_music_enabled') === 'false';
+    } catch {
+      return false;
+    }
+  }
+
   /**
    * Starts or resumes playback with smooth fade-in and seamless crossfading.
+   * If force is false, respects user's explicit preference to keep muted.
    */
-  public async play(): Promise<void> {
+  public async play(force = false): Promise<void> {
     if (this.isPlaying) return;
+
+    if (!force && this.isExplicitlyMuted()) {
+      return;
+    }
 
     if (this.fadeOutTimer) {
       window.clearTimeout(this.fadeOutTimer);
@@ -180,6 +203,14 @@ class KingdomAudioManager {
       sessionStorage.setItem('kingdom_music_enabled', 'true');
     } catch {}
     this.notify();
+  }
+
+  public toggle(): void {
+    if (this.isPlaying) {
+      this.pause();
+    } else {
+      this.play(true); // Explicit user toggle: force play
+    }
   }
 
   /**
@@ -290,14 +321,6 @@ class KingdomAudioManager {
         this.ctx.suspend().catch(() => {});
       }
     }, (this.fadeOutDuration + 0.05) * 1000);
-  }
-
-  public toggle(): void {
-    if (this.isPlaying) {
-      this.pause();
-    } else {
-      this.play();
-    }
   }
 
   private stopActiveVoices() {
