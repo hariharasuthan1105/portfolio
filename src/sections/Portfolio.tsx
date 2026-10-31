@@ -442,7 +442,9 @@ export default function Portfolio({
             <div className="journey-right-hud">
               <aside className="journey-inspector glass" aria-live="polite">
                 <div className="inspector-header">
-                  <span className="eyebrow mono">{currentMilestone.year} // MILESTONE 0{activeMilestoneIndex + 1}</span>
+                  <span className="eyebrow mono">
+                    {currentMilestone.year} // {activeMilestoneIndex === 3 ? "FUTURE GOAL" : `MILESTONE 0${activeMilestoneIndex + 1}`}
+                  </span>
                   <h4 className="inspector-title">{currentMilestone.title}</h4>
                   <span className="inspector-org mono">{currentMilestone.organization}</span>
                   <span className="inspector-date mono">
