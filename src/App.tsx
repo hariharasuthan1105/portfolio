@@ -25,8 +25,8 @@ const links = [
   "Projects",
   "Experience",
   "Achievements",
-  "Vault",
   "Contact",
+  "Vault",
 ];
 
 export default function App() {
@@ -224,7 +224,7 @@ export default function App() {
 
         <Suspense fallback={<p className="loading">Opening the archive…</p>}>
           <Portfolio reduced={reduced} low={low} />
-          <Vault />
+          <Vault reduced={reduced} />
         </Suspense>
       </main>
 

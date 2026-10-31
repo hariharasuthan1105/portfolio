@@ -41,6 +41,7 @@ import JourneyTimelineScene, {
 import HallOfHonorScene from "../components/3d/HallOfHonorScene";
 import { ACHIEVEMENTS, CERTIFICATIONS } from "../data/achievements";
 import { LaurelEmblem, GeometricEmblem, GlobeEmblem } from "../components/ui/AwardEmblems";
+import ContactPortalScene from "../components/3d/ContactPortalScene";
 import {
   DocReconHologram,
   PathwayAIHologram,
@@ -90,6 +91,7 @@ export default function Portfolio({
   const [selectedAwardIndex, setSelectedAwardIndex] = useState<number | null>(null);
   const [awardModalIndex, setAwardModalIndex] = useState<number | null>(null);
   const [certificationsOpen, setCertificationsOpen] = useState(false);
+  const [activeContactCard, setActiveContactCard] = useState<number | null>(null);
 
   const openAwardModal = (i: number) => {
     setAwardModalIndex(i);
@@ -733,64 +735,140 @@ export default function Portfolio({
         </div>
       </section>
 
-      {/* 07 / CONTACT */}
-      <section id="contact" className="section contact-section chamber">
-        <div className="section-inner contact-layout">
-          <div>
-            <Heading
-              n="07"
-              title="LET’S BUILD SOMETHING MEANINGFUL."
-              sub="THE PORTAL"
-            />
-            <p className="lead">
-              A single conversation can
-              <br />
-              spark groundbreaking innovation.
-            </p>
-            <p>
-              Always open to opportunities, research collaborations, and engineering discussions
-              in AI, quantitative methods, and distributed intelligence.
-            </p>
-            <span className="availability mono">
-              <i />
-              COIMBATORE, INDIA · OPEN TO OPPORTUNITIES
-            </span>
-          </div>
-          <div className="contact-links">
-            <a href={"mailto:" + profile.email} aria-label={`Send email to ${profile.email}`}>
-              <Mail />
-              <div>
-                <span className="mono">DIRECT EMAIL</span>
-                <strong>{profile.email}</strong>
+      {/* 07 / CONTACT — THE PORTAL */}
+      <section id="contact" className="section contact-section contact-portal-section">
+        {/* Real-time 3D Cinematic Atmosphere: Celestial Sphere, Orbital Rings, Fog & God Rays */}
+        <div className="contact-portal-scene-container" aria-hidden="false">
+          <ContactPortalScene activeCardIndex={activeContactCard} reduced={reduced} />
+        </div>
+
+        <div className="section-inner contact-portal-inner">
+          <div className="contact-portal-layout">
+            {/* LEFT ZONE — 30%: Heading, Quote, Scope & Status */}
+            <div className="portal-left-zone">
+              <div className="portal-header-block">
+                <span className="eyebrow mono">[ 07 / THE PORTAL ]</span>
+                <h2 className="portal-main-title">
+                  LET'S BUILD<br />SOMETHING<br />MEANINGFUL.
+                </h2>
+                <p className="portal-lead-quote">
+                  "A single conversation can spark groundbreaking innovation."
+                </p>
+                <p className="portal-sub-desc">
+                  Open to opportunities, research collaborations, and engineering discussions in AI, data science, and intelligent systems.
+                </p>
+                <div className="portal-status-pill mono">
+                  <span className="portal-status-dot" aria-hidden="true" />
+                  <span>COIMBATORE, INDIA · OPEN TO OPPORTUNITIES</span>
+                </div>
               </div>
-              <ArrowUpRight />
-            </a>
-            <button onClick={copy} aria-label="Copy email address to clipboard">
-              {copied ? <Check size={16} /> : <Copy size={16} />}
-              <span className="mono" aria-live="polite">
-                {copied
-                  ? "EMAIL COPIED TO CLIPBOARD"
-                  : copyError
-                    ? "SELECT EMAIL TO COPY"
-                    : "COPY EMAIL ADDRESS"}
-              </span>
-            </button>
-            <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="Connect on LinkedIn">
-              <Linkedin />
-              <div>
-                <span className="mono">LINKEDIN</span>
-                <strong>Connect with Hariharasuthan</strong>
+            </div>
+
+            {/* CENTER ZONE — 30%: Unobstructed Perspective Bridge */}
+            <div className="portal-center-zone" aria-hidden="true">
+              {/* Preserves full visibility of central celestial orbital sphere, cloaked explorer, and gothic architecture */}
+            </div>
+
+            {/* RIGHT ZONE — 40%: Three Vertically Aligned Glassmorphism Contact Cards */}
+            <div className="portal-right-zone">
+              <div className="portal-cards-stack" role="region" aria-label="Direct Contact Actions">
+                {/* 01 — DIRECT EMAIL */}
+                <div className="portal-card-wrapper">
+                  <a
+                    href={"mailto:" + profile.email}
+                    className={`portal-contact-card ${activeContactCard === 0 ? "active-card" : ""}`}
+                    aria-label={`Send direct email to ${profile.email}`}
+                    onMouseEnter={() => setActiveContactCard(0)}
+                    onMouseLeave={() => setActiveContactCard(null)}
+                    onFocus={() => setActiveContactCard(0)}
+                    onBlur={() => setActiveContactCard(null)}
+                  >
+                    <div className="portal-card-icon" aria-hidden="true">
+                      <Mail size={20} />
+                    </div>
+                    <div className="portal-card-content">
+                      <span className="mono portal-card-label">01 // DIRECT EMAIL</span>
+                      <strong className="portal-card-value">{profile.email}</strong>
+                      <span className="mono portal-card-action">
+                        <span>OPEN EMAIL</span>
+                        <ArrowUpRight size={13} />
+                      </span>
+                    </div>
+                  </a>
+
+                  {/* Dedicated Copy Email Action Button directly beneath Email Card */}
+                  <button
+                    type="button"
+                    onClick={copy}
+                    className="portal-copy-btn mono"
+                    aria-label="Copy email address to clipboard"
+                  >
+                    {copied ? <Check size={14} /> : <Copy size={14} />}
+                    <span aria-live="polite">
+                      {copied
+                        ? "EMAIL COPIED TO CLIPBOARD"
+                        : copyError
+                        ? "SELECT EMAIL TO COPY"
+                        : "COPY EMAIL ADDRESS"}
+                    </span>
+                  </button>
+                </div>
+
+                {/* 02 — LINKEDIN */}
+                <div className="portal-card-wrapper">
+                  <a
+                    href={profile.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`portal-contact-card ${activeContactCard === 1 ? "active-card" : ""}`}
+                    aria-label="Connect with Hariharasuthan on LinkedIn"
+                    onMouseEnter={() => setActiveContactCard(1)}
+                    onMouseLeave={() => setActiveContactCard(null)}
+                    onFocus={() => setActiveContactCard(1)}
+                    onBlur={() => setActiveContactCard(null)}
+                  >
+                    <div className="portal-card-icon" aria-hidden="true">
+                      <Linkedin size={20} />
+                    </div>
+                    <div className="portal-card-content">
+                      <span className="mono portal-card-label">02 // LINKEDIN</span>
+                      <strong className="portal-card-value">Connect with Hariharasuthan V</strong>
+                      <span className="mono portal-card-action">
+                        <span>VIEW PROFILE</span>
+                        <ArrowUpRight size={13} />
+                      </span>
+                    </div>
+                  </a>
+                </div>
+
+                {/* 03 — GITHUB */}
+                <div className="portal-card-wrapper">
+                  <a
+                    href={profile.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`portal-contact-card ${activeContactCard === 2 ? "active-card" : ""}`}
+                    aria-label="Explore source code and projects on GitHub"
+                    onMouseEnter={() => setActiveContactCard(2)}
+                    onMouseLeave={() => setActiveContactCard(null)}
+                    onFocus={() => setActiveContactCard(2)}
+                    onBlur={() => setActiveContactCard(null)}
+                  >
+                    <div className="portal-card-icon" aria-hidden="true">
+                      <Github size={20} />
+                    </div>
+                    <div className="portal-card-content">
+                      <span className="mono portal-card-label">03 // GITHUB</span>
+                      <strong className="portal-card-value">Explore Source Code &amp; Projects</strong>
+                      <span className="mono portal-card-action">
+                        <span>VIEW GITHUB</span>
+                        <ArrowUpRight size={13} />
+                      </span>
+                    </div>
+                  </a>
+                </div>
               </div>
-              <ArrowUpRight />
-            </a>
-            <a href={profile.github} target="_blank" rel="noreferrer" aria-label="View GitHub repositories">
-              <Github />
-              <div>
-                <span className="mono">GITHUB</span>
-                <strong>Explore Source Code &amp; Repos</strong>
-              </div>
-              <ArrowUpRight />
-            </a>
+            </div>
           </div>
         </div>
       </section>

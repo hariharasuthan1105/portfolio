@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Contact Section Exists",
+    "pass": true,
+    "note": "#contact found in DOM"
+  },
+  {
+    "name": "Capture 01 Default Contact Portal 1536x1024",
+    "pass": true,
+    "note": "Saved 01_contact_portal_desktop_1536x1024.png"
+  },
+  {
+    "name": "Portal Main Title Match",
+    "pass": true,
+    "note": "Title: \"LET'S BUILD SOMETHING MEANINGFUL.\""
+  },
+  {
+    "name": "Lead Quote Match",
+    "pass": true,
+    "note": "Quote: \"\"A single conversation can spark groundbreaking innovation.\"\""
+  },
+  {
+    "name": "Status Pill Match",
+    "pass": true,
+    "note": "Status: \"COIMBATORE, INDIA · OPEN TO OPPORTUNITIES\""
+  },
+  {
+    "name": "3-Zone Grid Layout Verified",
+    "pass": true,
+    "note": "Columns: 442.875px 387.516px 553.594px"
+  },
+  {
+    "name": "Three Contact Cards Present",
+    "pass": true,
+    "note": "Found 3 cards"
+  },
+  {
+    "name": "Card 1 is Email mailto",
+    "pass": true,
+    "note": "Href: mailto:hariharasuthan1105@gmail.com"
+  },
+  {
+    "name": "Card 2 is LinkedIn URL",
+    "pass": true,
+    "note": "Href: https://www.linkedin.com/in/hariharasuthan-v-b48653300"
+  },
+  {
+    "name": "Card 3 is GitHub URL",
+    "pass": true,
+    "note": "Href: https://github.com/hariharasuthan1105"
+  },
+  {
+    "name": "Capture 02 Email Card Hovered",
+    "pass": true,
+    "note": "Saved 02_contact_portal_email_hover_1536x1024.png"
+  },
+  {
+    "name": "Copy Email Button Present",
+    "pass": true,
+    "note": "Found dedicated copy email button"
+  },
+  {
+    "name": "Copy Email Feedback Triggered",
+    "pass": true,
+    "note": "Button text: \"EMAIL COPIED TO CLIPBOARD\""
+  },
+  {
+    "name": "Capture 03 Email Copied State",
+    "pass": true,
+    "note": "Saved 03_contact_portal_email_copied_1536x1024.png"
+  },
+  {
+    "name": "Capture 04 LinkedIn Card Hovered",
+    "pass": true,
+    "note": "Saved 04_contact_portal_linkedin_hover_1536x1024.png"
+  },
+  {
+    "name": "Capture 05 GitHub Card Hovered",
+    "pass": true,
+    "note": "Saved 05_contact_portal_github_hover_1536x1024.png"
+  },
+  {
+    "name": "Keyboard Tab Focus Functional",
+    "pass": true,
+    "note": "Active focused element tag: A"
+  },
+  {
+    "name": "Capture 06 Laptop 1366x768",
+    "pass": true,
+    "note": "Saved 06_contact_portal_laptop_1366x768.png"
+  },
+  {
+    "name": "Laptop Zero Horizontal Overflow",
+    "pass": true,
+    "note": "scrollWidth <= clientWidth: true"
+  },
+  {
+    "name": "Capture 07 Tablet 768x1024",
+    "pass": true,
+    "note": "Saved 07_contact_portal_tablet_768x1024.png"
+  },
+  {
+    "name": "Tablet Zero Horizontal Overflow",
+    "pass": true,
+    "note": "scrollWidth <= clientWidth: true"
+  },
+  {
+    "name": "Capture 08 Mobile 390x844",
+    "pass": true,
+    "note": "Saved 08_contact_portal_mobile_390x844.png"
+  },
+  {
+    "name": "Mobile Zero Horizontal Overflow",
+    "pass": true,
+    "note": "scrollWidth <= clientWidth: true"
+  },
+  {
+    "name": "Mobile Card Touch Target >= 44px",
+    "pass": true,
+    "note": "Height: 91.546875px, Width: 346px"
+  }
+]

@@ -1,0 +1,152 @@
+[
+  {
+    "name": "Vault Section Exists",
+    "pass": true,
+    "note": "#vault found in DOM"
+  },
+  {
+    "name": "Capture 01 Vault Initial Chamber 1536x1024",
+    "pass": true,
+    "note": "Saved 01_vault_initial_chamber_desktop_1536x1024.png"
+  },
+  {
+    "name": "Vault Main Title Match",
+    "pass": true,
+    "note": "Title: \"THE INTELLIGENCE VAULT\""
+  },
+  {
+    "name": "Gateway Cue Button Present",
+    "pass": true,
+    "note": "Found [ BEGIN THE INTELLIGENCE TRIAL ] cue"
+  },
+  {
+    "name": "Capture 02 Challenges Initial State",
+    "pass": true,
+    "note": "Saved 02_vault_challenges_initial_1536x1024.png"
+  },
+  {
+    "name": "Perception Scanner Slider Found",
+    "pass": true,
+    "note": "#scanner exists"
+  },
+  {
+    "name": "Key 01 (Perception) Unlocked",
+    "pass": true,
+    "note": "DocRecon scanner extracted all 3 entities"
+  },
+  {
+    "name": "Capture 03 Perception Solved",
+    "pass": true,
+    "note": "Saved 03_vault_challenge_01_perception_solved.png"
+  },
+  {
+    "name": "Reasoning RAG Action Button Found",
+    "pass": true,
+    "note": ".rag-action-btn exists"
+  },
+  {
+    "name": "Key 02 (Reasoning) Unlocked",
+    "pass": true,
+    "note": "Grounded answer synthesized"
+  },
+  {
+    "name": "Capture 04 Reasoning Solved",
+    "pass": true,
+    "note": "Saved 04_vault_challenge_02_reasoning_solved.png"
+  },
+  {
+    "name": "Four Decentralized Nodes Found",
+    "pass": true,
+    "note": "Found 4 nodes"
+  },
+  {
+    "name": "Key 03 (Connection) Unlocked",
+    "pass": true,
+    "note": "All 4 nodes synchronized in decentralized consensus"
+  },
+  {
+    "name": "Capture 05 Connection Solved",
+    "pass": true,
+    "note": "Saved 05_vault_challenge_03_connection_solved.png"
+  },
+  {
+    "name": "Vault Grand Finale Unlocked",
+    "pass": true,
+    "note": ".vault-reveal.unlocked rendered"
+  },
+  {
+    "name": "Superpower Statement Verified",
+    "pass": true,
+    "note": "Heading: \"TRANSFORMING COMPLEX DATA INTO INTELLIGENT DECISIONS.\""
+  },
+  {
+    "name": "Three Project Pillars Verified",
+    "pass": true,
+    "note": "Found Perception (DocRecon), Reasoning (Pathway AI), Connection (HEFIN)"
+  },
+  {
+    "name": "Capture 06 Superpower Reveal 1536x1024",
+    "pass": true,
+    "note": "Saved 06_vault_superpower_reveal_desktop_1536x1024.png"
+  },
+  {
+    "name": "Capture 07 Chamber Unlocked Astral Core",
+    "pass": true,
+    "note": "Saved 07_vault_chamber_unlocked_astral_core_1536x1024.png"
+  },
+  {
+    "name": "Replay Button Found",
+    "pass": true,
+    "note": "Found replay button"
+  },
+  {
+    "name": "Replay Restores Original Locked State",
+    "pass": true,
+    "note": "Keys reset, slider returned to 0"
+  },
+  {
+    "name": "Capture 08 Replayed Reset State",
+    "pass": true,
+    "note": "Saved 08_vault_replayed_reset_state.png"
+  },
+  {
+    "name": "Capture 09 Laptop 1366x768",
+    "pass": true,
+    "note": "Saved 09_vault_laptop_1366x768.png"
+  },
+  {
+    "name": "Laptop Zero Horizontal Overflow",
+    "pass": true,
+    "note": "scrollWidth <= clientWidth: true"
+  },
+  {
+    "name": "Capture 10 Tablet 768x1024",
+    "pass": true,
+    "note": "Saved 10_vault_tablet_768x1024.png"
+  },
+  {
+    "name": "Tablet Zero Horizontal Overflow",
+    "pass": true,
+    "note": "scrollWidth <= clientWidth: true"
+  },
+  {
+    "name": "Capture 11 Mobile Chamber 390x844",
+    "pass": true,
+    "note": "Saved 11_vault_mobile_chamber_390x844.png"
+  },
+  {
+    "name": "Capture 12 Mobile Challenges 390x844",
+    "pass": true,
+    "note": "Saved 12_vault_mobile_challenges_390x844.png"
+  },
+  {
+    "name": "Mobile Zero Horizontal Overflow",
+    "pass": true,
+    "note": "scrollWidth <= clientWidth: true"
+  },
+  {
+    "name": "Mobile Node Button Touch Target >= 44px",
+    "pass": true,
+    "note": "Height: 44px, Width: 44px"
+  }
+]
