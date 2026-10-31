@@ -131,6 +131,29 @@ export default function Portfolio({
   const visible =
     category === "All skills" ? Object.values(skills).flat() : skills[category] || [];
 
+
+  // Entrance animation IntersectionObserver for About section
+  useEffect(() => {
+    const section = document.getElementById("about");
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Add in-view class to all animate elements
+            section.querySelectorAll(".about-animate-in").forEach((el, i) => {
+              setTimeout(() => el.classList.add("in-view"), i * 80);
+            });
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(profile.email);
@@ -150,13 +173,14 @@ export default function Portfolio({
 
   return (
     <>
-      {/* 02 / ABOUT ME - CINEMATIC 3D REDESIGN */}
-      <section id="about" className="section about chamber about-enhanced-chamber">
-        {/* Content Container with Non-Overflowing 3-Zone CSS Grid */}
+      {/* 02 / ABOUT ME - CINEMATIC 3D FINAL REDESIGN */}
+      <section id="about" className="section about chamber about-enhanced-chamber about-cinematic-v3">
+        {/* Cathedral environment plate — art direction background */}
+        <div className="about-cathedral-bg" aria-hidden="true" />
         <div className="about-container">
           <div className="about-grid">
             {/* LEFT ZONE (30%): Label, Headline, Bio, Education Card, Desktop Resume */}
-            <div className="about-left-col">
+            <div className="about-left-col about-animate-in about-animate-left">
               <div className="about-eyebrow mono">[ 02 / ABOUT ]</div>
               
               <h2 className="about-main-heading">
@@ -219,8 +243,8 @@ export default function Portfolio({
               </div>
             </div>
 
-            {/* CENTER ZONE (40%): Scenic Corridor with Real 3D Rotating Floor Mechanism & Explorer */}
-            <div className="about-center-corridor">
+            {/* CENTER ZONE (40%): Cinematic 3D Scene — Orbital Sphere + Mechanical Platform */}
+            <div className="about-center-corridor about-animate-in about-animate-up">
               <div className="about-scene-container" aria-hidden="false">
                 <ChamberPlatformScene
                   activeConceptIndex={activeConceptIndex}
@@ -228,12 +252,20 @@ export default function Portfolio({
                   reduced={reduced}
                   onPlatformHover={() => setPlatformRippleTrigger((prev) => prev + 1)}
                 />
-
+                {/* Cloaked Explorer Cutout Grounded upon the Rotating 3D Dais */}
+                <div className="about-character-stand" aria-hidden="true">
+                  <img
+                    src="/assets/chamber_character.png"
+                    alt="Cloaked explorer standing in gothic chamber"
+                    className="about-character-cutout"
+                  />
+                  <div className="about-character-base-mist" />
+                </div>
               </div>
             </div>
 
-            {/* RIGHT ZONE (30%): Three Vertically Aligned Smoked-Glass Value Panels */}
-            <div className="about-right-col">
+            {/* RIGHT ZONE (30%): Three Premium Glass Value Panels */}
+            <div className="about-right-col about-animate-in about-animate-right">
               <div className="about-values-stack">
                 {/* 01 CURIOSITY */}
                 <div
