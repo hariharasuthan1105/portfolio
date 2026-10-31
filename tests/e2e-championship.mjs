@@ -161,8 +161,7 @@ async function runTestSuite() {
 
     // --- TEST M: Project modal dialog & specifications ---
     await page.goto(`${targetUrl}#projects`);
-    await page.waitForTimeout(600);
-    const exploreBtn = await page.$('.project-card:nth-child(1) .project-open');
+    const exploreBtn = (await page.$('.archive-cta-btn')) || (await page.$('.project-card:nth-child(1) .project-open'));
     await exploreBtn.click();
     await page.waitForTimeout(400);
     const dialog = await page.$('.project-dialog[open]');

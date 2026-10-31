@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Sparkles, Html } from "@react-three/drei";
+import { Sparkles, Html, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import {
   Code,
@@ -64,7 +64,7 @@ export const FORGE_NODES: SkillNodeData[] = [
     name: "DATABASES",
     category: "Databases",
     angle: 172,
-    radius: 2.9,
+    radius: 2.5,
     icon: "database",
     skills: ["SQL", "MongoDB", "Schema Normalization", "Query Optimization"],
     description:
@@ -72,10 +72,10 @@ export const FORGE_NODES: SkillNodeData[] = [
   },
   {
     id: "cloud",
-    name: "CLOUD & DEPLOYMENT",
+    name: "CLOUD & AWS",
     category: "Tools & Cloud",
     angle: 8,
-    radius: 2.9,
+    radius: 2.5,
     icon: "cloud",
     skills: ["AWS Amplify", "Amazon CloudFront", "GitHub Actions", "CI/CD"],
     description:
@@ -86,7 +86,7 @@ export const FORGE_NODES: SkillNodeData[] = [
     name: "WEB DEVELOPMENT",
     category: "Web Development",
     angle: 215,
-    radius: 2.5,
+    radius: 2.3,
     icon: "cpu",
     skills: ["FastAPI", "React", "Django", "Node.js", "Express.js"],
     description:
@@ -97,7 +97,7 @@ export const FORGE_NODES: SkillNodeData[] = [
     name: "OTHER",
     category: "Other",
     angle: 325,
-    radius: 2.5,
+    radius: 2.3,
     icon: "boxes",
     skills: ["Qiskit", "Quantum Circuits", "Java", "Data Structures"],
     description:
@@ -108,7 +108,7 @@ export const FORGE_NODES: SkillNodeData[] = [
     name: "TOOLS",
     category: "Tools & Cloud",
     angle: 252,
-    radius: 2.15,
+    radius: 2.1,
     icon: "wrench",
     skills: ["Git", "GitHub", "Streamlit", "Linux / CLI"],
     description:
@@ -460,17 +460,25 @@ export default function ForgeOfIntelligenceScene({
       >
         <ambientLight intensity={1.2} />
         <pointLight position={[0, 0, 1.5]} intensity={35} color="#ffffff" />
-        <directionalLight position={[0, 6, 4]} intensity={2.5} color="#ffffff" />
-        <directionalLight position={[-4, 2, 2]} intensity={1.2} color="#969696" />
-        <directionalLight position={[4, 2, 2]} intensity={1.2} color="#969696" />
+        <directionalLight position={[0, 6, 4]} intensity={2.8} color="#ffffff" />
+        <directionalLight position={[-4, 2, 2]} intensity={1.5} color="#969696" />
+        <directionalLight position={[4, 2, 2]} intensity={1.5} color="#969696" />
+        {/* Dais uplight */}
+        <pointLight position={[0, -2.2, 0]} intensity={18} color="#dadada" />
 
         <group
           rotation={[
-            mousePos.y * 0.08,
-            mousePos.x * 0.12,
+            mousePos.y * 0.05,
+            mousePos.x * 0.08,
             0,
           ]}
         >
+          {/* Ground contact shadow disc */}
+          <mesh position={[0, -2.3, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <ringGeometry args={[0, 1.6, 32]} />
+            <meshBasicMaterial color="#000000" transparent opacity={0.7} />
+          </mesh>
+
           <CentralIntelligenceCore
             activeCategory={activeCategory}
             selectedNodeId={selectedNodeId}
@@ -498,14 +506,26 @@ export default function ForgeOfIntelligenceScene({
 
           {!reduced && (
             <Sparkles
-              count={70}
-              size={1.6}
-              scale={7}
+              count={85}
+              size={1.8}
+              scale={7.5}
               speed={0.2}
               color="#ffffff"
             />
           )}
         </group>
+
+        <OrbitControls
+          enableZoom={false}
+          enablePan={false}
+          rotateSpeed={0.5}
+          dampingFactor={0.08}
+          enableDamping
+          autoRotate={!reduced}
+          autoRotateSpeed={0.25}
+          maxPolarAngle={Math.PI / 2 + 0.25}
+          minPolarAngle={Math.PI / 2 - 0.25}
+        />
       </Canvas>
     </div>
   );

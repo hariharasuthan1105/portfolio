@@ -16,6 +16,9 @@ import {
   AlertTriangle,
   Lightbulb,
   Cpu,
+  Layers,
+  Sparkles as SparklesIcon,
+  Calendar,
 } from "lucide-react";
 import {
   profile,
@@ -29,6 +32,10 @@ import { Scene } from "../components/ui/Scene";
 import ForgeOfIntelligenceScene, {
   FORGE_NODES,
 } from "../components/3d/ForgeOfIntelligenceScene";
+import ArchiveGalleryScene from "../components/3d/ArchiveGalleryScene";
+import JourneyTimelineScene, {
+  MILESTONES,
+} from "../components/3d/JourneyTimelineScene";
 import {
   DocReconHologram,
   PathwayAIHologram,
@@ -68,6 +75,8 @@ export default function Portfolio({
   const [category, setCategory] = useState("All skills");
   const [selected, setSelected] = useState("Python");
   const [selectedNodeId, setSelectedNodeId] = useState("python");
+  const [selectedProjectIndex, setSelectedProjectIndex] = useState<number | null>(null);
+  const [activeMilestoneIndex, setActiveMilestoneIndex] = useState(1);
   const [detail, setDetail] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
@@ -75,6 +84,8 @@ export default function Portfolio({
 
   const currentNode =
     FORGE_NODES.find((n) => n.id === selectedNodeId) || FORGE_NODES[0];
+
+  const currentMilestone = MILESTONES[activeMilestoneIndex] || MILESTONES[0];
 
   const visible =
     category === "All skills" ? Object.values(skills).flat() : skills[category] || [];
@@ -92,6 +103,7 @@ export default function Portfolio({
 
   const openProjectModal = (i: number) => {
     setDetail(i);
+    setSelectedProjectIndex(i);
     dialog.current?.showModal();
   };
 
@@ -293,20 +305,73 @@ export default function Portfolio({
         </div>
       </section>
 
-      {/* 04 / SELECTED PROJECTS */}
-      <section id="projects" className="section projects-section">
-        <div className="section-inner">
-          <Heading n="04" title="THE ARCHIVE." sub="SELECTED PROJECTS" />
-          <p className="section-intro">
-            Three authentic engineering systems. Three ways to turn complex data into intelligent action.
-          </p>
-          <div className="projects-grid">
+      {/* 04 / PROJECTS: THE ARCHIVE OF CREATIONS */}
+      <section id="projects" className="section archive-section">
+        {/* Environment Background Layer */}
+        <div className="archive-background-layer" aria-hidden="true" />
+
+        <div className="archive-container">
+          <div className="archive-main-grid">
+            {/* Left HUD: Title & Actions */}
+            <div className="archive-left-hud">
+              <div className="archive-title-block">
+                <span className="eyebrow mono">[ THE ARCHIVE ]</span>
+                <h2 className="archive-heading">THE ARCHIVE<br />OF CREATIONS</h2>
+                <p className="archive-subhead mono">REAL PROJECTS. INTELLIGENT WORLDS.</p>
+                <p className="archive-desc">
+                  A collection of AI-powered systems, built for a smarter, more connected future.
+                </p>
+              </div>
+
+              <div className="archive-actions">
+                <button
+                  className="archive-cta-btn mono"
+                  onClick={() => openProjectModal(0)}
+                >
+                  <span>EXPLORE PROJECTS</span>
+                  <ArrowRight size={14} />
+                </button>
+                <button
+                  className="archive-secondary-btn mono"
+                  onClick={() => openProjectModal(1)}
+                >
+                  <span>▶ VIEW ARCHITECTURE SPECS</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Center 3D Stage: 3 Distinct Spatial Exhibits */}
+            <div className="archive-stage">
+              <ArchiveGalleryScene
+                selectedProjectIndex={selectedProjectIndex}
+                onSelectProject={(i) => openProjectModal(i)}
+                reduced={reduced}
+              />
+            </div>
+
+            {/* Right HUD: Vertical Philosophy Track */}
+            <div className="archive-right-hud" aria-hidden="true">
+              <div className="vertical-philosophy-track mono">
+                <span>IDEAS</span>
+                <span className="dot" />
+                <span>SYSTEMS</span>
+                <span className="dot" />
+                <span>INTELLIGENCE</span>
+                <span className="dot" />
+                <span>IMPACT</span>
+                <span className="dot" />
+                <span>AND BEYOND</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Accessible Project Cards (Preserved for screen readers and keyboard navigation) */}
+          <div className="projects-grid sr-only-focusable">
             {projects.map((p, i) => (
               <article className="project-card" key={p.shortName}>
                 <div className="project-number mono">
                   0{i + 1} <span>{p.type}</span>
                 </div>
-                <Exhibit index={i} />
                 <div className="project-body">
                   <h3>{p.shortName}</h3>
                   <p className="project-headline">{p.headline}</p>
@@ -330,19 +395,85 @@ export default function Portfolio({
         </div>
       </section>
 
-      {/* 05 / EXPERIENCE */}
-      <section id="experience" className="section experience-section chamber">
-        <div className="section-inner journey-layout">
-          <div>
-            <Heading n="05" title="THE JOURNEY." sub="EXPERIENCE" />
-            <p className="lead">
-              From concepts
-              <br />
-              to deployed systems.
-            </p>
-            <span className="eyebrow mono">LEARN. ARCHITECT. REFINE.</span>
+      {/* 05 / EXPERIENCE: THE JOURNEY ARCHIVE */}
+      <section id="experience" className="section journey-section">
+        {/* Environment Background Layer */}
+        <div className="journey-background-layer" aria-hidden="true" />
+
+        <div className="journey-container">
+          <div className="journey-main-grid">
+            {/* Left HUD: Title & Chronicle Intro */}
+            <div className="journey-left-hud">
+              <div className="journey-title-block">
+                <span className="eyebrow mono">[ A CHRONICLE OF GROWTH ]</span>
+                <h2 className="journey-heading">THE JOURNEY<br />ARCHIVE</h2>
+                <h3 className="journey-subhead mono">HARIHARASUTHAN V</h3>
+                <span className="journey-role mono">AI &amp; DATA SCIENCE DEVELOPER</span>
+                <p className="journey-desc">
+                  A timeline of roles, internships, projects, and experiences that shaped my path.
+                  Each milestone represents a step towards building a more intelligent tomorrow.
+                </p>
+              </div>
+
+              <div className="journey-actions">
+                <button
+                  className="journey-cta-btn mono"
+                  onClick={() => {
+                    const next = (activeMilestoneIndex + 1) % MILESTONES.length;
+                    setActiveMilestoneIndex(next);
+                  }}
+                >
+                  <span>EXPLORE THE JOURNEY</span>
+                  <ArrowRight size={14} />
+                </button>
+              </div>
+            </div>
+
+            {/* Center 3D Stage: Floating Winding Pathway & Milestone Monuments */}
+            <div className="journey-stage">
+              <JourneyTimelineScene
+                activeMilestoneIndex={activeMilestoneIndex}
+                onSelectMilestone={(i) => setActiveMilestoneIndex(i)}
+                reduced={reduced}
+              />
+            </div>
+
+            {/* Right HUD: Active Milestone Inspector Card & Track */}
+            <div className="journey-right-hud">
+              <aside className="journey-inspector glass" aria-live="polite">
+                <div className="inspector-header">
+                  <span className="eyebrow mono">{currentMilestone.year} // MILESTONE 0{activeMilestoneIndex + 1}</span>
+                  <h4 className="inspector-title">{currentMilestone.title}</h4>
+                  <span className="inspector-org mono">{currentMilestone.organization}</span>
+                  <span className="inspector-date mono">
+                    <Calendar size={11} /> {currentMilestone.dateRange}
+                  </span>
+                </div>
+
+                <p className="inspector-desc">{currentMilestone.description}</p>
+
+                <div className="inspector-tags mono">
+                  {currentMilestone.tags.map((t) => (
+                    <span key={t}>{t}</span>
+                  ))}
+                </div>
+              </aside>
+
+              <div className="vertical-journey-track mono" aria-hidden="true">
+                {["LEARN", "BUILD", "SOLVE", "COLLABORATE", "INNOVATE", "GROW", "IMPACT"].map((w) => (
+                  <span key={w}>{w}</span>
+                ))}
+              </div>
+            </div>
           </div>
-          <ol className="timeline">
+
+          {/* Bottom Chronicle Banner */}
+          <div className="journey-bottom-banner mono" aria-hidden="true">
+            <span>"MORE EXPERIENCES LEAD TO A BRIGHTER TOMORROW."</span>
+          </div>
+
+          {/* Accessible Semantic Timeline for Screen Readers & Tests */}
+          <ol className="timeline sr-only-focusable">
             {experience.map((e) => (
               <li key={e.company}>
                 <span className="timeline-dot" />
