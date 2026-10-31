@@ -19,6 +19,8 @@ import {
   Layers,
   Sparkles as SparklesIcon,
   Calendar,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import {
   profile,
@@ -340,11 +342,29 @@ export default function Portfolio({
               </div>
             </div>
 
+            {/* Mobile Exhibit Selector (Visible only on mobile/tablet) */}
+            <div className="archive-mobile-selector mono" aria-label="Select mobile exhibit">
+              {projects.map((p, i) => (
+                <button
+                  key={p.shortName}
+                  type="button"
+                  className={`archive-mobile-tab ${(selectedProjectIndex ?? 0) === i ? "active" : ""}`}
+                  onClick={() => setSelectedProjectIndex(i)}
+                  aria-label={`View ${p.shortName} exhibit`}
+                >
+                  0{i + 1} // {p.shortName}
+                </button>
+              ))}
+            </div>
+
             {/* Center 3D Stage: 3 Distinct Spatial Exhibits */}
             <div className="archive-stage">
               <ArchiveGalleryScene
                 selectedProjectIndex={selectedProjectIndex}
-                onSelectProject={(i) => openProjectModal(i)}
+                onSelectProject={(i) => {
+                  setSelectedProjectIndex(i);
+                  openProjectModal(i);
+                }}
                 reduced={reduced}
               />
             </div>
@@ -422,8 +442,9 @@ export default function Portfolio({
                     const next = (activeMilestoneIndex + 1) % MILESTONES.length;
                     setActiveMilestoneIndex(next);
                   }}
+                  aria-label="Advance to next milestone"
                 >
-                  <span>EXPLORE THE JOURNEY</span>
+                  <span>NEXT MILESTONE</span>
                   <ArrowRight size={14} />
                 </button>
               </div>
@@ -441,10 +462,21 @@ export default function Portfolio({
             {/* Right HUD: Active Milestone Inspector Card & Track */}
             <div className="journey-right-hud">
               <aside className="journey-inspector glass" aria-live="polite">
-                <div className="inspector-header">
+                {/* Meta Counter & Status */}
+                <div className="inspector-meta-row">
                   <span className="eyebrow mono">
-                    {currentMilestone.year} // {activeMilestoneIndex === 3 ? "FUTURE GOAL" : `MILESTONE 0${activeMilestoneIndex + 1}`}
+                    {currentMilestone.isFuture ? "FUTURE HORIZON" : `MILESTONE 0${activeMilestoneIndex + 1} OF 04`}
                   </span>
+                  <span className="inspector-counter mono">
+                    0{activeMilestoneIndex + 1} / 04
+                  </span>
+                </div>
+
+                <div className="inspector-header">
+                  <div className="inspector-year-row">
+                    <span className="inspector-year mono">{currentMilestone.year}</span>
+                    <span className="inspector-sub mono">{currentMilestone.subtitle}</span>
+                  </div>
                   <h4 className="inspector-title">{currentMilestone.title}</h4>
                   <span className="inspector-org mono">{currentMilestone.organization}</span>
                   <span className="inspector-date mono">
@@ -452,12 +484,63 @@ export default function Portfolio({
                   </span>
                 </div>
 
+                {currentMilestone.isFuture && (
+                  <div className="future-goal-badge mono">
+                    [ FUTURE GOAL · ACTIVE RESEARCH &amp; ARCHITECTURE ]
+                  </div>
+                )}
+
                 <p className="inspector-desc">{currentMilestone.description}</p>
 
                 <div className="inspector-tags mono">
                   {currentMilestone.tags.map((t) => (
                     <span key={t}>{t}</span>
                   ))}
+                </div>
+
+                {/* Milestone Navigation Controls */}
+                <div className="inspector-nav-controls">
+                  <button
+                    type="button"
+                    className="inspector-nav-btn mono"
+                    onClick={() => {
+                      const prev = (activeMilestoneIndex - 1 + MILESTONES.length) % MILESTONES.length;
+                      setActiveMilestoneIndex(prev);
+                    }}
+                    aria-label="Previous milestone"
+                  >
+                    <ChevronLeft size={13} />
+                    <span>PREV</span>
+                  </button>
+
+                  <div className="milestone-steps" role="tablist" aria-label="Milestone steps">
+                    {MILESTONES.map((m, idx) => (
+                      <button
+                        key={m.id}
+                        type="button"
+                        className={`milestone-step-btn mono ${activeMilestoneIndex === idx ? "active" : ""}`}
+                        onClick={() => setActiveMilestoneIndex(idx)}
+                        aria-label={`Jump to ${m.year} milestone`}
+                        role="tab"
+                        aria-selected={activeMilestoneIndex === idx}
+                      >
+                        {m.year === "FUTURE" ? "F" : `0${idx + 1}`}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    className="inspector-nav-btn mono"
+                    onClick={() => {
+                      const next = (activeMilestoneIndex + 1) % MILESTONES.length;
+                      setActiveMilestoneIndex(next);
+                    }}
+                    aria-label="Next milestone"
+                  >
+                    <span>NEXT</span>
+                    <ChevronRight size={13} />
+                  </button>
                 </div>
               </aside>
 

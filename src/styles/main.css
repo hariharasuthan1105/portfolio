@@ -4159,6 +4159,11 @@ html[data-motion="reduced"] *:after {
   outline: none;
 }
 
+/* Mobile Exhibit Switcher Tabs */
+.archive-mobile-selector {
+  display: none;
+}
+
 /* 3D Exhibit Pedestal Plaques */
 .archive-plaque {
   display: flex;
@@ -4319,9 +4324,36 @@ html[data-motion="reduced"] *:after {
   .archive-left-hud {
     order: 1;
   }
-  .archive-stage {
-    height: 520px;
+  .archive-mobile-selector {
     order: 2;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 4px 0 12px;
+    z-index: 10;
+  }
+  .archive-stage {
+    height: 440px;
+    order: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .archive-mobile-tab {
+    padding: 6px 12px;
+    background: rgba(10, 10, 14, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #969696;
+    font-size: 8.5px;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .archive-mobile-tab.active {
+    background: #ffffff;
+    color: #050505;
+    border-color: #ffffff;
+    font-weight: 700;
   }
   .archive-plaque {
     width: 170px;
@@ -4384,7 +4416,7 @@ html[data-motion="reduced"] *:after {
 
 .journey-main-grid {
   display: grid;
-  grid-template-columns: 280px 1fr 310px;
+  grid-template-columns: 280px 1fr 340px;
   gap: 24px;
   align-items: center;
   min-height: 640px;
@@ -4499,145 +4531,171 @@ html[data-motion="reduced"] *:after {
   outline: none;
 }
 
-/* 3D Milestone Floating Card */
-.journey-milestone-card {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 10px 14px;
-  background: rgba(8, 8, 12, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
-  width: 175px;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.journey-milestone-card:hover {
-  transform: translateY(-4px) scale(1.06);
-  border-color: #ffffff;
-  box-shadow: 0 10px 28px rgba(255, 255, 255, 0.25);
-}
-
-.journey-milestone-card.active {
-  border-color: #ffffff;
-  background: rgba(22, 22, 30, 0.98);
-  box-shadow: 0 0 24px rgba(255, 255, 255, 0.4);
-  transform: scale(1.08);
-}
-
-.card-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card-year {
-  font-size: 11px;
-  font-weight: 700;
-  color: #ffffff;
-}
-
-.card-sub {
-  font-size: 7px;
-  letter-spacing: 1px;
-  color: #969696;
-}
-
-.card-title {
-  font-size: 11.5px;
-  font-weight: 600;
-  color: #ffffff;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.card-org {
-  font-size: 8px;
-  color: #dadada;
-  margin: 0 0 4px 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.card-tags {
-  display: flex;
-  gap: 4px;
-}
-
-.card-tags span {
-  font-size: 6.5px;
-  padding: 1px 4px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #dadada;
-}
-
-/* Right HUD: Inspector & Values Track */
-.journey-right-hud {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  z-index: 10;
-}
-
-.journey-inspector {
-  padding: 22px;
-  background: rgba(10, 10, 14, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7);
-}
-
-.journey-inspector .inspector-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  padding-bottom: 12px;
-  margin-bottom: 14px;
-}
-
-.journey-inspector .inspector-header .eyebrow {
-  display: block;
-  font-size: 8.5px;
-  letter-spacing: 2px;
-  color: #969696;
-  margin-bottom: 4px;
-}
-
-.journey-inspector .inspector-title {
-  font-size: 18px;
-  color: #ffffff;
-  margin: 0 0 6px 0;
-  letter-spacing: 1.5px;
-  font-weight: 600;
-}
-
-.journey-inspector .inspector-org {
-  display: block;
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  color: #dadada;
-  margin-bottom: 4px;
-}
-
-.journey-inspector .inspector-date {
+/* 3D Subtle Milestone Spatial Pin (Replaces heavy overlapping card) */
+.milestone-spatial-pin {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding: 4px 10px;
+  background: rgba(8, 8, 12, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  user-select: none;
+  border-radius: 2px;
+  white-space: nowrap;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #dadada;
+}
+
+.milestone-spatial-pin:hover {
+  transform: translateY(-2px) scale(1.05);
+  border-color: #ffffff;
+  color: #ffffff;
+  background: rgba(18, 18, 24, 0.95);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
+}
+
+.milestone-spatial-pin.active {
+  border-color: #ffffff;
+  background: rgba(24, 24, 32, 0.98);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.45);
+  transform: scale(1.08);
+}
+
+.pin-year {
+  font-size: 10px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.pin-sep {
+  font-size: 8px;
+  color: #707078;
+}
+
+.pin-label {
+  font-size: 8.5px;
+  letter-spacing: 1px;
+  color: #dadada;
+}
+
+.pin-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 8px #ffffff;
+}
+
+/* Right HUD: Single Milestone Inspector */
+.journey-right-hud {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 10;
+  min-width: 0;
+}
+
+.journey-inspector {
+  padding: 24px;
+  background: rgba(10, 10, 14, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inspector-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+}
+
+.inspector-meta-row .eyebrow {
+  font-size: 8.5px;
+  letter-spacing: 2px;
+  color: #969696;
+}
+
+.inspector-counter {
   font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #dadada;
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.inspector-year-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.inspector-year {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 2px;
+}
+
+.inspector-sub {
+  font-size: 8.5px;
+  letter-spacing: 1.5px;
+  color: #969696;
+}
+
+.inspector-title {
+  font-size: 16px;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+  letter-spacing: 1.2px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.inspector-org {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #dadada;
+  margin-bottom: 4px;
+}
+
+.inspector-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9.5px;
   letter-spacing: 1px;
   color: #969696;
 }
 
+.future-goal-badge {
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  padding: 5px 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  text-align: center;
+  margin-top: 4px;
+}
+
 .journey-inspector .inspector-desc {
-  font-size: 12.5px;
+  font-size: 12px;
   line-height: 1.6;
   color: #c8c8d0;
-  margin: 0 0 16px 0;
+  margin: 0;
 }
 
 .journey-inspector .inspector-tags {
@@ -4647,12 +4705,74 @@ html[data-motion="reduced"] *:after {
 }
 
 .journey-inspector .inspector-tags span {
-  padding: 4px 10px;
-  font-size: 9px;
+  padding: 3px 8px;
+  font-size: 8.5px;
   letter-spacing: 1px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #dadada;
+}
+
+/* Inspector Prev/Next Controls */
+.inspector-nav-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 14px;
+  margin-top: 4px;
+}
+
+.inspector-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: #dadada;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.inspector-nav-btn:hover {
+  background: #ffffff;
+  color: #050505;
+  border-color: #ffffff;
+}
+
+.milestone-steps {
+  display: flex;
+  gap: 4px;
+}
+
+.milestone-step-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #969696;
+  font-size: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.milestone-step-btn:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.milestone-step-btn.active {
+  background: #ffffff;
+  color: #050505;
+  border-color: #ffffff;
+  font-weight: 700;
 }
 
 .vertical-journey-track {
@@ -4712,12 +4832,8 @@ html[data-motion="reduced"] *:after {
     order: 1;
   }
   .journey-stage {
-    height: 520px;
+    height: 480px;
     order: 2;
-  }
-  .journey-milestone-card {
-    width: 145px;
-    padding: 7px 9px;
   }
   .journey-right-hud {
     order: 3;
