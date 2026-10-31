@@ -49,7 +49,7 @@ export default function Hero({
             <span>:WELCOME TO MY REALM : • • • • •</span>
           </div>
 
-          <h1 className="hero-title">
+          <h1 className="hero-title display-heading">
             KINGDOM
             <br />
             <span className="hero-subtext">OF CODE</span>

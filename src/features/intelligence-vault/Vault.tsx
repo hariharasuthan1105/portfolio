@@ -146,7 +146,7 @@ export default function Vault({ reduced = false }: { reduced?: boolean }) {
             <span className="eyebrow mono">[ 08 / THE SIGNATURE EXPERIMENT ]</span>
             <div className="vault-title-row">
               <LockKeyhole size={28} className={unlocked ? "unlocked-icon" : "locked-icon"} />
-              <h2 className="vault-main-title">THE INTELLIGENCE VAULT</h2>
+              <h2 className="vault-main-title section-heading-text">THE INTELLIGENCE VAULT</h2>
             </div>
             <p className="vault-subheading mono">
               THREE KEYS. ONE INTELLIGENCE. UNLOCK MY SUPERPOWER.
@@ -199,7 +199,7 @@ export default function Vault({ reduced = false }: { reduced?: boolean }) {
               <header>
                 <span className="challenge-index mono">01</span>
                 <div>
-                  <h3 id="c1-title">PERCEPTION</h3>
+                  <h3 id="c1-title" className="card-heading">PERCEPTION</h3>
                   <p className="challenge-inspiration">Inspired by DocRecon</p>
                 </div>
                 <div className="challenge-status">
@@ -306,7 +306,7 @@ export default function Vault({ reduced = false }: { reduced?: boolean }) {
               <header>
                 <span className="challenge-index mono">02</span>
                 <div>
-                  <h3 id="c2-title">REASONING</h3>
+                  <h3 id="c2-title" className="card-heading">REASONING</h3>
                   <p className="challenge-inspiration">Inspired by Pathway AI</p>
                 </div>
                 <div className="challenge-status">
@@ -408,7 +408,7 @@ export default function Vault({ reduced = false }: { reduced?: boolean }) {
               <header>
                 <span className="challenge-index mono">03</span>
                 <div>
-                  <h3 id="c3-title">CONNECTION</h3>
+                  <h3 id="c3-title" className="card-heading">CONNECTION</h3>
                   <p className="challenge-inspiration">Inspired by HEFIN</p>
                 </div>
                 <div className="challenge-status">
@@ -496,7 +496,7 @@ export default function Vault({ reduced = false }: { reduced?: boolean }) {
                   [ GRAND FINALE: THREE KEYS MERGED · REVEALING MY SUPERPOWER ]
                 </span>
 
-                <h3 className="superpower-heading">
+                <h3 className="superpower-heading display-heading">
                   TRANSFORMING COMPLEX DATA
                   <br />
                   INTO INTELLIGENT DECISIONS.
