@@ -435,111 +435,149 @@ export default function Portfolio({
         </div>
       </section>
 
-      {/* 04 / PROJECTS: THE ARCHIVE OF CREATIONS */}
+      {/* 04 / PROJECTS: THE ARCHIVE OF CREATIONS (CINEMATIC EXHIBITION REDESIGN) */}
       <section id="projects" className="section archive-section">
         {/* Environment Background Layer */}
         <div className="archive-background-layer" aria-hidden="true" />
+        <div className="archive-vignette-overlay" aria-hidden="true" />
 
-        <div className="archive-container">
-          <div className="archive-main-grid">
-            {/* Left HUD: Title & Actions */}
-            <div className="archive-left-hud">
-              <div className="archive-title-block">
-                <span className="eyebrow mono">[ THE ARCHIVE ]</span>
-                <h2 className="archive-heading section-heading-text">THE ARCHIVE<br />OF CREATIONS</h2>
-                <p className="archive-subhead mono">REAL PROJECTS. INTELLIGENT WORLDS.</p>
-                <p className="archive-desc">
-                  A collection of AI-powered systems, built for a smarter, more connected future.
-                </p>
-              </div>
-
-              <div className="archive-actions">
-                <button
-                  className="archive-cta-btn mono"
-                  onClick={() => openProjectModal(0)}
-                >
-                  <span>EXPLORE PROJECTS</span>
-                  <ArrowRight size={14} />
-                </button>
-                <button
-                  className="archive-secondary-btn mono"
-                  onClick={() => openProjectModal(1)}
-                >
-                  <span>▶ VIEW ARCHITECTURE SPECS</span>
-                </button>
-              </div>
+        {/* Top Header HUD: Left Title & Right Telemetry */}
+        <div className="archive-header-hud">
+          <div className="archive-title-block">
+            <span className="eyebrow mono">[ THE ARCHIVE ]</span>
+            <h2 className="archive-heading section-heading-text">THE ARCHIVE<br />OF CREATIONS</h2>
+            <div className="archive-desc-wrap">
+              <p className="archive-subhead mono">REAL PROJECTS. INTELLIGENT WORLDS.</p>
+              <p className="archive-desc">
+                A collection of AI-powered systems, built for a smarter, more connected future.
+              </p>
             </div>
-
-            {/* Mobile Exhibit Selector (Visible only on mobile/tablet) */}
-            <div className="archive-mobile-selector mono" aria-label="Select mobile exhibit">
-              {projects.map((p, i) => (
-                <button
-                  key={p.shortName}
-                  type="button"
-                  className={`archive-mobile-tab ${(selectedProjectIndex ?? 0) === i ? "active" : ""}`}
-                  onClick={() => setSelectedProjectIndex(i)}
-                  aria-label={`View ${p.shortName} exhibit`}
-                >
-                  0{i + 1} // {p.shortName}
-                </button>
-              ))}
-            </div>
-
-            {/* Center 3D Stage: 3 Distinct Spatial Exhibits */}
-            <div className="archive-stage">
-              <ArchiveGalleryScene
-                selectedProjectIndex={selectedProjectIndex}
-                onSelectProject={(i) => {
-                  setSelectedProjectIndex(i);
-                  openProjectModal(i);
-                }}
-                reduced={reduced}
-              />
-            </div>
-
-            {/* Right HUD: Vertical Philosophy Track */}
-            <div className="archive-right-hud" aria-hidden="true">
-              <div className="vertical-philosophy-track mono">
-                <span>IDEAS</span>
-                <span className="dot" />
-                <span>SYSTEMS</span>
-                <span className="dot" />
-                <span>INTELLIGENCE</span>
-                <span className="dot" />
-                <span>IMPACT</span>
-                <span className="dot" />
-                <span>AND BEYOND</span>
-              </div>
+            <div className="archive-actions">
+              <button
+                className="archive-cta-btn mono"
+                onClick={() => openProjectModal(0)}
+              >
+                <span>EXPLORE PROJECTS</span>
+                <ArrowRight size={14} />
+              </button>
+              <button
+                className="archive-secondary-btn mono"
+                onClick={() => openProjectModal(selectedProjectIndex ?? 1)}
+              >
+                <span>VIEW ARCHITECTURE SPECS</span>
+                <ArrowUpRight size={13} />
+              </button>
             </div>
           </div>
 
-          {/* Accessible Project Cards (Preserved for screen readers and keyboard navigation) */}
-          <div className="projects-grid sr-only-focusable">
-            {projects.map((p, i) => (
-              <article className="project-card" key={p.shortName}>
-                <div className="project-number mono">
-                  0{i + 1} <span>{p.type}</span>
+          {/* Right Architectural Telemetry Badge */}
+          <div className="archive-telemetry-badge mono" aria-hidden="true">
+            <div className="telemetry-pill">
+              <span className="telemetry-dot" />
+              <span>ARCHIVE REPOSITORY // 03 SYSTEMS</span>
+            </div>
+            <span className="telemetry-sub">MONOCHROME 3D EXHIBITION</span>
+          </div>
+        </div>
+
+        {/* Mobile Exhibit Switcher Tabs */}
+        <div className="archive-mobile-selector mono" aria-label="Select mobile exhibit">
+          {projects.map((p, i) => (
+            <button
+              key={p.shortName}
+              type="button"
+              className={`archive-mobile-tab ${(selectedProjectIndex ?? 0) === i ? "active" : ""}`}
+              onClick={() => setSelectedProjectIndex(i)}
+              aria-label={`View ${p.shortName} exhibit`}
+            >
+              0{i + 1} // {p.shortName}
+            </button>
+          ))}
+        </div>
+
+        {/* Center 3D Stage: 3 Distinct Spatial Exhibits Spanning Hall */}
+        <div className="archive-stage">
+          <ArchiveGalleryScene
+            selectedProjectIndex={selectedProjectIndex ?? 0}
+            onSelectProject={(i) => {
+              setSelectedProjectIndex(i);
+              openProjectModal(i);
+            }}
+            reduced={reduced}
+          />
+        </div>
+
+        {/* Center + Right Row: 3 Dedicated Project Cards Aligned across Common Pedestal Baseline */}
+        <div className="archive-cards-row">
+          {projects.map((p, i) => {
+            const subtitles = [
+              "DOCUMENT INTELLIGENCE",
+              "SMART URBAN RAG",
+              "DECENTRALIZED AI",
+            ];
+            const isSelected = (selectedProjectIndex ?? 0) === i;
+            return (
+              <article
+                key={p.shortName}
+                className={`archive-exhibit-card ${isSelected ? "selected" : ""}`}
+                onMouseEnter={() => setSelectedProjectIndex(i)}
+                onFocus={() => setSelectedProjectIndex(i)}
+                onClick={() => openProjectModal(i)}
+                tabIndex={0}
+                role="button"
+                aria-label={`Explore ${p.name} architecture specification`}
+              >
+                <div className="card-top-bar">
+                  <div className="card-index-group mono">
+                    <span className="card-number">0{i + 1}</span>
+                    <span className="card-divider">/</span>
+                    <span className="card-subtitle">{subtitles[i] || p.type}</span>
+                  </div>
+                  <span className="card-emblem-badge" aria-hidden="true">
+                    {i === 0 && (
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <rect x="4" y="3" width="16" height="18" rx="2" />
+                        <line x1="8" y1="8" x2="16" y2="8" />
+                        <line x1="8" y1="12" x2="16" y2="12" />
+                        <line x1="8" y1="16" x2="13" y2="16" />
+                      </svg>
+                    )}
+                    {i === 1 && (
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M3 21h18M6 21V10l6-4 6 4v11M10 21V14h4v7" />
+                      </svg>
+                    )}
+                    {i === 2 && (
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                    )}
+                  </span>
                 </div>
-                <div className="project-body">
-                  <h3 className="card-heading">{p.shortName}</h3>
-                  <p className="project-headline">{p.headline}</p>
-                  <div className="tags">
-                    {p.tags.map((t) => (
-                      <span key={t} className="mono">{t}</span>
+
+                <div className="card-main-content">
+                  <h3 className="card-title card-heading">{p.shortName}</h3>
+                  <p className="card-headline">{p.headline}</p>
+                </div>
+
+                <div className="card-footer-strip">
+                  <div className="card-tags">
+                    {p.tags.slice(0, 3).map((tag) => (
+                      <span key={tag} className="card-tag mono">
+                        [{tag}]
+                      </span>
                     ))}
                   </div>
-                  <button
-                    className="project-open mono"
-                    onClick={() => openProjectModal(i)}
-                    aria-label={`Explore technical details for ${p.shortName}`}
-                  >
+
+                  <div className="card-action mono">
                     <span>EXPLORE ARCHITECTURE</span>
-                    <ArrowUpRight size={17} />
-                  </button>
+                    <ArrowUpRight size={14} className="action-arrow" />
+                  </div>
                 </div>
               </article>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </section>
 
