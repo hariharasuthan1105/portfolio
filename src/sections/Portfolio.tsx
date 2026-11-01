@@ -937,6 +937,7 @@ export default function Portfolio({
             <p className="hall-lead-quote">
               "Milestones earned through curiosity, persistence, and engineering."
             </p>
+            <div className="hall-accent-line" aria-hidden="true" />
           </div>
 
           {/* Atmospheric 3D Hall of Honor Scene (God Rays, Ground Mist, 3D Trophies) */}

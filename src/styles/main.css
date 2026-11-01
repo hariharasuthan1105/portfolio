@@ -1822,7 +1822,7 @@ nav a[aria-current]:after {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("/assets/hall-of-honor-environment.webp") center bottom / cover no-repeat;
+  background: url("/assets/hall-of-honor-environment.webp") center center / cover no-repeat;
   filter: saturate(0) contrast(1.08) brightness(0.94);
   opacity: 0.96;
   pointer-events: none;
@@ -1845,6 +1845,17 @@ nav a[aria-current]:after {
   );
   pointer-events: none;
   z-index: 2;
+}
+
+/* Isolated 3D Mode (?isolate=hall3d) */
+.awards-section.hall-of-honor-section.is-hall-isolated::before,
+.awards-section.hall-of-honor-section.is-hall-isolated::after {
+  display: none !important;
+}
+.awards-section.hall-of-honor-section.is-hall-isolated .hall-header-block,
+.awards-section.hall-of-honor-section.is-hall-isolated .hall-awards-container {
+  opacity: 0.2;
+  pointer-events: none;
 }
 
 /* Real-Time Three.js Canvas Container */
@@ -1887,28 +1898,27 @@ nav a[aria-current]:after {
   position: relative;
   z-index: 10;
   pointer-events: auto;
-  max-width: 480px;
-  background: linear-gradient(135deg, rgba(7, 7, 7, 0.82) 0%, rgba(18, 18, 20, 0.45) 100%);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-left: 2px solid #ffffff;
-  padding: 22px 26px;
-  border-radius: 2px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+  max-width: 440px;
+  background: rgba(10, 10, 14, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 26px 30px;
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
 }
 
 .hall-header-block .eyebrow {
-  color: #999999;
-  font-size: 10px;
+  color: #a0a0b0;
+  font-size: 10.5px;
   letter-spacing: 0.16em;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .hall-main-title {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+  font-size: clamp(2.2rem, 3.8vw, 3.6rem);
   font-weight: 700;
   color: #ffffff;
   line-height: 1.08;
@@ -1921,9 +1931,18 @@ nav a[aria-current]:after {
   font-family: system-ui, -apple-system, sans-serif;
   font-size: 13.5px;
   line-height: 1.55;
-  color: #b0b0b0;
+  color: #b0b0b8;
   margin: 0;
   font-style: italic;
+}
+
+.hall-header-block .hall-accent-line {
+  width: 32px;
+  height: 2px;
+  background: #ffffff;
+  opacity: 0.6;
+  margin-top: 14px;
+  border-radius: 1px;
 }
 
 /* Lower Area — Three Award Panels */
@@ -2020,12 +2039,12 @@ nav a[aria-current]:after {
 }
 
 .hall-award-panel.hall-podium-badge {
-  background: linear-gradient(180deg, rgba(14, 14, 20, 0.78) 0%, rgba(6, 6, 10, 0.92) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(8, 8, 12, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  padding: 14px 18px 12px;
-  border-radius: 3px;
+  padding: 16px 20px 14px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2034,7 +2053,7 @@ nav a[aria-current]:after {
   cursor: pointer;
   outline: none;
   overflow: hidden;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
   transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.24s ease,
               box-shadow 0.24s ease,
@@ -2056,14 +2075,14 @@ nav a[aria-current]:after {
   transform: translateY(-3px);
   border-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 255, 255, 0.1);
-  background: linear-gradient(180deg, rgba(20, 20, 28, 0.88) 0%, rgba(10, 10, 16, 0.96) 100%);
+  background: rgba(14, 14, 20, 0.88);
 }
 
 .hall-award-panel.hall-podium-badge.active-award {
   border-color: #ffffff;
   transform: translateY(-3px);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9), 0 0 24px rgba(255, 255, 255, 0.2);
-  background: linear-gradient(180deg, rgba(24, 24, 34, 0.92) 0%, rgba(12, 12, 18, 0.98) 100%);
+  background: rgba(18, 18, 26, 0.94);
 }
 
 .badge-meta {
@@ -2075,19 +2094,19 @@ nav a[aria-current]:after {
 }
 
 .badge-index {
-  font-size: 9px;
-  color: #777788;
+  font-size: 9.5px;
+  color: #888899;
   letter-spacing: 0.14em;
 }
 
 .badge-status {
   font-size: 8px;
   letter-spacing: 0.12em;
-  padding: 2px 7px;
+  padding: 3px 8px;
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #e0e0e0;
-  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  border-radius: 4px;
   transition: all 0.2s ease;
 }
 
@@ -7719,8 +7738,14 @@ html[data-motion="reduced"] *:after {
 .awards-section.hall-of-honor-section.is-hall-isolated {
   background-color: #060608 !important;
 }
-.is-hall-isolated .hall-inner {
+.is-hall-isolated .hall-header-block,
+.is-hall-isolated .hall-awards-container,
+.is-hall-isolated .hall-prompt-row,
+.is-hall-isolated .hall-mobile-controls,
+.is-hall-isolated .hall-credentials-bar {
   visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 
 @media (max-width: 1024px) and (min-width: 769px) {
