@@ -1,0 +1,422 @@
+[
+  {
+    "width": 1536,
+    "height": 1024,
+    "errors": [],
+    "layout": {
+      "overflow": false,
+      "scene": {
+        "x": 504.9375,
+        "y": 170.375,
+        "width": 551.984375,
+        "height": 778.234375,
+        "right": 1056.921875
+      },
+      "left": {
+        "x": 46.078125,
+        "y": 190.375,
+        "width": 431.21875,
+        "height": 308.46875,
+        "right": 477.296875
+      },
+      "right": {
+        "x": 1084.5625,
+        "y": 170.375,
+        "width": 405.359375,
+        "height": 502,
+        "right": 1489.921875
+      },
+      "canvas": {
+        "x": 504.9375,
+        "y": 170.375,
+        "width": 551.984375,
+        "height": 778.234375,
+        "right": 1056.921875
+      }
+    },
+    "resume": "hariharasuthan-resume.pdf",
+    "audit": {
+      "foundation": [
+        0,
+        0,
+        0
+      ],
+      "foundationRotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "feetY": 0.065,
+      "daisY": 0.065,
+      "crystalY": 1.65,
+      "camera": [
+        0,
+        1.7283097468003574,
+        6.314552742226196
+      ],
+      "ring": 0,
+      "inFrame": true
+    }
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "errors": [],
+    "layout": {
+      "overflow": false,
+      "scene": {
+        "x": 20,
+        "y": 459.75,
+        "width": 350,
+        "height": 450,
+        "right": 370
+      },
+      "left": {
+        "x": 20,
+        "y": 161,
+        "width": 350,
+        "height": 274.75,
+        "right": 370
+      },
+      "right": {
+        "x": 20,
+        "y": 1204.09375,
+        "width": 350,
+        "height": 372,
+        "right": 370
+      },
+      "canvas": {
+        "x": 20,
+        "y": 459.75,
+        "width": 350,
+        "height": 450,
+        "right": 370
+      }
+    },
+    "resume": "hariharasuthan-resume.pdf",
+    "audit": {
+      "foundation": [
+        0,
+        0,
+        0
+      ],
+      "foundationRotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "feetY": 0.065,
+      "daisY": 0.065,
+      "crystalY": 1.65,
+      "camera": [
+        0,
+        1.6874187949800268,
+        5.860208833111408
+      ],
+      "ring": 0,
+      "inFrame": true
+    }
+  },
+  {
+    "width": 1920,
+    "height": 1080,
+    "errors": [],
+    "layout": {
+      "overflow": false,
+      "scene": {
+        "x": 630.21875,
+        "y": 177.09375,
+        "width": 692,
+        "height": 820.796875,
+        "right": 1322.21875
+      },
+      "left": {
+        "x": 57.59375,
+        "y": 197.09375,
+        "width": 540.625,
+        "height": 280.71875,
+        "right": 598.21875
+      },
+      "right": {
+        "x": 1354.21875,
+        "y": 177.09375,
+        "width": 508.1875,
+        "height": 502,
+        "right": 1862.40625
+      },
+      "canvas": {
+        "x": 630.21875,
+        "y": 177.09375,
+        "width": 692,
+        "height": 820.796875,
+        "right": 1322.21875
+      }
+    },
+    "resume": "hariharasuthan-resume.pdf",
+    "audit": {
+      "foundation": [
+        0,
+        0,
+        0
+      ],
+      "foundationRotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "feetY": 0.065,
+      "daisY": 0.065,
+      "crystalY": 1.65,
+      "camera": [
+        0,
+        1.6728651920676478,
+        5.698502134084977
+      ],
+      "ring": 0,
+      "inFrame": true
+    }
+  },
+  {
+    "width": 1366,
+    "height": 768,
+    "errors": [],
+    "layout": {
+      "overflow": false,
+      "scene": {
+        "x": 449.046875,
+        "y": 161,
+        "width": 490.890625,
+        "height": 600,
+        "right": 939.9375
+      },
+      "left": {
+        "x": 40.96875,
+        "y": 181,
+        "width": 383.5,
+        "height": 266.3125,
+        "right": 424.46875
+      },
+      "right": {
+        "x": 964.515625,
+        "y": 161,
+        "width": 360.515625,
+        "height": 502,
+        "right": 1325.03125
+      },
+      "canvas": {
+        "x": 449.046875,
+        "y": 161,
+        "width": 490.890625,
+        "height": 600,
+        "right": 939.9375
+      }
+    },
+    "resume": "hariharasuthan-resume.pdf",
+    "audit": {
+      "foundation": [
+        0,
+        0,
+        0
+      ],
+      "foundationRotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "feetY": 0.065,
+      "daisY": 0.065,
+      "crystalY": 1.65,
+      "camera": [
+        0,
+        1.6728651920676478,
+        5.698502134084977
+      ],
+      "ring": 0,
+      "inFrame": true
+    }
+  },
+  {
+    "width": 1024,
+    "height": 768,
+    "errors": [],
+    "layout": {
+      "overflow": false,
+      "scene": {
+        "x": 521.203125,
+        "y": 132,
+        "width": 472.078125,
+        "height": 620,
+        "right": 993.28125
+      },
+      "left": {
+        "x": 30.71875,
+        "y": 208.90625,
+        "width": 472.0625,
+        "height": 207.84375,
+        "right": 502.78125
+      },
+      "right": {
+        "x": 30.71875,
+        "y": 770.421875,
+        "width": 962.5625,
+        "height": 190,
+        "right": 993.28125
+      },
+      "canvas": {
+        "x": 521.203125,
+        "y": 132,
+        "width": 472.078125,
+        "height": 620,
+        "right": 993.28125
+      }
+    },
+    "resume": "hariharasuthan-resume.pdf",
+    "audit": {
+      "foundation": [
+        0,
+        0,
+        0
+      ],
+      "foundationRotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "feetY": 0.065,
+      "daisY": 0.065,
+      "crystalY": 1.65,
+      "camera": [
+        0,
+        1.6965169381803613,
+        5.961299313115128
+      ],
+      "ring": 0,
+      "inFrame": true
+    }
+  },
+  {
+    "width": 768,
+    "height": 1024,
+    "errors": [],
+    "layout": {
+      "overflow": false,
+      "scene": {
+        "x": 23.03125,
+        "y": 434.0625,
+        "width": 721.9375,
+        "height": 450,
+        "right": 744.96875
+      },
+      "left": {
+        "x": 23.03125,
+        "y": 161,
+        "width": 721.9375,
+        "height": 249.0625,
+        "right": 744.96875
+      },
+      "right": {
+        "x": 23.03125,
+        "y": 1178.40625,
+        "width": 721.9375,
+        "height": 372,
+        "right": 744.96875
+      },
+      "canvas": {
+        "x": 23.03125,
+        "y": 434.0625,
+        "width": 721.9375,
+        "height": 450,
+        "right": 744.96875
+      }
+    },
+    "resume": "hariharasuthan-resume.pdf",
+    "audit": {
+      "foundation": [
+        0,
+        0,
+        0
+      ],
+      "foundationRotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "feetY": 0.065,
+      "daisY": 0.065,
+      "crystalY": 1.65,
+      "camera": [
+        0,
+        1.6728651920676478,
+        5.698502134084977
+      ],
+      "ring": 0,
+      "inFrame": true
+    }
+  },
+  {
+    "width": 320,
+    "height": 568,
+    "errors": [],
+    "layout": {
+      "overflow": false,
+      "scene": {
+        "x": 20,
+        "y": 503.984375,
+        "width": 280,
+        "height": 450,
+        "right": 300
+      },
+      "left": {
+        "x": 20,
+        "y": 161.265625,
+        "width": 280,
+        "height": 318.71875,
+        "right": 300
+      },
+      "right": {
+        "x": 20,
+        "y": 1266.546875,
+        "width": 280,
+        "height": 372,
+        "right": 300
+      },
+      "canvas": {
+        "x": 20,
+        "y": 503.984375,
+        "width": 280,
+        "height": 450,
+        "right": 300
+      }
+    },
+    "resume": "hariharasuthan-resume.pdf",
+    "audit": {
+      "foundation": [
+        0,
+        0,
+        0
+      ],
+      "foundationRotation": [
+        0,
+        0,
+        0,
+        "XYZ"
+      ],
+      "feetY": 0.065,
+      "daisY": 0.065,
+      "crystalY": 1.65,
+      "camera": [
+        0,
+        1.7932693770699395,
+        7.036326411888218
+      ],
+      "ring": 0,
+      "inFrame": true
+    }
+  }
+]

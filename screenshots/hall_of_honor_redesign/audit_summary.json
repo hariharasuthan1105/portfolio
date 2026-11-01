@@ -1,0 +1,87 @@
+[
+  {
+    "name": "Achievements section mounted",
+    "pass": true,
+    "note": "#achievements exists"
+  },
+  {
+    "name": "Capture 01 Default 1920x1080",
+    "pass": true,
+    "note": "Saved 01_desktop_1920x1080_default.png"
+  },
+  {
+    "name": "Three Podium Badges rendered",
+    "pass": true,
+    "note": "Count: 3"
+  },
+  {
+    "name": "Trophy 01 Selection opens modal",
+    "pass": true,
+    "note": "Citation dialog opened"
+  },
+  {
+    "name": "Escape key closes modal",
+    "pass": true,
+    "note": "Modal closed cleanly"
+  },
+  {
+    "name": "Capture 03 Pathway Trophy Selected",
+    "pass": true,
+    "note": "Saved 03_desktop_1920_trophy02_pathway_selected.png"
+  },
+  {
+    "name": "Capture 04 WCHL Trophy Selected",
+    "pass": true,
+    "note": "Saved 04_desktop_1920_trophy03_wchl_selected.png"
+  },
+  {
+    "name": "Certifications expanded",
+    "pass": true,
+    "note": "Found 5 certified items"
+  },
+  {
+    "name": "Capture 06 Desktop 1536x1024",
+    "pass": true,
+    "note": "Saved 06_desktop_1536x1024_default.png"
+  },
+  {
+    "name": "Capture 07 Laptop 1366x768",
+    "pass": true,
+    "note": "Saved 07_laptop_1366x768.png"
+  },
+  {
+    "name": "Capture 08 Tablet 1024x768",
+    "pass": true,
+    "note": "Saved 08_tablet_1024x768.png"
+  },
+  {
+    "name": "Mobile Zero Horizontal Overflow",
+    "pass": true,
+    "note": "scrollWidth: 390px, clientWidth: 390px"
+  },
+  {
+    "name": "Capture 09 Mobile 390x844 Default",
+    "pass": true,
+    "note": "Saved 09_mobile_390x844_default.png"
+  },
+  {
+    "name": "Capture 10 Mobile Next Trophy",
+    "pass": true,
+    "note": "Saved 10_mobile_390x844_next_trophy.png"
+  },
+  {
+    "name": "Capture 11 Mobile Modal Opened",
+    "pass": true,
+    "note": "Saved 11_mobile_390x844_modal_opened.png"
+  },
+  {
+    "name": "Capture 12 Isolated 3D Preview",
+    "pass": true,
+    "note": "Saved 12_isolated_3d_trophies_and_podiums.png"
+  },
+  {
+    "name": "Capture 13 Debug World Axes & Grid",
+    "pass": true,
+    "note": "Saved 13_debug_world_axes_and_grid.png"
+  }
+]
