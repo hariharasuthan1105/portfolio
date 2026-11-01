@@ -59,6 +59,8 @@ export interface ProjectData {
   challenge: string;
   lessonsLearned: string;
   github: string;
+  liveUrl?: string;
+  actionLabel?: string;
 }
 
 export const projects: ProjectData[] = [
@@ -83,7 +85,8 @@ export const projects: ProjectData[] = [
       "Preserving logical key-value relationships across highly variable invoice templates without requiring model fine-tuning for every visual variance.",
     lessonsLearned:
       "Spatial proximity heuristics must be coupled with strict schema validation; handling real-world scan artifacts requires adaptive pre-processing before OCR inference.",
-    github: "https://github.com/hariharasuthan1105/portfolio",
+    github: "https://github.com/hariharasuthan1105/docai",
+    actionLabel: "VIEW SOURCE CODE",
   },
   {
     name: "Pathway AI — Dynamic RAG for Smart Urban Management",
@@ -107,6 +110,8 @@ export const projects: ProjectData[] = [
     lessonsLearned:
       "Dynamic indexing requires sliding temporal windows and strict citation metadata so every AI assertion maps directly to an authenticated sensor timestamp.",
     github: "https://github.com/hariharasuthan1105/portfolio",
+    liveUrl: "https://hariharasuthan1105.github.io/pathway-safety-urban-planning/",
+    actionLabel: "LAUNCH LIVE PROJECT",
   },
   {
     name: "HEFIN — Decentralized AI Chatbot",
@@ -130,6 +135,8 @@ export const projects: ProjectData[] = [
     lessonsLearned:
       "Decoupling read-heavy conversational inference from write-heavy blockchain commitments with optimistic client updates creates a seamless Web3 experience.",
     github: "https://github.com/hariharasuthan1105/portfolio",
+    liveUrl: "https://hariharasuthan1105.github.io/-HEFIN/",
+    actionLabel: "LAUNCH LIVE PROJECT",
   },
 ];
 
