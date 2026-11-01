@@ -990,22 +990,25 @@ nav a[aria-current]:after {
   box-sizing: border-box;
 }
 
-/* Three Clearly Defined Zones: Left (30%), Center (40%), Right (30%) */
+/* Three Clearly Defined Zones: Left (29%), Center (42%), Right (29%) */
 .about-grid {
   display: grid;
-  grid-template-columns: minmax(0, 29%) minmax(0, 43%) minmax(0, 28%);
-  grid-template-rows: auto 1fr;
-  grid-template-areas:
-    "intro center values"
-    "edu   center values";
-  gap: clamp(16px, 2.2vw, 36px);
+  grid-template-columns: minmax(0, 29%) minmax(0, 42%) minmax(0, 29%);
+  gap: clamp(16px, 2vw, 36px);
   align-items: center;
   width: 100%;
   box-sizing: border-box;
 }
 
+.about-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  z-index: 10;
+}
+
 .about-intro-block {
-  grid-area: intro;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -1013,16 +1016,14 @@ nav a[aria-current]:after {
 }
 
 .about-edu-block {
-  grid-area: edu;
   display: flex;
   flex-direction: column;
   min-width: 0;
   z-index: 10;
-  margin-top: 18px;
+  margin-top: 8px;
 }
 
 .about-values-block {
-  grid-area: values;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -1259,23 +1260,27 @@ nav a[aria-current]:after {
 .about-center-corridor {
   position: relative;
   width: 100%;
-  height: 740px;
-  min-height: 740px;
+  height: 700px;
+  min-height: 700px;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  overflow: visible;
 }
 
 /* 3D Real-Time Stepped Rotating Floor Scene Container */
 .about-scene-container {
-  position: absolute;
-  inset: -30px -15% -30px -15%;
-  width: 130%;
-  height: calc(100% + 60px);
+  position: relative;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   overflow: visible;
   z-index: 3;
+}
+
+.about-character-stand {
+  display: none !important;
 }
 
 .about-platform-scene-wrapper {
@@ -6226,6 +6231,19 @@ html[data-motion="reduced"] *:after {
   scroll-margin-top: 64px;
 }
 
+.archive-section.is-isolated {
+  background: #06070a !important;
+}
+.archive-section.is-isolated .archive-background-layer,
+.archive-section.is-isolated .archive-pedestal-plaques-overlay,
+.archive-section.is-isolated .archive-top-hud,
+.archive-section.is-isolated .archive-bottom-panel-zone {
+  display: none !important;
+}
+.archive-section.is-isolated .archive-stage-area {
+  height: 100vh !important;
+}
+
 /* Background image: monumental gothic cathedral hall with architectural pedestals */
 .archive-background-layer {
   position: absolute;
@@ -6237,18 +6255,18 @@ html[data-motion="reduced"] *:after {
   z-index: 1;
 }
 
-/* Cinematic Vignette Overlay (Leaves pedestals, reflective floor, and statues crisp) */
+/* Cinematic Vignette Overlay (Leaves statues, light shafts, and upper gothic architecture crisp while blending floor into deep obsidian) */
 .archive-vignette-overlay {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 50% 46%, transparent 40%, rgba(2, 2, 4, 0.42) 72%, rgba(0, 0, 0, 0.92) 100%),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, transparent 12%, transparent 72%, rgba(0, 0, 0, 0.88) 100%);
+    radial-gradient(ellipse at 50% 36%, transparent 42%, rgba(2, 2, 4, 0.45) 75%, rgba(0, 0, 0, 0.95) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, transparent 14%, transparent 56%, rgba(5, 6, 10, 0.88) 78%, #040508 100%);
   pointer-events: none;
   z-index: 2;
 }
 
-/* Technical Corner Framing Brackets (Exact Image A Detail) */
+/* Technical Corner Framing Brackets */
 .archive-corner-bracket {
   position: absolute;
   font-family: var(--font-mono);
@@ -6263,69 +6281,25 @@ html[data-motion="reduced"] *:after {
 .archive-corner-bracket.corner-bl { bottom: 20px; left: 24px; }
 .archive-corner-bracket.corner-br { bottom: 20px; right: 24px; }
 
-/* Margin HUD (Left Margin Technical Status) */
-.archive-margin-hud {
-  position: absolute;
-  top: 52px;
-  left: 28px;
-  z-index: 12;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  pointer-events: none;
-}
-
-.margin-indicator-group {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.margin-sec-num {
-  font-size: 15px;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 2px;
-}
-
-.margin-sec-label {
-  font-size: 9px;
-  color: #888896;
-  letter-spacing: 2px;
-}
-
-.margin-hud-divider {
-  width: 1px;
-  height: 28px;
-  background: rgba(255, 255, 255, 0.22);
-  margin: 6px 0;
-}
-
-.margin-tap-prompt {
-  font-size: 8px;
-  color: #727280;
-  letter-spacing: 1.5px;
-  max-width: 86px;
-  line-height: 1.45;
-}
-
-/* Left Column: Title Block & HUD (Desktop 25% Zone, completely clear of DocRecon) */
-.archive-left-hud {
-  position: absolute;
-  top: 64px;
-  left: 48px;
-  width: 250px;
+/* Top Header Region (Negative Space Above 3D Gallery: No overlap with exhibits!) */
+.archive-top-hud {
+  position: relative;
   z-index: 25;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 38px 48px 12px;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  justify-content: center;
   pointer-events: auto;
 }
 
-.archive-title-block {
+.archive-top-hud-inner {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
 }
 
 .archive-eyebrow-row {
@@ -6349,100 +6323,37 @@ html[data-motion="reduced"] *:after {
 
 .archive-heading {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-size: clamp(2rem, 3.2vw, 2.85rem);
   font-weight: 700;
-  line-height: 1.05;
+  line-height: 1.1;
   color: #ffffff;
   margin: 0;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   text-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
 }
 
-.archive-desc-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.archive-subhead {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 11.5px;
-  color: #e2e2ec;
-  letter-spacing: 1.5px;
-  margin: 0;
-  text-transform: uppercase;
-}
-
-.archive-desc {
-  font-family: var(--font-body);
-  font-size: 13px;
-  line-height: 1.55;
-  color: #a4a4b2;
-  margin: 0;
-  max-width: 245px;
-}
-
-.archive-actions {
+.archive-subhead-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 6px;
-  flex-wrap: wrap;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #8c8e9c;
+  text-transform: uppercase;
 }
 
-.archive-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  background: #ffffff;
-  color: #030303;
-  border: 1px solid #ffffff;
-  border-radius: 9999px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.8px;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 0 24px rgba(255, 255, 255, 0.3);
+.archive-subhead-sep {
+  color: rgba(255, 255, 255, 0.3);
 }
 
-.archive-cta-btn:hover {
-  background: #dadada;
-  border-color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 0 32px rgba(255, 255, 255, 0.5);
-}
-
-.archive-secondary-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 10px 18px;
-  background: rgba(10, 10, 16, 0.75);
-  color: #dadada;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 9999px;
-  font-size: 9.5px;
-  letter-spacing: 1.5px;
-  cursor: pointer;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: all 0.25s ease;
-}
-
-.archive-secondary-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
+.archive-subhead-desc {
+  color: #6a6c78;
 }
 
 /* Full-Width 3D Exhibition Stage Area */
 .archive-stage-area {
   position: relative;
-  height: 740px;
+  height: clamp(660px, 72vh, 860px);
   width: 100%;
   z-index: 10;
 }
@@ -6467,7 +6378,7 @@ html[data-motion="reduced"] *:after {
   outline: none;
 }
 
-/* Pedestal Plaques Overlay (Physical capsule badges on pedestal fronts) */
+/* Pedestal Plaques Overlay (Physical capsule badges directly aligned to 18%, 51%, 84%) */
 .archive-pedestal-plaques-overlay {
   position: absolute;
   inset: 0;
@@ -6477,7 +6388,7 @@ html[data-motion="reduced"] *:after {
 
 .pedestal-plaque-btn {
   position: absolute;
-  top: 83%;
+  top: 89%;
   transform: translate(-50%, -50%);
   pointer-events: auto;
   display: flex;
@@ -6495,9 +6406,9 @@ html[data-motion="reduced"] *:after {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
 }
 
-.pedestal-plaque-btn.plaque-0 { left: 23.5%; }
-.pedestal-plaque-btn.plaque-1 { left: 50%; }
-.pedestal-plaque-btn.plaque-2 { left: 77%; }
+.pedestal-plaque-btn.plaque-0 { left: 18%; }
+.pedestal-plaque-btn.plaque-1 { left: 51%; }
+.pedestal-plaque-btn.plaque-2 { left: 84%; }
 
 .pedestal-plaque-btn:hover,
 .pedestal-plaque-btn.active {
@@ -7556,9 +7467,9 @@ html[data-motion="reduced"] *:after {
   height: 720px;
 }
 
-/* Entrance animation base state: elements start invisible and offset */
+/* Entrance animation base state: elements visible by default */
 .about-animate-in {
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -7704,11 +7615,40 @@ html[data-motion="reduced"] *:after {
 /* Isolated 3D Scene Mode for Geometry Validation */
 .about-platform-scene-wrapper.isolated-3d-mode {
   position: fixed !important;
-  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
   z-index: 999999 !important;
-  background: #08080c !important;
+  background: #06070a !important;
+}
+
+/* Mobile Responsive Ordering for Section 02 */
+/* Tablet Responsive: 769px - 1024px */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .about-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 24px !important;
+  }
+  .about-left-col {
+    grid-column: 1 !important;
+  }
+  .about-cinematic-v3 .about-center-corridor,
+  .about-center-corridor {
+    grid-column: 2 !important;
+    height: 560px !important;
+    min-height: 520px !important;
+  }
+  .about-right-col {
+    grid-column: 1 / -1 !important;
+  }
+  .about-values-stack {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 14px !important;
+  }
 }
 
 /* Mobile Responsive Ordering for Section 02 */
@@ -7719,6 +7659,11 @@ html[data-motion="reduced"] *:after {
     gap: 20px !important;
     width: 100% !important;
   }
+  .about-left-col {
+    order: 1 !important;
+    width: 100% !important;
+    display: contents !important;
+  }
   .about-intro-block {
     order: 1 !important;
     width: 100% !important;
@@ -7727,24 +7672,36 @@ html[data-motion="reduced"] *:after {
   .about-center-corridor {
     order: 2 !important;
     width: 100% !important;
-    height: 330px !important;
+    height: 440px !important;
+    min-height: 440px !important;
     position: relative !important;
-    overflow: hidden !important;
-    margin: 6px 0 12px !important;
+    overflow: visible !important;
+    margin: 8px 0 14px !important;
   }
   .about-edu-block {
     order: 3 !important;
     width: 100% !important;
     margin-top: 0 !important;
   }
-  .about-values-block {
+  .about-right-col {
     order: 4 !important;
     width: 100% !important;
+    margin-top: 14px !important;
   }
-  .about-character-stand {
-    bottom: 35px !important;
-  }
-  .about-character-cutout {
-    width: 130px !important;
+  .about-values-stack {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
   }
 }
+
+/* Isolated Mode for Section 02 Geometry Inspection */
+.section.about.is-about-isolated {
+  background-color: #06070a !important;
+}
+.section.about.is-about-isolated:before,
+.section.about.is-about-isolated:after,
+.section.about.is-about-isolated .about-cathedral-bg {
+  display: none !important;
+}
+

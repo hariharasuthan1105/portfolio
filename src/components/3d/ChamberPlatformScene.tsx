@@ -3,26 +3,6 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 // ============================================================================
-// TEXTURE LOADER FOR PEDESTAL MARBLE & ENGRAVINGS
-// ============================================================================
-function usePlatformTextures() {
-  return useMemo(() => {
-    const loader = new THREE.TextureLoader();
-    const outer = loader.load("/assets/ring_outer_texture.png");
-    const middle = loader.load("/assets/ring_middle_texture.png");
-    const inner = loader.load("/assets/ring_inner_texture.png");
-    const reflection = loader.load("/assets/character_floor_reflection.png");
-    [outer, middle, inner, reflection].forEach((t) => {
-      t.colorSpace = THREE.SRGBColorSpace;
-      t.generateMipmaps = true;
-      t.minFilter = THREE.LinearMipmapLinearFilter;
-      t.magFilter = THREE.LinearFilter;
-    });
-    return { outer, middle, inner, reflection };
-  }, []);
-}
-
-// ============================================================================
 // DELICATE RADIAL MECHANICAL TICKS
 // ============================================================================
 function RadialTicks({
@@ -32,7 +12,7 @@ function RadialTicks({
   tickWidth = 0.004,
   tickHeight = 0.015,
   color = "#ffffff",
-  emissiveIntensity = 0.6,
+  emissiveIntensity = 0.65,
 }: {
   count: number;
   radius: number;
@@ -77,19 +57,19 @@ function RadialTicks({
 }
 
 // ============================================================================
-// CUSTOM FACETED DIAMOND CRYSTAL GEOMETRY (48 FACETS)
+// CUSTOM FACETED DIAMOND CRYSTAL GEOMETRY (Double-Cone Bipyramid with Girdle)
 // ============================================================================
 function createFacetedDiamondGeometry(): THREE.BufferGeometry {
   const geom = new THREE.BufferGeometry();
   const segments = 8;
-  const topY = 0.95;
-  const upperY = 0.46;
-  const upperR = 0.30;
+  const topY = 0.42;
+  const upperY = 0.20;
+  const upperR = 0.18;
   const midY = 0.0;
-  const midR = 0.48;
-  const lowerY = -0.46;
-  const lowerR = 0.30;
-  const botY = -0.95;
+  const midR = 0.24;
+  const lowerY = -0.20;
+  const lowerR = 0.18;
+  const botY = -0.42;
 
   const positions: number[] = [];
 
@@ -101,32 +81,32 @@ function createFacetedDiamondGeometry(): THREE.BufferGeometry {
 
   for (let i = 0; i < segments; i++) {
     const angle = (i / segments) * Math.PI * 2;
-    const midAngle = ((i + 0.5) / segments) * Math.PI * 2;
+    const midAngle = angle + Math.PI / segments;
     upperRing.push([Math.cos(angle) * upperR, upperY, Math.sin(angle) * upperR]);
     midRing.push([Math.cos(midAngle) * midR, midY, Math.sin(midAngle) * midR]);
     lowerRing.push([Math.cos(angle) * lowerR, lowerY, Math.sin(angle) * lowerR]);
   }
 
-  function addTri(
+  const addTri = (
     p1: [number, number, number],
     p2: [number, number, number],
     p3: [number, number, number]
-  ) {
+  ) => {
     positions.push(...p1, ...p2, ...p3);
-  }
+  };
 
   for (let i = 0; i < segments; i++) {
     const next = (i + 1) % segments;
     // Top pyramid facets
     addTri(topPoint, upperRing[i], upperRing[next]);
-    // Upper tier to equator
+    // Upper transition facets
     addTri(upperRing[i], midRing[i], upperRing[next]);
     addTri(upperRing[next], midRing[i], midRing[next]);
-    // Equator to lower tier
+    // Lower transition facets
     addTri(midRing[i], lowerRing[i], midRing[next]);
     addTri(midRing[next], lowerRing[i], lowerRing[next]);
-    // Lower pyramid facets
-    addTri(lowerRing[next], lowerRing[i], botPoint);
+    // Bottom pyramid facets
+    addTri(botPoint, lowerRing[next], lowerRing[i]);
   }
 
   geom.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
@@ -135,11 +115,305 @@ function createFacetedDiamondGeometry(): THREE.BufferGeometry {
 }
 
 // ============================================================================
-// 05 — REAL 3D CRYSTALLINE INTELLIGENCE CORE
-// Translucent diamond facets, glowing refraction core, silver edges,
-// and vertical light filament
+// 1. FLOOR GROUP: REALISTIC 3D CONCENTRIC MECHANICAL PLATFORM
+// Solid obsidian circular base with physical thickness, beveled outer edges,
+// four concentric mechanical rings with engraved radial ticks, and stationary dais.
 // ============================================================================
-function CrystallineIntelligenceCore({
+function FloorGroup({
+  activeConceptIndex,
+  rippleTrigger = 0,
+  reduced = false,
+}: {
+  activeConceptIndex: number | null;
+  rippleTrigger?: number;
+  reduced?: boolean;
+}) {
+  const ring1Ref = useRef<THREE.Group>(null);
+  const ring2Ref = useRef<THREE.Group>(null);
+  const ring3Ref = useRef<THREE.Group>(null);
+  const rippleMeshRef = useRef<THREE.Mesh>(null);
+  const rippleScale = useRef(0.2);
+  const rippleOpacity = useRef(0.0);
+
+  useEffect(() => {
+    rippleScale.current = 0.25;
+    rippleOpacity.current = 0.95;
+  }, [rippleTrigger, activeConceptIndex]);
+
+  useFrame((_state, delta) => {
+    if (reduced) return;
+    // Concentric mechanical rings rotate in alternating directions
+    if (ring1Ref.current) ring1Ref.current.rotation.y += delta * 0.016;
+    if (ring2Ref.current) ring2Ref.current.rotation.y -= delta * 0.024;
+    if (ring3Ref.current) ring3Ref.current.rotation.y += delta * 0.034;
+
+    // Interactive silver radial ripple expansion on hover/activation
+    if (rippleMeshRef.current && rippleOpacity.current > 0.01) {
+      rippleScale.current += delta * 2.2;
+      rippleOpacity.current = THREE.MathUtils.lerp(
+        rippleOpacity.current,
+        0,
+        delta * 2.5
+      );
+      rippleMeshRef.current.scale.set(rippleScale.current, rippleScale.current, 1);
+      const mat = rippleMeshRef.current.material as THREE.MeshBasicMaterial;
+      mat.opacity = rippleOpacity.current;
+    }
+  });
+
+  return (
+    <group position={[0, 0, 0]}>
+      {/* Soft Contact Shadow disc beneath platform foundation */}
+      <mesh position={[0, -0.38, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[1.05, 64]} />
+        <meshBasicMaterial
+          color="#000000"
+          transparent
+          opacity={0.88}
+          depthWrite={false}
+        />
+      </mesh>
+
+      {/* 1. Base Foundation Plinth (Solid Obsidian Cylinder with Physical Depth) */}
+      <mesh position={[0, -0.34, 0]}>
+        <cylinderGeometry args={[0.90, 0.93, 0.07, 64]} />
+        <meshStandardMaterial
+          color="#06060a"
+          roughness={0.16}
+          metalness={0.92}
+        />
+      </mesh>
+
+      {/* Beveled Black-Chrome Outer Perimeter Torus */}
+      <mesh position={[0, -0.305, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[0.90, 0.012, 16, 64]} />
+        <meshStandardMaterial
+          color="#ffffff"
+          metalness={0.98}
+          roughness={0.04}
+          emissive="#ffffff"
+          emissiveIntensity={0.25}
+        />
+      </mesh>
+
+      {/* 2. Ring 01: Outermost Mechanical Rotating Ring (Clockwise) */}
+      <group ref={ring1Ref} position={[0, -0.30, 0]}>
+        <mesh>
+          <cylinderGeometry args={[0.84, 0.84, 0.035, 64]} />
+          <meshStandardMaterial
+            color="#08090f"
+            roughness={0.12}
+            metalness={0.94}
+          />
+        </mesh>
+        <RadialTicks
+          count={48}
+          radius={0.78}
+          tickLength={0.045}
+          tickWidth={0.005}
+          tickHeight={0.036}
+          color="#ffffff"
+          emissiveIntensity={0.5}
+        />
+        {/* Luminous silver perimeter groove */}
+        <mesh position={[0, 0.018, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.84, 0.006, 16, 64]} />
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="#ffffff"
+            emissiveIntensity={0.65}
+            metalness={0.98}
+            roughness={0.02}
+          />
+        </mesh>
+      </group>
+
+      {/* Stepped Divider Ring 1 */}
+      <mesh position={[0, -0.28, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[0.72, 0.007, 16, 64]} />
+        <meshStandardMaterial color="#353846" metalness={0.96} roughness={0.08} />
+      </mesh>
+
+      {/* 3. Ring 02: Middle Mechanical Rotating Ring (Counter-Clockwise) */}
+      <group ref={ring2Ref} position={[0, -0.27, 0]}>
+        <mesh>
+          <cylinderGeometry args={[0.68, 0.68, 0.035, 64]} />
+          <meshStandardMaterial
+            color="#0c0d15"
+            roughness={0.10}
+            metalness={0.95}
+          />
+        </mesh>
+        <RadialTicks
+          count={36}
+          radius={0.62}
+          tickLength={0.038}
+          tickWidth={0.004}
+          tickHeight={0.036}
+          color="#ffffff"
+          emissiveIntensity={0.6}
+        />
+        <mesh position={[0, 0.018, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.68, 0.0055, 16, 64]} />
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="#ffffff"
+            emissiveIntensity={0.7}
+            metalness={0.98}
+            roughness={0.02}
+          />
+        </mesh>
+      </group>
+
+      {/* Stepped Divider Ring 2 */}
+      <mesh position={[0, -0.25, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[0.54, 0.006, 16, 64]} />
+        <meshStandardMaterial color="#303340" metalness={0.96} roughness={0.08} />
+      </mesh>
+
+      {/* 4. Ring 03: Inner Mechanical Rotating Ring (Clockwise) */}
+      <group ref={ring3Ref} position={[0, -0.24, 0]}>
+        <mesh>
+          <cylinderGeometry args={[0.50, 0.50, 0.035, 64]} />
+          <meshStandardMaterial
+            color="#10111a"
+            roughness={0.08}
+            metalness={0.96}
+          />
+        </mesh>
+        <RadialTicks
+          count={24}
+          radius={0.44}
+          tickLength={0.032}
+          tickWidth={0.004}
+          tickHeight={0.036}
+          color="#ffffff"
+          emissiveIntensity={0.75}
+        />
+        <mesh position={[0, 0.018, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.50, 0.005, 16, 64]} />
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="#ffffff"
+            emissiveIntensity={0.8}
+            metalness={0.98}
+            roughness={0.02}
+          />
+        </mesh>
+      </group>
+
+      {/* 5. Center Stationary Focus Dais (Stage where Character stands) */}
+      {/* Character's feet rest on top surface at y = -0.19 */}
+      <group position={[0, -0.21, 0]}>
+        <mesh>
+          <cylinderGeometry args={[0.32, 0.32, 0.035, 64]} />
+          <meshStandardMaterial
+            color="#040407"
+            roughness={0.04}
+            metalness={0.98}
+          />
+        </mesh>
+        {/* Luminous circular boundary rim */}
+        <mesh position={[0, 0.018, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.32, 0.006, 16, 64]} />
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="#ffffff"
+            emissiveIntensity={0.9}
+            metalness={0.98}
+            roughness={0.02}
+          />
+        </mesh>
+      </group>
+
+      {/* 6. Interactive Silver Radial Shockwave */}
+      <mesh
+        ref={rippleMeshRef}
+        position={[0, -0.19, 0]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        scale={[0.2, 0.2, 1]}
+      >
+        <ringGeometry args={[0.15, 0.22, 64]} />
+        <meshBasicMaterial
+          color="#ffffff"
+          transparent
+          opacity={0}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+    </group>
+  );
+}
+
+// ============================================================================
+// 2. EXPLORER CHARACTER COMPONENT
+// Grounded stationary explorer figure facing the crystal.
+// Feet rest exactly on top of the dais at y = -0.19 with realistic contact shadow.
+// ============================================================================
+function ExplorerCharacter({ daisTopY = -0.19 }: { daisTopY?: number }) {
+  const texture = useMemo(() => {
+    const loader = new THREE.TextureLoader();
+    const tex = loader.load("/assets/chamber_character.png");
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.minFilter = THREE.LinearFilter;
+    tex.magFilter = THREE.LinearFilter;
+    return tex;
+  }, []);
+
+  // Character dimensions calibrated to crystal scale
+  const height = 0.54;
+  const width = height * (230 / 220); // 0.564
+
+  return (
+    <group position={[0, daisTopY, 0]}>
+      {/* Soft Contact Shadow beneath boots */}
+      <mesh position={[0, 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[0.16, 32]} />
+        <meshBasicMaterial
+          color="#000000"
+          transparent
+          opacity={0.85}
+          depthWrite={false}
+        />
+      </mesh>
+
+      {/* Subtle Ground Mist at base of coat */}
+      <mesh position={[0, 0.004, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.06, 0.24, 32]} />
+        <meshBasicMaterial
+          color="#e0e4f4"
+          transparent
+          opacity={0.10}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+
+      {/* High-quality 2.5D Character Plane: feet touch daisTopY (y = 0 local) */}
+      <mesh position={[0, height / 2, 0]}>
+        <planeGeometry args={[width, height]} />
+        <meshStandardMaterial
+          map={texture}
+          transparent
+          roughness={0.7}
+          metalness={0.15}
+          alphaTest={0.02}
+          depthWrite={true}
+        />
+      </mesh>
+    </group>
+  );
+}
+
+// ============================================================================
+// 3. CRYSTAL GROUP: SUSPENDED FACETED ARTIFACT & INDEPENDENT ORBITAL RINGS
+// Centered in upper cathedral space (y = 1.15).
+// Occupies 30–40% of scene height with clear negative space below navbar
+// and clear separation from explorer head.
+// ============================================================================
+function CrystalGroup({
   activeConceptIndex,
   activationProgress,
   onActivate,
@@ -150,42 +424,57 @@ function CrystallineIntelligenceCore({
   onActivate: () => void;
   reduced?: boolean;
 }) {
-  const groupRef = useRef<THREE.Group>(null);
+  const crystalGroupRef = useRef<THREE.Group>(null);
   const outerCrystalRef = useRef<THREE.Mesh>(null);
   const innerCoreRef = useRef<THREE.Mesh>(null);
+  const ring1Ref = useRef<THREE.Group>(null);
+  const ring2Ref = useRef<THREE.Group>(null);
   const pointLightRef = useRef<THREE.PointLight>(null);
 
   const diamondGeom = useMemo(() => createFacetedDiamondGeometry(), []);
-  const edgesGeom = useMemo(() => new THREE.EdgesGeometry(diamondGeom), [diamondGeom]);
+  const edgesGeom = useMemo(() => new THREE.EdgesGeometry(diamondGeom, 12), [diamondGeom]);
 
-  // Astrolabe constellation coordinates
-  const constellationNodes = useMemo<[number, number, number][]>(() => {
-    return Array.from({ length: 8 }, (_, i) => {
-      const a = (i / 8) * Math.PI * 2;
-      return [Math.cos(a) * 0.76, Math.sin(a * 2) * 0.06, Math.sin(a) * 0.76];
-    });
+  // Constellation satellite bead coordinates
+  const satelliteBeads = useMemo(() => {
+    return [
+      [0.48, 0.06, 0.0],
+      [-0.48, -0.06, 0.0],
+      [0.0, 0.38, 0.12],
+      [0.0, -0.38, -0.12],
+      [0.26, 0.26, 0.24],
+      [-0.26, -0.26, -0.24],
+    ] as [number, number, number][];
   }, []);
 
   useFrame((state, delta) => {
-    if (reduced || !groupRef.current) return;
+    if (reduced || !crystalGroupRef.current) return;
     const t = state.clock.getElapsedTime();
 
-    // Gentle floating hover
-    groupRef.current.position.y = 1.25 + Math.sin(t * 0.6) * 0.035;
+    // Gentle vertical floating breathing motion
+    crystalGroupRef.current.position.y = 1.15 + Math.sin(t * 0.7) * 0.025;
 
-    // Slow rotation
+    // Slow independent rotation of crystal facets
     if (outerCrystalRef.current) {
-      outerCrystalRef.current.rotation.y = t * 0.08;
+      outerCrystalRef.current.rotation.y += delta * 0.12;
+      outerCrystalRef.current.rotation.z = Math.sin(t * 0.35) * 0.04;
     }
     if (innerCoreRef.current) {
-      innerCoreRef.current.rotation.y = -t * 0.12;
-      innerCoreRef.current.rotation.x = Math.sin(t * 0.4) * 0.06;
+      innerCoreRef.current.rotation.y -= delta * 0.15;
+    }
+
+    // Independent multi-axis mechanical rotation of orbital rings
+    if (ring1Ref.current) {
+      ring1Ref.current.rotation.z += delta * 0.14;
+    }
+    if (ring2Ref.current) {
+      ring2Ref.current.rotation.y += delta * 0.18;
+      ring2Ref.current.rotation.x += delta * -0.08;
     }
 
     // Dynamic light pulsation
     if (pointLightRef.current) {
-      const baseIntensity = 2.4 + Math.sin(t * 1.6) * 0.4;
-      const boost = (activeConceptIndex !== null ? 1.8 : 0) + activationProgress * 6.0;
+      const baseIntensity = 2.2 + Math.sin(t * 1.5) * 0.3;
+      const boost = (activeConceptIndex !== null ? 1.5 : 0) + activationProgress * 4.5;
       pointLightRef.current.intensity = THREE.MathUtils.lerp(
         pointLightRef.current.intensity,
         baseIntensity + boost,
@@ -198,8 +487,8 @@ function CrystallineIntelligenceCore({
 
   return (
     <group
-      ref={groupRef}
-      position={[0, 1.25, 0]}
+      ref={crystalGroupRef}
+      position={[0, 1.15, 0]}
       onClick={(e) => {
         e.stopPropagation();
         onActivate();
@@ -211,43 +500,32 @@ function CrystallineIntelligenceCore({
         document.body.style.cursor = "auto";
       }}
     >
-      {/* 1. Vertical Shaft of Volumetric Light Beam passing through Crystal Axis */}
+      {/* Vertical light beam axis passing through crystal */}
       <mesh>
-        <cylinderGeometry args={[0.003, 0.003, 4.4, 16]} />
+        <cylinderGeometry args={[0.0025, 0.0025, 3.6, 16]} />
         <meshBasicMaterial
           color="#ffffff"
           transparent
-          opacity={0.85}
+          opacity={0.75}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
 
-      {/* Outer ambient beam glow */}
-      <mesh>
-        <cylinderGeometry args={[0.024, 0.024, 4.2, 16]} />
-        <meshBasicMaterial
-          color="#d0d4ee"
-          transparent
-          opacity={0.16}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
-
-      {/* 2. Outer Faceted Smoked-Diamond Crystal Mesh */}
+      {/* 1. Outer Faceted Smoked-Glass Diamond Mesh */}
       <mesh ref={outerCrystalRef} geometry={diamondGeom}>
         <meshStandardMaterial
-          color="#06080c"
-          roughness={0.05}
-          metalness={0.94}
+          color="#080a12"
+          roughness={0.04}
+          metalness={0.92}
           flatShading={true}
           transparent={true}
-          opacity={0.78}
+          opacity={0.75}
           emissive="#ffffff"
-          emissiveIntensity={isHighlighted ? 0.35 : 0.08}
+          emissiveIntensity={isHighlighted ? 0.32 : 0.08}
         />
       </mesh>
 
-      {/* 3. Luminous Silver-White Facet Edges Grid */}
+      {/* 2. Luminous Fine Silver Facet Edges Grid */}
       <lineSegments geometry={edgesGeom}>
         <lineBasicMaterial
           color="#ffffff"
@@ -257,75 +535,111 @@ function CrystallineIntelligenceCore({
         />
       </lineSegments>
 
-      {/* 4. Inner Luminous Nested Diamond Facet Core */}
-      <mesh ref={innerCoreRef} geometry={diamondGeom} scale={[0.72, 0.72, 0.72]}>
+      {/* 3. Inner Radiant Core Diamond */}
+      <mesh ref={innerCoreRef} geometry={diamondGeom} scale={[0.68, 0.68, 0.68]}>
         <meshStandardMaterial
           color="#ffffff"
           emissive="#ffffff"
-          emissiveIntensity={isHighlighted ? 2.2 : 1.2}
+          emissiveIntensity={isHighlighted ? 2.0 : 1.1}
           roughness={0.03}
-          metalness={0.96}
+          metalness={0.95}
           transparent={true}
-          opacity={0.45}
+          opacity={0.4}
           flatShading={true}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
 
-      {/* 5. Central Radiant Energy Core Sphere */}
+      {/* 4. Central Radiant White Energy Node */}
       <mesh>
-        <sphereGeometry args={[0.065, 32, 32]} />
+        <sphereGeometry args={[0.045, 24, 24]} />
         <meshStandardMaterial
           color="#ffffff"
           emissive="#ffffff"
-          emissiveIntensity={3.2}
+          emissiveIntensity={2.8}
           roughness={0.02}
           metalness={0.92}
         />
       </mesh>
 
-      {/* Core glow halo shroud */}
-      <mesh>
-        <sphereGeometry args={[0.11, 24, 24]} />
-        <meshBasicMaterial
-          color="#ffffff"
-          transparent
-          opacity={0.25}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
-
-      {/* 6. Astrolabe Celestial Coordinates Cage */}
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[0.76, 0.0025, 8, 80]} />
-        <meshBasicMaterial
-          color="#ffffff"
-          transparent
-          opacity={0.35}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
-
-      {/* Satellite Constellation Nodes */}
-      {constellationNodes.map((pos, i) => (
-        <mesh key={`node-${i}`} position={pos}>
-          <sphereGeometry args={[0.014, 12, 12]} />
+      {/* 5. Major Equatorial Beveled Orbital Ring */}
+      <group ref={ring1Ref} rotation={[Math.PI / 8, 0, 0]}>
+        <mesh>
+          <torusGeometry args={[0.48, 0.012, 6, 72]} />
+          <meshStandardMaterial
+            color="#12141c"
+            metalness={0.98}
+            roughness={0.06}
+            emissive="#ffffff"
+            emissiveIntensity={0.12}
+          />
+        </mesh>
+        {/* Fine silver rim line */}
+        <mesh>
+          <torusGeometry args={[0.495, 0.002, 12, 72]} />
           <meshStandardMaterial
             color="#ffffff"
             emissive="#ffffff"
-            emissiveIntensity={1.6}
+            emissiveIntensity={0.8}
+            metalness={0.98}
+            roughness={0.02}
+          />
+        </mesh>
+        <RadialTicks
+          count={24}
+          radius={0.48}
+          tickLength={0.022}
+          tickWidth={0.003}
+          tickHeight={0.016}
+          color="#ffffff"
+          emissiveIntensity={0.65}
+        />
+      </group>
+
+      {/* 6. Intermediate Tilted Beveled Orbital Ring */}
+      <group ref={ring2Ref} rotation={[Math.PI / 3.5, 0, Math.PI / 5]}>
+        <mesh>
+          <torusGeometry args={[0.38, 0.010, 6, 64]} />
+          <meshStandardMaterial
+            color="#0e1018"
+            metalness={0.98}
+            roughness={0.07}
+            emissive="#ffffff"
+            emissiveIntensity={0.1}
+          />
+        </mesh>
+        <mesh>
+          <torusGeometry args={[0.392, 0.0018, 12, 64]} />
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="#ffffff"
+            emissiveIntensity={0.7}
+            metalness={0.98}
+            roughness={0.03}
+          />
+        </mesh>
+      </group>
+
+      {/* 7. Satellite Constellation Beads */}
+      {satelliteBeads.map((pos, i) => (
+        <mesh key={`bead-${i}`} position={pos}>
+          <sphereGeometry args={[0.011, 12, 12]} />
+          <meshStandardMaterial
+            color="#ffffff"
+            emissive="#ffffff"
+            emissiveIntensity={1.8}
             metalness={0.95}
             roughness={0.05}
           />
         </mesh>
       ))}
 
-      {/* Dynamic Celestial Point Light */}
+      {/* Localized Point Light */}
       <pointLight
         ref={pointLightRef}
-        intensity={2.8}
-        color="#f2f5ff"
-        distance={4.2}
+        intensity={2.2}
+        color="#ffffff"
+        distance={3.6}
         decay={1.8}
       />
     </group>
@@ -333,605 +647,55 @@ function CrystallineIntelligenceCore({
 }
 
 // ============================================================================
-// 06 — REAL 3D ORBITAL RINGS
-// Three thick beveled metallic mechanical rings on distinct rotational axes
-// with engraved radial ticks and black-chrome reflections
+// 4. ATMOSPHERIC PARTICLES
 // ============================================================================
-function EngravedMechanicalOrbitalRings({
-  activationProgress,
-  reduced = false,
-}: {
-  activationProgress: number;
-  reduced?: boolean;
-}) {
-  const groupRef = useRef<THREE.Group>(null);
-  const ring1Ref = useRef<THREE.Group>(null);
-  const ring2Ref = useRef<THREE.Group>(null);
-  const ring3Ref = useRef<THREE.Group>(null);
+function AtmosphericEffects({ count = 40 }: { count?: number }) {
+  const points = useMemo(() => {
+    const coords = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      coords[i * 3] = (Math.random() - 0.5) * 3.2;
+      coords[i * 3 + 1] = Math.random() * 2.8 - 0.4;
+      coords[i * 3 + 2] = (Math.random() - 0.5) * 2.0;
+    }
+    return coords;
+  }, [count]);
 
-  useFrame((state, delta) => {
-    if (reduced || !groupRef.current) return;
+  const pointsRef = useRef<THREE.Points>(null);
+
+  useFrame((state) => {
+    if (!pointsRef.current) return;
     const t = state.clock.getElapsedTime();
-
-    // Natural multi-axis rotation
-    if (ring1Ref.current) ring1Ref.current.rotation.z += delta * 0.12;
-    if (ring2Ref.current) {
-      ring2Ref.current.rotation.x += delta * -0.15;
-      ring2Ref.current.rotation.y += delta * 0.07;
-    }
-    if (ring3Ref.current) {
-      ring3Ref.current.rotation.y += delta * 0.18;
-      ring3Ref.current.rotation.z += delta * -0.10;
-    }
-
-    // Follow crystal vertical float
-    groupRef.current.position.y = 1.25 + Math.sin(t * 0.6) * 0.035;
-
-    // Resonant alignment during activation pulse
-    if (activationProgress > 0.01) {
-      const alignEase = Math.sin(activationProgress * Math.PI);
-      if (ring1Ref.current) {
-        ring1Ref.current.rotation.x = THREE.MathUtils.lerp(
-          ring1Ref.current.rotation.x,
-          Math.PI / 10,
-          alignEase * 0.15
-        );
+    const positions = pointsRef.current.geometry.attributes.position.array as Float32Array;
+    for (let i = 0; i < count; i++) {
+      positions[i * 3 + 1] += 0.0018;
+      if (positions[i * 3 + 1] > 2.4) {
+        positions[i * 3 + 1] = -0.4;
       }
-      if (ring2Ref.current) {
-        ring2Ref.current.rotation.z = THREE.MathUtils.lerp(
-          ring2Ref.current.rotation.z,
-          Math.PI / 4,
-          alignEase * 0.15
-        );
-      }
+      positions[i * 3] += Math.sin(t * 0.3 + i) * 0.0004;
     }
+    pointsRef.current.geometry.attributes.position.needsUpdate = true;
   });
 
   return (
-    <group ref={groupRef} position={[0, 1.25, 0]}>
-      {/* 1. Major Equatorial Beveled Ring (Tilted ~18 deg) */}
-      <group ref={ring1Ref} rotation={[Math.PI / 10, 0, 0]}>
-        {/* Ring Body: Beveled Torus (6 radial segments = flat beveled hexagonal facets) */}
-        <mesh>
-          <torusGeometry args={[0.78, 0.022, 6, 84]} />
-          <meshStandardMaterial
-            color="#14151c"
-            metalness={0.98}
-            roughness={0.06}
-            emissive="#ffffff"
-            emissiveIntensity={0.12}
-          />
-        </mesh>
-        {/* Fine silver outer rim torus */}
-        <mesh>
-          <torusGeometry args={[0.805, 0.0035, 12, 84]} />
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="#ffffff"
-            emissiveIntensity={0.8}
-            metalness={0.98}
-            roughness={0.02}
-          />
-        </mesh>
-        {/* Radial mechanical tick engravings (32 markers) */}
-        <RadialTicks
-          count={32}
-          radius={0.78}
-          tickLength={0.032}
-          tickWidth={0.004}
-          tickHeight={0.026}
-          color="#ffffff"
-          emissiveIntensity={0.65}
-        />
-      </group>
-
-      {/* 2. Intermediate Tilted Beveled Ring (Tilted ~44 deg) */}
-      <group ref={ring2Ref} rotation={[Math.PI / 4.1, 0, Math.PI / 6]}>
-        <mesh>
-          <torusGeometry args={[0.66, 0.019, 6, 72]} />
-          <meshStandardMaterial
-            color="#101218"
-            metalness={0.98}
-            roughness={0.07}
-            emissive="#d8e0ff"
-            emissiveIntensity={0.1}
-          />
-        </mesh>
-        <mesh>
-          <torusGeometry args={[0.682, 0.003, 12, 72]} />
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="#ffffff"
-            emissiveIntensity={0.65}
-            metalness={0.98}
-            roughness={0.04}
-          />
-        </mesh>
-        <RadialTicks
-          count={24}
-          radius={0.66}
-          tickLength={0.028}
-          tickWidth={0.004}
-          tickHeight={0.022}
-          color="#d0d4ee"
-          emissiveIntensity={0.5}
-        />
-      </group>
-
-      {/* 3. Steep Gimbal Beveled Ring (Tilted ~68 deg) */}
-      <group ref={ring3Ref} rotation={[-Math.PI / 2.65, 0, -Math.PI / 8]}>
-        <mesh>
-          <torusGeometry args={[0.55, 0.016, 6, 64]} />
-          <meshStandardMaterial
-            color="#0d0e14"
-            metalness={0.96}
-            roughness={0.08}
-            emissive="#c0c8e0"
-            emissiveIntensity={0.08}
-          />
-        </mesh>
-        <mesh>
-          <torusGeometry args={[0.568, 0.0028, 12, 64]} />
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="#ffffff"
-            emissiveIntensity={0.55}
-            metalness={0.98}
-            roughness={0.04}
-          />
-        </mesh>
-        <RadialTicks
-          count={18}
-          radius={0.55}
-          tickLength={0.024}
-          tickWidth={0.004}
-          tickHeight={0.02}
-          color="#ffffff"
-          emissiveIntensity={0.45}
-        />
-      </group>
-    </group>
-  );
-}
-
-// ============================================================================
-// FLOATING KNOWLEDGE SHARDS
-// ============================================================================
-interface ShardData {
-  pos: [number, number, number];
-  rot: [number, number, number];
-  scale: [number, number, number];
-  speed: number;
-  amp: number;
-  phase: number;
-}
-
-function KnowledgeShards({
-  activeConceptIndex,
-  reduced = false,
-}: {
-  activeConceptIndex: number | null;
-  reduced?: boolean;
-}) {
-  const groupRef = useRef<THREE.Group>(null);
-  const shards = useMemo<ShardData[]>(
-    () => [
-      {
-        pos: [-0.95, 0.68, -0.4],
-        rot: [0.4, 0.2, 0.1],
-        scale: [0.04, 0.09, 0.035],
-        speed: 0.7,
-        amp: 0.035,
-        phase: 0.0,
-      },
-      {
-        pos: [0.92, 0.78, -0.35],
-        rot: [-0.3, 0.5, 0.2],
-        scale: [0.042, 0.1, 0.038],
-        speed: 0.6,
-        amp: 0.04,
-        phase: 1.2,
-      },
-      {
-        pos: [-0.62, 1.1, -0.5],
-        rot: [0.2, -0.4, 0.3],
-        scale: [0.035, 0.08, 0.03],
-        speed: 0.8,
-        amp: 0.03,
-        phase: 2.4,
-      },
-      {
-        pos: [0.65, 0.55, -0.25],
-        rot: [-0.2, 0.3, -0.1],
-        scale: [0.038, 0.088, 0.032],
-        speed: 0.75,
-        amp: 0.035,
-        phase: 3.6,
-      },
-      {
-        pos: [-0.82, 0.42, -0.2],
-        rot: [0.5, 0.1, -0.4],
-        scale: [0.032, 0.075, 0.028],
-        speed: 0.9,
-        amp: 0.028,
-        phase: 4.8,
-      },
-      {
-        pos: [0.98, 1.2, -0.45],
-        rot: [-0.4, -0.2, 0.5],
-        scale: [0.042, 0.095, 0.036],
-        speed: 0.65,
-        amp: 0.035,
-        phase: 5.5,
-      },
-      {
-        pos: [0.0, 1.45, -0.65],
-        rot: [0.1, 0.6, -0.2],
-        scale: [0.048, 0.11, 0.042],
-        speed: 0.55,
-        amp: 0.04,
-        phase: 0.8,
-      },
-    ],
-    []
-  );
-
-  useFrame((state, delta) => {
-    if (reduced || !groupRef.current) return;
-    const t = state.clock.getElapsedTime();
-    groupRef.current.children.forEach((child, i) => {
-      const data = shards[i];
-      if (!data) return;
-      child.position.y = data.pos[1] + Math.sin(t * data.speed + data.phase) * data.amp;
-      child.rotation.x += delta * 0.16;
-      child.rotation.y += delta * 0.22;
-      const mesh = child as THREE.Mesh;
-      if (mesh.material) {
-        const mat = mesh.material as THREE.MeshStandardMaterial;
-        const targetEmissive =
-          activeConceptIndex !== null
-            ? 0.4
-            : 0.06 + Math.sin(t * 1.5 + data.phase) * 0.03;
-        mat.emissiveIntensity = THREE.MathUtils.lerp(
-          mat.emissiveIntensity,
-          targetEmissive,
-          0.1
-        );
-      }
-    });
-  });
-
-  return (
-    <group ref={groupRef}>
-      {shards.map((s, i) => (
-        <mesh key={i} position={s.pos} rotation={s.rot} scale={s.scale}>
-          <octahedronGeometry args={[1, 0]} />
-          <meshStandardMaterial
-            color="#06060a"
-            metalness={0.96}
-            roughness={0.06}
-            emissive="#ffffff"
-            emissiveIntensity={0.08}
-          />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-// ============================================================================
-// 07 — MONUMENTAL 3D PEDESTAL
-// Stepped circular gothic machine with dark obsidian chrome body,
-// counter-rotating concentric rings with delicate radial ticks, and ground mist
-// ============================================================================
-function MonumentalPedestalPlatform({
-  activeConceptIndex,
-  rippleTrigger = 0,
-  reduced = false,
-}: {
-  activeConceptIndex: number | null;
-  rippleTrigger?: number;
-  reduced?: boolean;
-}) {
-  const textures = usePlatformTextures();
-  const ring1Ref = useRef<THREE.Group>(null);
-  const ring2Ref = useRef<THREE.Group>(null);
-  const ring3Ref = useRef<THREE.Group>(null);
-  const ring4Ref = useRef<THREE.Group>(null);
-  const rippleMeshRef = useRef<THREE.Mesh>(null);
-  const rippleScale = useRef(0.2);
-  const rippleOpacity = useRef(0.0);
-
-  useEffect(() => {
-    rippleScale.current = 0.25;
-    rippleOpacity.current = 0.95;
-  }, [rippleTrigger, activeConceptIndex]);
-
-  useFrame((_state, delta) => {
-    if (reduced) return;
-    if (ring1Ref.current) ring1Ref.current.rotation.y += delta * 0.014;
-    if (ring2Ref.current) ring2Ref.current.rotation.y -= delta * 0.022;
-    if (ring3Ref.current) ring3Ref.current.rotation.y += delta * 0.032;
-    if (ring4Ref.current) ring4Ref.current.rotation.y -= delta * 0.042;
-
-    if (rippleMeshRef.current && rippleOpacity.current > 0.01) {
-      rippleScale.current += delta * 2.2;
-      rippleOpacity.current = THREE.MathUtils.lerp(
-        rippleOpacity.current,
-        0,
-        delta * 2.2
-      );
-      rippleMeshRef.current.scale.set(rippleScale.current, rippleScale.current, 1);
-      const mat = rippleMeshRef.current.material as THREE.MeshBasicMaterial;
-      mat.opacity = rippleOpacity.current;
-    }
-  });
-
-  return (
-    <group position={[0, -0.88, 0]}>
-      {/* 1. Sub-floor deep shadow disc */}
-      <mesh position={[0, -0.1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[1.78, 64]} />
-        <meshBasicMaterial color="#000000" depthWrite={true} />
-      </mesh>
-
-      {/* 2. Base Monumental Foundation Plinth (Heavy Stepped Base) */}
-      <mesh position={[0, -0.04, 0]}>
-        <cylinderGeometry args={[1.56, 1.62, 0.12, 64]} />
-        <meshStandardMaterial
-          color="#06060a"
-          roughness={0.18}
-          metalness={0.92}
-        />
-      </mesh>
-
-      {/* Gothic Arcade Relief perimeter markers */}
-      <RadialTicks
-        count={36}
-        radius={1.56}
-        tickLength={0.06}
-        tickWidth={0.018}
-        tickHeight={0.11}
-        color="#181a24"
-        emissiveIntensity={0.04}
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[points, 3]} />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.024}
+        color="#ffffff"
+        transparent
+        opacity={0.32}
+        sizeAttenuation
       />
-
-      {/* Outer Polished Rim Torus */}
-      <mesh position={[0, 0.02, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[1.56, 0.014, 16, 64]} />
-        <meshStandardMaterial
-          color="#ffffff"
-          metalness={0.98}
-          roughness={0.04}
-          emissive="#ffffff"
-          emissiveIntensity={0.25}
-        />
-      </mesh>
-
-      {/* 3. Ring 01: Outermost Concentric Rotating Ring (Clockwise) */}
-      <group ref={ring1Ref} position={[0, 0.022, 0]}>
-        <mesh>
-          <cylinderGeometry args={[1.44, 1.44, 0.04, 64]} />
-          <meshStandardMaterial
-            color="#090a10"
-            map={textures.outer}
-            bumpMap={textures.outer}
-            bumpScale={0.04}
-            roughness={0.14}
-            metalness={0.94}
-          />
-        </mesh>
-        <RadialTicks
-          count={48}
-          radius={1.34}
-          tickLength={0.06}
-          tickWidth={0.005}
-          tickHeight={0.042}
-          color="#ffffff"
-          emissiveIntensity={0.45}
-        />
-        {/* Luminous perimeter groove */}
-        <mesh position={[0, 0.021, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[1.44, 0.008, 16, 64]} />
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="#ffffff"
-            emissiveIntensity={0.7}
-            metalness={0.98}
-            roughness={0.02}
-          />
-        </mesh>
-      </group>
-
-      {/* Divider Step 1 */}
-      <mesh position={[0, 0.044, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[1.20, 0.008, 16, 64]} />
-        <meshStandardMaterial color="#404452" metalness={0.96} roughness={0.08} />
-      </mesh>
-
-      {/* 4. Ring 02: Mid-Outer Concentric Rotating Ring (Counter-clockwise) */}
-      <group ref={ring2Ref} position={[0, 0.046, 0]}>
-        <mesh>
-          <cylinderGeometry args={[1.16, 1.16, 0.042, 64]} />
-          <meshStandardMaterial
-            color="#0b0c13"
-            map={textures.middle}
-            bumpMap={textures.middle}
-            bumpScale={0.035}
-            roughness={0.15}
-            metalness={0.92}
-          />
-        </mesh>
-        <RadialTicks
-          count={36}
-          radius={1.04}
-          tickLength={0.05}
-          tickWidth={0.005}
-          tickHeight={0.044}
-          color="#ffffff"
-          emissiveIntensity={0.4}
-        />
-        <mesh position={[0, 0.022, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[1.16, 0.0075, 16, 64]} />
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="#ffffff"
-            emissiveIntensity={0.5}
-            metalness={0.98}
-            roughness={0.04}
-          />
-        </mesh>
-      </group>
-
-      {/* Divider Step 2 */}
-      <mesh position={[0, 0.068, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[0.90, 0.0075, 16, 64]} />
-        <meshStandardMaterial color="#404452" metalness={0.96} roughness={0.08} />
-      </mesh>
-
-      {/* 5. Ring 03: Mid-Inner Concentric Rotating Ring (Clockwise) */}
-      <group ref={ring3Ref} position={[0, 0.07, 0]}>
-        <mesh>
-          <cylinderGeometry args={[0.86, 0.86, 0.044, 64]} />
-          <meshStandardMaterial
-            color="#0e0f17"
-            map={textures.inner}
-            bumpMap={textures.inner}
-            bumpScale={0.03}
-            roughness={0.14}
-            metalness={0.95}
-          />
-        </mesh>
-        <RadialTicks
-          count={24}
-          radius={0.76}
-          tickLength={0.045}
-          tickWidth={0.005}
-          tickHeight={0.046}
-          color="#ffffff"
-          emissiveIntensity={0.55}
-        />
-        <mesh position={[0, 0.023, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.86, 0.007, 16, 64]} />
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="#ffffff"
-            emissiveIntensity={0.65}
-            metalness={0.98}
-            roughness={0.03}
-          />
-        </mesh>
-        <mesh position={[0, 0.023, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.62, 0.007, 16, 64]} />
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="#ffffff"
-            emissiveIntensity={0.8}
-            metalness={0.98}
-            roughness={0.02}
-          />
-        </mesh>
-      </group>
-
-      {/* 6. Ring 04: Innermost Concentric Ring (Counter-clockwise) */}
-      <group ref={ring4Ref} position={[0, 0.094, 0]}>
-        <mesh>
-          <cylinderGeometry args={[0.58, 0.58, 0.046, 64]} />
-          <meshStandardMaterial
-            color="#12141e"
-            roughness={0.08}
-            metalness={0.96}
-          />
-        </mesh>
-        <RadialTicks
-          count={24}
-          radius={0.48}
-          tickLength={0.038}
-          tickWidth={0.005}
-          tickHeight={0.048}
-          color="#ffffff"
-          emissiveIntensity={0.75}
-        />
-      </group>
-
-      {/* 7. Center Stationary Focus Dais (Stage for Explorer Character) */}
-      <group position={[0, 0.118, 0]}>
-        <mesh>
-          <cylinderGeometry args={[0.36, 0.36, 0.048, 64]} />
-          <meshStandardMaterial
-            color="#040407"
-            roughness={0.03}
-            metalness={0.98}
-          />
-        </mesh>
-        {/* Luminous circular rim */}
-        <mesh position={[0, 0.025, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.36, 0.0075, 16, 64]} />
-          <meshStandardMaterial
-            color="#ffffff"
-            emissive="#ffffff"
-            emissiveIntensity={0.9}
-            metalness={0.98}
-            roughness={0.02}
-          />
-        </mesh>
-        {/* Floor reflection texture plane beneath character feet */}
-        <mesh position={[0, 0.026, 0.04]} rotation={[-Math.PI / 2, 0, 0]}>
-          <planeGeometry args={[0.48, 0.48]} />
-          <meshBasicMaterial
-            map={textures.reflection}
-            transparent
-            opacity={0.35}
-            blending={THREE.AdditiveBlending}
-            depthWrite={false}
-          />
-        </mesh>
-      </group>
-
-      {/* 8. Interactive Silver Radial Shockwave */}
-      <mesh
-        ref={rippleMeshRef}
-        position={[0, 0.145, 0]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={[0.2, 0.2, 1]}
-      >
-        <ringGeometry args={[0.25, 0.34, 64]} />
-        <meshBasicMaterial
-          color="#ffffff"
-          transparent
-          opacity={0}
-          side={THREE.DoubleSide}
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
-
-      {/* 9. Ground Mist Layers around base */}
-      <group position={[0, 0.01, 0]}>
-        {[0, 1, 2, 3].map((idx) => (
-          <mesh
-            key={idx}
-            rotation={[-Math.PI / 2, 0, (idx * Math.PI) / 4]}
-            position={[0, 0.003 * idx, 0]}
-          >
-            <ringGeometry args={[1.34 + idx * 0.06, 1.72 + idx * 0.08, 48]} />
-            <meshBasicMaterial
-              color="#e0e4f4"
-              transparent
-              opacity={0.075 - idx * 0.015}
-              side={THREE.DoubleSide}
-              depthWrite={false}
-              blending={THREE.AdditiveBlending}
-            />
-          </mesh>
-        ))}
-      </group>
-    </group>
+    </points>
   );
 }
 
 // ============================================================================
-// CAMERA CONTROLLER WITH RESPONSIVE FRAMING
+// 5. CAMERA CONTROLLER: FRUSTUM CALCULATION & RESPONSIVE FRAMING
+// Calibrates camera distance based on center scene container dimensions and FOV.
+// Keeps crystal, rings, character, and platform completely within view.
 // ============================================================================
 function CameraController({
   reduced = false,
@@ -943,35 +707,18 @@ function CameraController({
   isTablet?: boolean;
 }) {
   const { camera } = useThree();
-  const targetZ = useRef(isMobile ? 5.8 : isTablet ? 5.4 : 5.0);
-  const targetY = useRef(isMobile ? 0.35 : 0.25);
+  const targetZ = useRef(isMobile ? 5.5 : isTablet ? 5.2 : 4.8);
+  const targetY = useRef(isMobile ? 0.40 : 0.45);
 
   useEffect(() => {
-    targetZ.current = isMobile ? 5.8 : isTablet ? 5.4 : 5.0;
-    targetY.current = isMobile ? 0.35 : 0.25;
+    targetZ.current = isMobile ? 5.5 : isTablet ? 5.2 : 4.8;
+    targetY.current = isMobile ? 0.40 : 0.45;
   }, [isMobile, isTablet]);
-
-  useEffect(() => {
-    if (reduced) return;
-    const handleScroll = () => {
-      const el = document.getElementById("about");
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const progress = Math.min(
-        Math.max((window.innerHeight - rect.top) / (window.innerHeight + rect.height), 0),
-        1
-      );
-      const baseZ = isMobile ? 5.8 : isTablet ? 5.4 : 5.0;
-      targetZ.current = baseZ - progress * 0.3;
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [reduced, isMobile, isTablet]);
 
   useFrame((_state, delta) => {
     if (reduced) return;
     camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ.current, delta * 3.0);
+    camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY.current, delta * 3.0);
     camera.lookAt(0, targetY.current, 0);
   });
 
@@ -979,7 +726,28 @@ function CameraController({
 }
 
 // ============================================================================
-// MAIN CHAMBER PLATFORM SCENE EXPORT
+// 6. VISUAL DEBUG HELPERS (?debug=about)
+// Renders bounding boxes, camera frustum, ground plane, and world axes.
+// ============================================================================
+function VisualDebugHelper({ enabled }: { enabled: boolean }) {
+  if (!enabled) return null;
+  return (
+    <group>
+      <axesHelper args={[1.5]} />
+      <gridHelper args={[3.0, 12, "#ffffff", "#333333"]} position={[0, -0.38, 0]} />
+    </group>
+  );
+}
+
+// ============================================================================
+// MAIN CHAMBER PLATFORM SCENE (SECTION 02)
+// Clean scene hierarchy:
+// SceneRoot
+//  - CathedralLighting
+//  - FloorGroup
+//  - ExplorerCharacter
+//  - CrystalGroup
+//  - AtmosphericEffects
 // ============================================================================
 export default function ChamberPlatformScene({
   activeConceptIndex = null,
@@ -999,13 +767,15 @@ export default function ChamberPlatformScene({
   const [activationProgress, setActivationProgress] = useState(0);
   const activationAnimRef = useRef<number | null>(null);
 
-  const isIsolated = useMemo(() => {
-    if (isolatedMode) return true;
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      return params.get("isolate") === "about3d";
+  const { isIsolated, isDebug } = useMemo(() => {
+    if (typeof window === "undefined") {
+      return { isIsolated: isolatedMode, isDebug: false };
     }
-    return false;
+    const params = new URLSearchParams(window.location.search);
+    return {
+      isIsolated: isolatedMode || params.get("isolate") === "about3d",
+      isDebug: params.get("debug") === "about",
+    };
   }, [isolatedMode]);
 
   useEffect(() => {
@@ -1022,7 +792,7 @@ export default function ChamberPlatformScene({
   const triggerActivation = useCallback(() => {
     if (activationAnimRef.current) cancelAnimationFrame(activationAnimRef.current);
     const startTime = performance.now();
-    const duration = 1800;
+    const duration = 1600;
 
     const animate = (now: number) => {
       const elapsed = now - startTime;
@@ -1048,10 +818,10 @@ export default function ChamberPlatformScene({
     >
       <Canvas
         camera={{
-          position: [0, 0.85, isMobile ? 5.8 : isTablet ? 5.4 : 5.0],
-          fov: isMobile ? 42 : isTablet ? 38 : 36,
+          position: [0, isMobile ? 0.40 : 0.45, isMobile ? 5.5 : isTablet ? 5.2 : 4.8],
+          fov: isMobile ? 38 : isTablet ? 36 : 34,
           near: 0.1,
-          far: 100,
+          far: 50,
         }}
         dpr={[1, 1.5]}
         gl={{
@@ -1061,49 +831,46 @@ export default function ChamberPlatformScene({
         }}
         className="about-platform-canvas"
       >
-        {isIsolated && <color attach="background" args={["#08080c"]} />}
+        {isIsolated && <color attach="background" args={["#06070a"]} />}
 
         <CameraController reduced={reduced} isMobile={isMobile} isTablet={isTablet} />
 
-        {/* Ambient illumination: controlled so materials retain deep obsidian tones */}
-        <ambientLight intensity={0.48} color="#b8bed2" />
-
-        {/* Downward key light from ceiling */}
+        {/* Scene Lighting: Directional cathedral sunlight and ambient rim illumination */}
+        <ambientLight intensity={0.52} color="#b4bad0" />
         <pointLight
-          position={[0, 3.2, 0.2]}
-          intensity={4.2}
+          position={[0, 3.0, 0.4]}
+          intensity={3.8}
           color="#ffffff"
-          distance={6.0}
+          distance={5.5}
           decay={1.8}
         />
+        <directionalLight position={[-3.0, 2.0, 2.0]} intensity={1.2} color="#9aa0b6" />
+        <directionalLight position={[3.0, 2.0, 2.0]} intensity={1.2} color="#9aa0b6" />
+        <directionalLight position={[0, -1.0, 1.2]} intensity={0.25} color="#22242e" />
 
-        {/* Rim lights catching ring bevels and facet edges */}
-        <directionalLight position={[-3.5, 1.8, 2.0]} intensity={1.4} color="#a2a8bd" />
-        <directionalLight position={[3.5, 1.8, 2.0]} intensity={1.4} color="#a2a8bd" />
+        {/* Visual Debugging Helpers */}
+        <VisualDebugHelper enabled={isDebug} />
 
-        {/* Upward bounce from dark reflective floor */}
-        <directionalLight position={[0, -1.2, 1.4]} intensity={0.3} color="#262832" />
-
-        {/* 3D Scene Components */}
-        <MonumentalPedestalPlatform
+        {/* 1. Floor Group: 3D Concentric Mechanical Platform */}
+        <FloorGroup
           activeConceptIndex={activeConceptIndex}
           rippleTrigger={rippleTrigger}
           reduced={reduced}
         />
-        <CrystallineIntelligenceCore
+
+        {/* 2. Explorer Character: Grounded on Center Dais with soft shadow */}
+        <ExplorerCharacter daisTopY={-0.19} />
+
+        {/* 3. Crystal Group: Suspended Faceted Diamond & Orbital Rings */}
+        <CrystalGroup
           activeConceptIndex={activeConceptIndex}
           activationProgress={activationProgress}
           onActivate={triggerActivation}
           reduced={reduced}
         />
-        <EngravedMechanicalOrbitalRings
-          activationProgress={activationProgress}
-          reduced={reduced}
-        />
-        <KnowledgeShards
-          activeConceptIndex={activeConceptIndex}
-          reduced={reduced}
-        />
+
+        {/* 4. Atmospheric Effects: Floating Cathedral Dust Particles */}
+        {!reduced && <AtmosphericEffects count={40} />}
       </Canvas>
     </div>
   );
