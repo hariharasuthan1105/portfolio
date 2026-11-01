@@ -1851,7 +1851,7 @@ nav a[aria-current]:after {
 .hall-scene-container {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 1;
   pointer-events: none;
 }
 
@@ -1884,6 +1884,9 @@ nav a[aria-current]:after {
 
 /* Top-Left Section Heading Block */
 .hall-header-block {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
   max-width: 480px;
   background: linear-gradient(135deg, rgba(7, 7, 7, 0.82) 0%, rgba(18, 18, 20, 0.45) 100%);
   backdrop-filter: blur(14px);
@@ -1925,6 +1928,9 @@ nav a[aria-current]:after {
 
 /* Lower Area — Three Award Panels */
 .hall-awards-container {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
   width: 100%;
   margin-top: auto;
   padding-top: 32px;
@@ -1938,175 +1944,197 @@ nav a[aria-current]:after {
   margin: 0 auto;
 }
 
-/* Individual Obsidian Award Plinth Panel */
-.hall-award-panel {
-  background: linear-gradient(180deg, rgba(14, 14, 18, 0.84) 0%, rgba(6, 6, 8, 0.94) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+/* Individual Obsidian Award Podium Badge (Reference-Accurate, Non-Obstructing) */
+.hall-explore-hint {
+  text-align: center;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  color: #888899;
+  margin-bottom: 12px;
+  pointer-events: auto;
+  text-transform: uppercase;
+}
+
+.hall-mobile-controls {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  pointer-events: auto;
+}
+
+.hall-mobile-btn {
+  background: rgba(14, 14, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #dddddd;
+  padding: 6px 12px;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hall-mobile-btn:hover {
+  background: rgba(24, 24, 32, 0.95);
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.hall-mobile-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.hall-mobile-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #444455;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.hall-mobile-dot.active {
+  background: #ffffff;
+  transform: scale(1.3);
+}
+
+.hall-mobile-view-btn {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 6px 14px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hall-mobile-view-btn:hover {
+  background: #e0e0e0;
+}
+
+.hall-award-panel.hall-podium-badge {
+  background: linear-gradient(180deg, rgba(14, 14, 20, 0.78) 0%, rgba(6, 6, 10, 0.92) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  padding: 26px 24px 22px;
+  padding: 14px 18px 12px;
   border-radius: 3px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 280px;
+  min-height: 108px;
   position: relative;
   cursor: pointer;
   outline: none;
   overflow: hidden;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.28s ease,
-              box-shadow 0.28s ease;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.75);
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.24s ease,
+              box-shadow 0.24s ease,
+              background 0.24s ease;
 }
 
-/* Hairline Top Light Accent */
-.hall-award-panel::before {
+.hall-award-panel.hall-podium-badge::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 12%;
-  right: 12%;
+  left: 15%;
+  right: 15%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
 }
 
-/* Surface Light Sweep Effect on Hover */
-.hall-award-panel::after {
-  content: "";
-  position: absolute;
-  inset: -100%;
-  background: linear-gradient(
-    115deg,
-    transparent 42%,
-    rgba(255, 255, 255, 0.08) 50%,
-    transparent 58%
-  );
-  transform: translateX(-100%);
-  transition: transform 0.7s ease;
-  pointer-events: none;
+.hall-award-panel.hall-podium-badge:hover,
+.hall-award-panel.hall-podium-badge:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgba(20, 20, 28, 0.88) 0%, rgba(10, 10, 16, 0.96) 100%);
 }
 
-.hall-award-panel:hover::after,
-.hall-award-panel:focus-visible::after {
-  transform: translateX(100%);
-}
-
-.hall-award-panel:hover,
-.hall-award-panel:focus-visible {
-  transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.45);
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.85), 0 0 24px rgba(255, 255, 255, 0.08);
-}
-
-.hall-award-panel.active-award {
+.hall-award-panel.hall-podium-badge.active-award {
   border-color: #ffffff;
-  box-shadow: 0 26px 54px rgba(0, 0, 0, 0.9), 0 0 32px rgba(255, 255, 255, 0.18);
-  background: linear-gradient(180deg, rgba(22, 22, 28, 0.9) 0%, rgba(8, 8, 12, 0.96) 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9), 0 0 24px rgba(255, 255, 255, 0.2);
+  background: linear-gradient(180deg, rgba(24, 24, 34, 0.92) 0%, rgba(12, 12, 18, 0.98) 100%);
 }
 
-/* Panel Header */
-.award-panel-meta {
+.badge-meta {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 8px;
 }
 
-.award-index {
-  font-size: 9.5px;
-  color: #888888;
+.badge-index {
+  font-size: 9px;
+  color: #777788;
   letter-spacing: 0.14em;
 }
 
-.award-badge {
-  font-size: 8.5px;
+.badge-status {
+  font-size: 8px;
   letter-spacing: 0.12em;
-  padding: 3px 8px;
+  padding: 2px 7px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #dddddd;
+  color: #e0e0e0;
   border-radius: 2px;
   transition: all 0.2s ease;
 }
 
-.hall-award-panel:hover .award-badge,
-.hall-award-panel.active-award .award-badge {
+.hall-award-panel:hover .badge-status,
+.hall-award-panel.active-award .badge-status {
   background: #ffffff;
   color: #000000;
   border-color: #ffffff;
 }
 
-/* Emblem Container */
-.award-panel-emblem {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 16px;
-  display: grid;
-  place-items: center;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.badge-body {
+  text-align: left;
+  margin-bottom: 8px;
 }
 
-.hall-award-panel:hover .award-panel-emblem,
-.hall-award-panel.active-award .award-panel-emblem {
-  transform: translateY(-3px) scale(1.06);
-}
-
-.award-svg-emblem {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.15));
-}
-
-/* Panel Body */
-.award-panel-body {
-  text-align: center;
-  margin-bottom: 16px;
-}
-
-.award-panel-title {
+.badge-title {
   font-family: var(--font-display);
-  font-size: clamp(1.15rem, 1.5vw, 1.45rem);
+  font-size: clamp(13px, 1.15vw, 16px);
   font-weight: 600;
   color: #ffffff;
-  letter-spacing: 0.03em;
-  margin: 0 0 6px;
-  line-height: 1.2;
+  letter-spacing: 0.02em;
+  margin: 0 0 3px;
+  line-height: 1.25;
 }
 
-.award-panel-organizer {
+.badge-organizer {
   display: block;
-  font-size: 10.5px;
-  color: #999999;
-  letter-spacing: 0.1em;
-  margin-bottom: 10px;
+  font-size: 9.5px;
+  color: #9999a8;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.award-panel-summary {
-  font-size: 12.5px;
-  line-height: 1.5;
-  color: #a8a8b2;
-  margin: 0;
-}
-
-/* Panel Footer Action */
-.award-panel-action {
+.badge-action {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 6px;
-  font-size: 9.5px;
+  font-size: 8.5px;
   letter-spacing: 0.12em;
-  color: #888888;
-  padding-top: 14px;
+  color: #888899;
+  padding-top: 6px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   transition: color 0.2s ease;
 }
 
-.hall-award-panel:hover .award-panel-action,
-.hall-award-panel.active-award .award-panel-action {
+.hall-award-panel:hover .badge-action,
+.hall-award-panel.active-award .badge-action {
   color: #ffffff;
 }
 
@@ -7625,83 +7653,148 @@ html[data-motion="reduced"] *:after {
   background: #06070a !important;
 }
 
-/* Mobile Responsive Ordering for Section 02 */
-/* Tablet Responsive: 769px - 1024px */
-@media (max-width: 1024px) and (min-width: 769px) {
-  .about-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-    gap: 24px !important;
-  }
-  .about-left-col {
-    grid-column: 1 !important;
-  }
-  .about-cinematic-v3 .about-center-corridor,
-  .about-center-corridor {
-    grid-column: 2 !important;
-    height: 560px !important;
-    min-height: 520px !important;
-  }
-  .about-right-col {
-    grid-column: 1 / -1 !important;
-  }
-  .about-values-stack {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 14px !important;
-  }
-}
-
-/* Mobile Responsive Ordering for Section 02 */
-@media (max-width: 768px) {
-  .about-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 20px !important;
-    width: 100% !important;
-  }
-  .about-left-col {
-    order: 1 !important;
-    width: 100% !important;
-    display: contents !important;
-  }
-  .about-intro-block {
-    order: 1 !important;
-    width: 100% !important;
-  }
-  .about-cinematic-v3 .about-center-corridor,
-  .about-center-corridor {
-    order: 2 !important;
-    width: 100% !important;
-    height: 440px !important;
-    min-height: 440px !important;
-    position: relative !important;
-    overflow: visible !important;
-    margin: 8px 0 14px !important;
-  }
-  .about-edu-block {
-    order: 3 !important;
-    width: 100% !important;
-    margin-top: 0 !important;
-  }
-  .about-right-col {
-    order: 4 !important;
-    width: 100% !important;
-    margin-top: 14px !important;
-  }
-  .about-values-stack {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 12px !important;
-  }
-}
-
-/* Isolated Mode for Section 02 Geometry Inspection */
-.section.about.is-about-isolated {
-  background-color: #06070a !important;
-}
+/* About compositing: independent grid tracks, shared scene height, no canvas bleed. */
+.section.about.about-cinematic-v3 { min-height: calc(100svh - 76px); padding: 56px 0 36px; }
+.about-cinematic-v3 .about-container { max-width: 1920px; padding-inline: clamp(20px, 3vw, 58px); }
+.about-cinematic-v3 .about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.28fr) minmax(0, 0.94fr); gap: clamp(16px, 1.8vw, 32px); }
+.about-cinematic-v3 .about-center-corridor { height: clamp(580px, 76svh, 860px); min-height: 0; overflow: hidden; margin: 0; }
+.about-cinematic-v3 .about-scene-container { position: relative; inset: auto; overflow: hidden; }
+.about-cinematic-v3 .about-left-col { gap: 20px; }
+.about-cinematic-v3 .about-main-heading { font-family: "Pixelify Sans", sans-serif; font-size: clamp(24px, 2.1vw, 38px); line-height: 1.16; }
+.about-cinematic-v3 .about-intro-copy p { font-size: clamp(14px, 1vw, 17px); line-height: 1.7; }
+.about-cinematic-v3 .about-value-card { min-height: 112px; padding: 18px; gap: 15px; background: linear-gradient(135deg, #141414e6, #080808ed); }
+.about-cinematic-v3 .about-values-stack { gap: 18px; }
+.about-cinematic-v3 .value-icon-box { flex-shrink: 0; }
+.about-cinematic-v3 .about-education-card { padding: 18px; background: #0b0b0bd9; }
+.about-cinematic-v3.chamber:before { background: url('/assets/chamber_sanctum_bg.jpg') center center / cover no-repeat; filter: saturate(0) contrast(1.12) brightness(0.96); opacity: 0.95; }
+.about-cinematic-v3.chamber:after { background: linear-gradient(90deg, #030303f2 0%, #03030399 22%, transparent 40%, transparent 60%, #03030399 78%, #030303f2 100%), linear-gradient(0deg, #030303 0%, transparent 15%, transparent 85%, #030303cc 100%); }
+.about-cinematic-v3 .about-cathedral-bg { background: none; }
+.about-cinematic-v3 .about-animate-in { transform: none; }
 .section.about.is-about-isolated:before,
 .section.about.is-about-isolated:after,
-.section.about.is-about-isolated .about-cathedral-bg {
-  display: none !important;
+.section.about.is-about-isolated .about-cathedral-bg { display: none; }
+@media (min-width: 1101px) and (max-height: 850px) {
+  .section.about.about-cinematic-v3 { padding-top: 85px; padding-bottom: 30px; }
+  .about-cinematic-v3 .about-center-corridor { height: 600px; }
+  .about-cinematic-v3 .about-left-col { gap: 8px; }
+}
+@media (max-width: 1100px) and (min-width: 769px) {
+  .about-cinematic-v3 .about-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .about-cinematic-v3 .about-center-corridor { height: 620px; grid-column: 2; grid-row: 1; }
+  .about-cinematic-v3 .about-right-col { grid-column: 1 / -1; }
+  .about-cinematic-v3 .about-values-stack { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .about-cinematic-v3 .about-value-card { flex-wrap: wrap; align-content: start; min-height: 190px; }
+}
+@media (max-width: 768px) {
+  .section.about.about-cinematic-v3 { padding: 85px 0 45px; }
+  .about-cinematic-v3 .about-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .about-cinematic-v3 .about-left-col { display: contents; }
+  .about-cinematic-v3 .about-intro-block { grid-row: 1; }
+  .about-cinematic-v3 .about-center-corridor { grid-row: 2; height: 450px; min-height: 0; border-radius: 0; background: url('/assets/chamber_sanctum_bg.jpg') center bottom / auto 140% no-repeat; }
+  .about-cinematic-v3 .about-center-corridor:after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg,#030303,transparent 12%,transparent 90%,#030303),linear-gradient(90deg,#030303,transparent 15%,transparent 85%,#030303); }
+  .about-cinematic-v3 .about-edu-block { grid-row: 3; margin: 0; }
+  .about-cinematic-v3 .about-right-col { grid-row: 4; margin: 0; }
+  .about-cinematic-v3 .about-values-stack { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .about-cinematic-v3.chamber:before { opacity: .18; }
+  .about-cinematic-v3 .about-main-heading { font-size: clamp(23px, 6.3vw, 34px); }
+  .about-cinematic-v3 .about-value-card { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-cinematic-v3 *, .about-cinematic-v3 *:before, .about-cinematic-v3 *:after { animation: none !important; transition: none !important; }
 }
 
+@media (min-width: 1101px) {
+  .about-cinematic-v3 .about-left-col { align-self: start; padding-top: 20px; }
+  .about-cinematic-v3 .about-right-col { align-self: start; padding-top: 130px; }
+}
+.is-about-isolated .about-left-col, .is-about-isolated .about-right-col { visibility: hidden; }
+
+/* -------------------------------------------------------------------------- */
+/* Section 06 / Hall of Honor Responsive & Isolation Rules                    */
+/* -------------------------------------------------------------------------- */
+.awards-section.hall-of-honor-section.is-hall-isolated::before,
+.awards-section.hall-of-honor-section.is-hall-isolated::after {
+  display: none !important;
+}
+.awards-section.hall-of-honor-section.is-hall-isolated {
+  background-color: #060608 !important;
+}
+.is-hall-isolated .hall-inner {
+  visibility: hidden;
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .hall-inner {
+    padding: 70px 30px 40px;
+  }
+  .hall-awards-grid {
+    gap: 16px;
+  }
+  .hall-award-panel.hall-podium-badge {
+    padding: 12px 14px;
+    min-height: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .awards-section.hall-of-honor-section {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: auto !important;
+    padding: 85px 0 45px !important;
+    background-color: #000000 !important;
+  }
+  .awards-section.hall-of-honor-section::before {
+    background-position: center 20% !important;
+    background-size: cover !important;
+    opacity: 0.8 !important;
+  }
+  .hall-inner {
+    display: contents !important;
+  }
+  .hall-header-block {
+    order: 1 !important;
+    width: calc(100% - 32px) !important;
+    margin: 0 auto 12px !important;
+    padding: 16px 18px !important;
+    max-width: 100% !important;
+  }
+  .hall-scene-container {
+    order: 2 !important;
+    position: relative !important;
+    inset: auto !important;
+    height: 380px !important;
+    width: 100% !important;
+    margin: 0 0 16px !important;
+    pointer-events: auto !important;
+  }
+  .hall-awards-container {
+    order: 3 !important;
+    width: calc(100% - 32px) !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+  .hall-mobile-controls {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+  }
+  .hall-awards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  .hall-award-panel.hall-podium-badge {
+    min-height: 80px !important;
+    padding: 12px 14px !important;
+  }
+  .hall-main-title {
+    font-size: clamp(1.8rem, 7vw, 2.6rem) !important;
+  }
+  .hall-explore-hint {
+    font-size: 9.5px !important;
+    margin-bottom: 8px !important;
+  }
+}

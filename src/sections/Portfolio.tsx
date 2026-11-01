@@ -99,7 +99,8 @@ export default function Portfolio({
   const [activeContactCard, setActiveContactCard] = useState<number | null>(null);
   const [activeConceptIndex, setActiveConceptIndex] = useState<number | null>(null);
   const [platformRippleTrigger, setPlatformRippleTrigger] = useState(0);
-  const isIsolated = typeof window !== "undefined" && Boolean(new URLSearchParams(window.location.search).get("isolate"));
+  const isIsolated = typeof window !== "undefined" && (new URLSearchParams(window.location.search).get("isolate") === "about3d");
+  const isHallIsolated = typeof window !== "undefined" && (new URLSearchParams(window.location.search).get("isolate") === "hall3d");
 
   const openAwardModal = (i: number) => {
     setAwardModalIndex(i);
@@ -110,6 +111,7 @@ export default function Portfolio({
   const closeAwardModal = () => {
     awardDialog.current?.close();
     setAwardModalIndex(null);
+    setSelectedAwardIndex(null);
   };
 
   const currentAward = awardModalIndex !== null ? ACHIEVEMENTS[awardModalIndex] : null;
@@ -924,19 +926,7 @@ export default function Portfolio({
       </section>
 
       {/* 06 / ACHIEVEMENTS — THE HALL OF HONOR */}
-      <section id="achievements" className="section awards-section hall-of-honor-section">
-        {/* Atmospheric 3D Hall of Honor Scene (God Rays, Ground Mist, 3D Trophies) */}
-        <div className="hall-scene-container" aria-hidden="false">
-          <HallOfHonorScene
-            selectedAwardIndex={selectedAwardIndex}
-            onSelectAward={(i) => {
-              setSelectedAwardIndex(i);
-              openAwardModal(i);
-            }}
-            reduced={reduced}
-          />
-        </div>
-
+      <section id="achievements" className={`section awards-section hall-of-honor-section ${isHallIsolated ? "is-hall-isolated" : ""}`}>
         <div className="section-inner hall-inner">
           {/* TOP-LEFT — SECTION HEADING */}
           <div className="hall-header-block">
@@ -949,13 +939,73 @@ export default function Portfolio({
             </p>
           </div>
 
-          {/* LOWER AREA — THREE AWARD PANELS */}
+          {/* Atmospheric 3D Hall of Honor Scene (God Rays, Ground Mist, 3D Trophies) */}
+          <div className="hall-scene-container" aria-hidden="false">
+            <HallOfHonorScene
+              selectedAwardIndex={selectedAwardIndex}
+              onSelectAward={(i) => {
+                setSelectedAwardIndex(i);
+                openAwardModal(i);
+              }}
+              reduced={reduced}
+            />
+          </div>
+
+          {/* LOWER AREA — PODIUM BADGES & INTERACTION */}
           <div className="hall-awards-container">
+            {/* Visual Instruction Hint */}
+            <div className="hall-explore-hint mono" aria-hidden="true">
+              [ SELECT A TROPHY TO EXPLORE ]
+            </div>
+
+            {/* Mobile Carousel Controls (shown on small screens) */}
+            <div className="hall-mobile-controls" role="group" aria-label="Trophy Navigation">
+              <button
+                type="button"
+                className="hall-mobile-btn mono"
+                onClick={() => {
+                  const prev = selectedAwardIndex === null ? 0 : (selectedAwardIndex + 2) % 3;
+                  setSelectedAwardIndex(prev);
+                }}
+                aria-label="Previous trophy"
+              >
+                [ PREVIOUS ]
+              </button>
+              <div className="hall-mobile-dots" aria-hidden="true">
+                {[0, 1, 2].map((idx) => (
+                  <span
+                    key={idx}
+                    className={`hall-mobile-dot ${selectedAwardIndex === idx ? "active" : ""}`}
+                    onClick={() => setSelectedAwardIndex(idx)}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                className="hall-mobile-btn mono"
+                onClick={() => {
+                  const next = selectedAwardIndex === null ? 1 : (selectedAwardIndex + 1) % 3;
+                  setSelectedAwardIndex(next);
+                }}
+                aria-label="Next trophy"
+              >
+                [ NEXT ]
+              </button>
+              <button
+                type="button"
+                className="hall-mobile-view-btn mono"
+                onClick={() => openAwardModal(selectedAwardIndex ?? 0)}
+              >
+                [ VIEW ACHIEVEMENT ]
+              </button>
+            </div>
+
+            {/* Three Compact Podium Badges (Unobtrusive & Reference-Accurate) */}
             <div className="hall-awards-grid" role="region" aria-label="Authentic Engineering Honors">
               {ACHIEVEMENTS.map((award, i) => (
                 <article
                   key={award.id}
-                  className={`hall-award-panel ${selectedAwardIndex === i ? "active-award" : ""}`}
+                  className={`hall-award-panel hall-podium-badge ${selectedAwardIndex === i ? "active-award" : ""}`}
                   onClick={() => {
                     setSelectedAwardIndex(i);
                     openAwardModal(i);
@@ -963,6 +1013,7 @@ export default function Portfolio({
                   tabIndex={0}
                   role="button"
                   aria-pressed={selectedAwardIndex === i}
+                  aria-label={`Select ${award.name} - ${award.status}`}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
@@ -972,28 +1023,20 @@ export default function Portfolio({
                   }}
                 >
                   {/* Top Bar: Number & Status */}
-                  <div className="award-panel-meta">
-                    <span className="mono award-index">0{i + 1} // COMPETITION</span>
-                    <span className="mono award-badge">{award.status}</span>
+                  <div className="badge-meta mono">
+                    <span className="badge-index">0{i + 1} // COMPETITION</span>
+                    <span className="badge-status">{award.status}</span>
                   </div>
 
-                  {/* Dimensional Monochrome Emblem */}
-                  <div className="award-panel-emblem" aria-hidden="true">
-                    {award.emblemType === "laurel" && <LaurelEmblem className="award-svg-emblem" />}
-                    {award.emblemType === "geometric" && <GeometricEmblem className="award-svg-emblem" />}
-                    {award.emblemType === "globe" && <GlobeEmblem className="award-svg-emblem" />}
-                  </div>
-
-                  {/* Body */}
-                  <div className="award-panel-body">
-                    <h3 className="award-panel-title card-heading">{award.name}</h3>
-                    <span className="award-panel-organizer mono">{award.organizer}</span>
-                    <p className="award-panel-summary">{award.description}</p>
+                  {/* Body: Title & Organizer */}
+                  <div className="badge-body">
+                    <h3 className="badge-title">{award.name}</h3>
+                    <span className="badge-organizer mono">{award.organizer}</span>
                   </div>
 
                   {/* Action Bar */}
-                  <div className="award-panel-action mono">
-                    <span>[ VIEW CITATION ]</span>
+                  <div className="badge-action mono">
+                    <span>[ EXPLORE TROPHY ]</span>
                     <ArrowUpRight size={13} />
                   </div>
                 </article>

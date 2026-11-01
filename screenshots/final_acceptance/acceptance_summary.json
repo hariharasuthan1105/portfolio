@@ -1,0 +1,137 @@
+[
+  {
+    "name": "Projects Section Exists",
+    "passed": true,
+    "notes": "#projects found"
+  },
+  {
+    "name": "Capture Projects Gallery Default",
+    "passed": true,
+    "notes": "Saved 01_projects_gallery_default.png"
+  },
+  {
+    "name": "Three Project Exhibits Count",
+    "passed": true,
+    "notes": "Found 3 project exhibits"
+  },
+  {
+    "name": "Capture DocRecon Selected",
+    "passed": true,
+    "notes": "Saved 02_projects_docrecon_selected.png"
+  },
+  {
+    "name": "Capture Pathway AI Selected",
+    "passed": true,
+    "notes": "Saved 03_projects_pathway_selected.png"
+  },
+  {
+    "name": "Capture HEFIN Selected",
+    "passed": true,
+    "notes": "Saved 04_projects_hefin_selected.png"
+  },
+  {
+    "name": "Project Modal Opens on Selection",
+    "passed": true,
+    "notes": "Dialog open attribute is true"
+  },
+  {
+    "name": "Capture Architecture Specs Modal",
+    "passed": true,
+    "notes": "Saved 05_projects_modal_open.png"
+  },
+  {
+    "name": "Project Modal Closes on Escape Key",
+    "passed": true,
+    "notes": "Dialog closed cleanly"
+  },
+  {
+    "name": "Journey Section Exists",
+    "passed": true,
+    "notes": "#experience found"
+  },
+  {
+    "name": "Milestone 3D Pins Rendered",
+    "passed": true,
+    "notes": "Found 4 spatial pins"
+  },
+  {
+    "name": "Single Active Inspector Panel",
+    "passed": true,
+    "notes": "Exactly 1 inspector panel rendered"
+  },
+  {
+    "name": "Step Selector Buttons Present",
+    "passed": true,
+    "notes": "Found 4 step buttons"
+  },
+  {
+    "name": "2023 Academic Origin Data Authentic",
+    "passed": true,
+    "notes": "Matches resume education & CGPA 8.25"
+  },
+  {
+    "name": "Capture 2023 Milestone",
+    "passed": true,
+    "notes": "Saved 06_journey_2023_foundation.png"
+  },
+  {
+    "name": "2024 Robotics Internship Data Authentic",
+    "passed": true,
+    "notes": "Matches resume Emglitz Technologies"
+  },
+  {
+    "name": "Capture 2024 Milestone",
+    "passed": true,
+    "notes": "Saved 07_journey_2024_robotics.png"
+  },
+  {
+    "name": "2025 Data Science Internship Data Authentic",
+    "passed": true,
+    "notes": "Matches resume Grow Your Skills"
+  },
+  {
+    "name": "Capture 2025 Milestone",
+    "passed": true,
+    "notes": "Saved 08_journey_2025_datascience.png"
+  },
+  {
+    "name": "Future Horizon Correctly Labeled Future Goal",
+    "passed": true,
+    "notes": "Explicitly marked as future goal/ambition, not completed experience"
+  },
+  {
+    "name": "Capture Future Milestone",
+    "passed": true,
+    "notes": "Saved 09_journey_future_ambition.png"
+  },
+  {
+    "name": "Inspector PREV Control Navigates",
+    "passed": true,
+    "notes": "Stepped back to 03 / 04"
+  },
+  {
+    "name": "Inspector NEXT Control Navigates",
+    "passed": true,
+    "notes": "Stepped forward to 04 / 04"
+  },
+  {
+    "name": "Capture Mobile Journey View",
+    "passed": true,
+    "notes": "Saved 10_mobile_journey_view.png"
+  },
+  {
+    "name": "Capture Mobile Projects View",
+    "passed": true,
+    "notes": "Saved 11_mobile_projects_view.png"
+  },
+  {
+    "name": "Capture Mobile Pathway AI Selected via Tab",
+    "passed": true,
+    "notes": "Saved 12_mobile_pathway_selected.png"
+  },
+  {
+    "name": "Mobile Zero Horizontal Overflow",
+    "passed": true,
+    "notes": "scrollWidth: 390px, clientWidth: 390px"
+  }
+]

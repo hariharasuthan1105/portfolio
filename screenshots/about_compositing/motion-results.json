@@ -1,0 +1,48 @@
+{
+  "before": {
+    "foundation": [
+      0,
+      0,
+      0
+    ],
+    "foundationRotation": [
+      0,
+      0,
+      0,
+      "XYZ"
+    ],
+    "feetY": 0.065,
+    "daisY": 0.065,
+    "crystalY": 1.665883885852901,
+    "camera": [
+      0,
+      1.6728651920676478,
+      5.698502134084977
+    ],
+    "ring": 0.054051000000033544,
+    "inFrame": true
+  },
+  "after": {
+    "foundation": [
+      0,
+      0,
+      0
+    ],
+    "foundationRotation": [
+      0,
+      0,
+      0,
+      "XYZ"
+    ],
+    "feetY": 0.065,
+    "daisY": 0.065,
+    "crystalY": 1.6406394717748223,
+    "camera": [
+      0,
+      1.6728651920676478,
+      5.698502134084977
+    ],
+    "ring": 0.286814999999944,
+    "inFrame": true
+  }
+}
