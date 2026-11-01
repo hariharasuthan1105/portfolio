@@ -175,34 +175,81 @@ export default function Portfolio({
   return (
     <>
       {/* 02 / ABOUT ME - CINEMATIC 3D FINAL REDESIGN */}
-      <section id="about" className="section about chamber about-enhanced-chamber about-cinematic-v3">
+      <section id="about" className={`section about chamber about-enhanced-chamber about-cinematic-v3 ${isIsolated ? "is-about-isolated" : ""}`}>
         {/* Cathedral environment plate — art direction background */}
         <div className="about-cathedral-bg" aria-hidden="true" />
         <div className="about-container">
           <div className="about-grid">
-            {/* ZONE 1 (LEFT / TOP-LEFT): Section label, Headline, Introduction */}
-            <div className="about-intro-block about-animate-in about-animate-left">
-              <div className="about-eyebrow mono">[ 02 / ABOUT ]</div>
-              
-              <h2 className="about-main-heading">
-                CURIOSITY IS WHERE<br />
-                EVERYTHING BEGINS.
-              </h2>
+            {/* ZONE 1 (LEFT COLUMN ~29%): Intro, Bio, Education Panel, Resume Download */}
+            <div className="about-left-col about-animate-in about-animate-left">
+              <div className="about-intro-block">
+                <div className="about-eyebrow mono">[ 02 / ABOUT ]</div>
+                
+                <h2 className="about-main-heading">
+                  CURIOSITY IS WHERE<br />
+                  EVERYTHING BEGINS.
+                </h2>
 
-              <div className="about-intro-copy">
-                <p>
-                  I'm Hariharasuthan, an AI &amp; Data Science undergraduate exploring
-                  how complex information transforms into dependable, intelligent decisions.
-                </p>
-                <p>
-                  My focus lies at the convergence of artificial intelligence,
-                  quantitative finance, probability, optimization, and real-time decision architectures.
-                </p>
+                <div className="about-intro-copy">
+                  <p>
+                    I'm Hariharasuthan, an AI &amp; Data Science undergraduate exploring
+                    how complex information transforms into dependable, intelligent decisions.
+                  </p>
+                  <p>
+                    My focus lies at the convergence of artificial intelligence,
+                    quantitative finance, probability, optimization, and real-time decision architectures.
+                  </p>
+                </div>
+              </div>
+
+              {/* Education Panel & Download Resume */}
+              <div className="about-edu-block">
+                <div className="about-education-card glass">
+                  <div className="edu-top-row">
+                    <div className="edu-icon-wrap" aria-hidden="true">
+                      <GraduationCap size={22} className="edu-icon" />
+                    </div>
+                    <span className="edu-badge mono">
+                      <span className="edu-dot" />
+                      UNDERGRADUATE
+                    </span>
+                  </div>
+
+                  <div className="edu-body">
+                    <h3 className="edu-degree">{profile.education.degree}</h3>
+                    <p className="edu-college">{profile.education.college}</p>
+                  </div>
+
+                  <div className="edu-cgpa-track">
+                    <div className="cgpa-label-row mono">
+                      <span>ACADEMIC INDEX</span>
+                      <strong>CGPA {profile.education.cgpa}</strong>
+                    </div>
+                    <div className="cgpa-bar-bg" aria-hidden="true">
+                      <div className="cgpa-bar-fill" style={{ width: "82.5%" }} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Download Resume Action */}
+                <div className="about-resume-wrap">
+                  <a
+                    className="about-resume-btn mono"
+                    href="/assets/hariharasuthan-resume.pdf"
+                    download
+                    aria-label="Download Hariharasuthan resume PDF"
+                  >
+                    <span className="bracket-left">┌</span>
+                    <span className="btn-label">DOWNLOAD RESUME</span>
+                    <ArrowRight size={14} className="btn-arrow" />
+                    <span className="bracket-right">┘</span>
+                  </a>
+                </div>
               </div>
             </div>
 
-            {/* ZONE 2 (CENTER): Cinematic 3D Scene — Faceted Diamond Crystal + Orbital Rings + Platform + Explorer */}
-            <div className="about-center-corridor about-animate-in about-animate-up">
+            {/* ZONE 2 (CENTER COLUMN ~42%): Cinematic 3D Scene */}
+            <div className="about-center-corridor">
               <div className="about-scene-container" aria-hidden="false">
                 <ChamberPlatformScene
                   activeConceptIndex={activeConceptIndex}
@@ -210,64 +257,10 @@ export default function Portfolio({
                   reduced={reduced}
                   onPlatformHover={() => setPlatformRippleTrigger((prev) => prev + 1)}
                 />
-                {/* Cloaked Explorer Cutout Grounded upon the Rotating 3D Dais */}
-                <div className="about-character-stand" aria-hidden="true">
-                  <img
-                    src="/assets/chamber_character.png"
-                    alt="Cloaked explorer standing in gothic chamber"
-                    className="about-character-cutout"
-                  />
-                  <div className="about-character-base-mist" />
-                </div>
               </div>
             </div>
 
-            {/* ZONE 3 (LEFT-BOTTOM / MOBILE STEP 3): Education Panel & Download Resume */}
-            <div className="about-edu-block about-animate-in about-animate-left">
-              <div className="about-education-card glass">
-                <div className="edu-top-row">
-                  <div className="edu-icon-wrap" aria-hidden="true">
-                    <GraduationCap size={22} className="edu-icon" />
-                  </div>
-                  <span className="edu-badge mono">
-                    <span className="edu-dot" />
-                    UNDERGRADUATE
-                  </span>
-                </div>
-
-                <div className="edu-body">
-                  <h3 className="edu-degree">{profile.education.degree}</h3>
-                  <p className="edu-college">{profile.education.college}</p>
-                </div>
-
-                <div className="edu-cgpa-track">
-                  <div className="cgpa-label-row mono">
-                    <span>ACADEMIC INDEX</span>
-                    <strong>CGPA {profile.education.cgpa}</strong>
-                  </div>
-                  <div className="cgpa-bar-bg" aria-hidden="true">
-                    <div className="cgpa-bar-fill" style={{ width: "82.5%" }} />
-                  </div>
-                </div>
-              </div>
-
-              {/* Download Resume Action */}
-              <div className="about-resume-wrap">
-                <a
-                  className="about-resume-btn mono"
-                  href="/assets/hariharasuthan-resume.pdf"
-                  download
-                  aria-label="Download Hariharasuthan resume PDF"
-                >
-                  <span className="bracket-left">┌</span>
-                  <span className="btn-label">DOWNLOAD RESUME</span>
-                  <ArrowRight size={14} className="btn-arrow" />
-                  <span className="bracket-right">┘</span>
-                </a>
-              </div>
-            </div>
-
-            {/* ZONE 4 (RIGHT / MOBILE STEP 4): Three Premium Glass Value Panels */}
+            {/* ZONE 3 (RIGHT COLUMN ~29%): Three Premium Glass Value Panels */}
             <div className="about-values-block about-right-col about-animate-in about-animate-right">
               <div className="about-values-stack">
                 {/* 01 CURIOSITY */}

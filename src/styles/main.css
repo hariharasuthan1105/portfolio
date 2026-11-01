@@ -990,22 +990,25 @@ nav a[aria-current]:after {
   box-sizing: border-box;
 }
 
-/* Three Clearly Defined Zones: Left (30%), Center (40%), Right (30%) */
+/* Three Clearly Defined Zones: Left (29%), Center (42%), Right (29%) */
 .about-grid {
   display: grid;
-  grid-template-columns: minmax(0, 29%) minmax(0, 43%) minmax(0, 28%);
-  grid-template-rows: auto 1fr;
-  grid-template-areas:
-    "intro center values"
-    "edu   center values";
-  gap: clamp(16px, 2.2vw, 36px);
+  grid-template-columns: minmax(0, 29%) minmax(0, 42%) minmax(0, 29%);
+  gap: clamp(16px, 2vw, 36px);
   align-items: center;
   width: 100%;
   box-sizing: border-box;
 }
 
+.about-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  z-index: 10;
+}
+
 .about-intro-block {
-  grid-area: intro;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -1013,16 +1016,14 @@ nav a[aria-current]:after {
 }
 
 .about-edu-block {
-  grid-area: edu;
   display: flex;
   flex-direction: column;
   min-width: 0;
   z-index: 10;
-  margin-top: 18px;
+  margin-top: 8px;
 }
 
 .about-values-block {
-  grid-area: values;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -1259,23 +1260,27 @@ nav a[aria-current]:after {
 .about-center-corridor {
   position: relative;
   width: 100%;
-  height: 740px;
-  min-height: 740px;
+  height: 700px;
+  min-height: 700px;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  overflow: visible;
 }
 
 /* 3D Real-Time Stepped Rotating Floor Scene Container */
 .about-scene-container {
-  position: absolute;
-  inset: -30px -15% -30px -15%;
-  width: 130%;
-  height: calc(100% + 60px);
+  position: relative;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   overflow: visible;
   z-index: 3;
+}
+
+.about-character-stand {
+  display: none !important;
 }
 
 .about-platform-scene-wrapper {
@@ -7462,9 +7467,9 @@ html[data-motion="reduced"] *:after {
   height: 720px;
 }
 
-/* Entrance animation base state: elements start invisible and offset */
+/* Entrance animation base state: elements visible by default */
 .about-animate-in {
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -7610,11 +7615,40 @@ html[data-motion="reduced"] *:after {
 /* Isolated 3D Scene Mode for Geometry Validation */
 .about-platform-scene-wrapper.isolated-3d-mode {
   position: fixed !important;
-  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
   z-index: 999999 !important;
-  background: #08080c !important;
+  background: #06070a !important;
+}
+
+/* Mobile Responsive Ordering for Section 02 */
+/* Tablet Responsive: 769px - 1024px */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .about-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 24px !important;
+  }
+  .about-left-col {
+    grid-column: 1 !important;
+  }
+  .about-cinematic-v3 .about-center-corridor,
+  .about-center-corridor {
+    grid-column: 2 !important;
+    height: 560px !important;
+    min-height: 520px !important;
+  }
+  .about-right-col {
+    grid-column: 1 / -1 !important;
+  }
+  .about-values-stack {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 14px !important;
+  }
 }
 
 /* Mobile Responsive Ordering for Section 02 */
@@ -7625,6 +7659,11 @@ html[data-motion="reduced"] *:after {
     gap: 20px !important;
     width: 100% !important;
   }
+  .about-left-col {
+    order: 1 !important;
+    width: 100% !important;
+    display: contents !important;
+  }
   .about-intro-block {
     order: 1 !important;
     width: 100% !important;
@@ -7633,24 +7672,36 @@ html[data-motion="reduced"] *:after {
   .about-center-corridor {
     order: 2 !important;
     width: 100% !important;
-    height: 330px !important;
+    height: 440px !important;
+    min-height: 440px !important;
     position: relative !important;
-    overflow: hidden !important;
-    margin: 6px 0 12px !important;
+    overflow: visible !important;
+    margin: 8px 0 14px !important;
   }
   .about-edu-block {
     order: 3 !important;
     width: 100% !important;
     margin-top: 0 !important;
   }
-  .about-values-block {
+  .about-right-col {
     order: 4 !important;
     width: 100% !important;
+    margin-top: 14px !important;
   }
-  .about-character-stand {
-    bottom: 35px !important;
-  }
-  .about-character-cutout {
-    width: 130px !important;
+  .about-values-stack {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
   }
 }
+
+/* Isolated Mode for Section 02 Geometry Inspection */
+.section.about.is-about-isolated {
+  background-color: #06070a !important;
+}
+.section.about.is-about-isolated:before,
+.section.about.is-about-isolated:after,
+.section.about.is-about-isolated .about-cathedral-bg {
+  display: none !important;
+}
+
