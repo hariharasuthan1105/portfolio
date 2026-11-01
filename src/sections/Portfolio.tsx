@@ -179,8 +179,8 @@ export default function Portfolio({
         <div className="about-cathedral-bg" aria-hidden="true" />
         <div className="about-container">
           <div className="about-grid">
-            {/* LEFT ZONE (30%): Label, Headline, Bio, Education Card, Desktop Resume */}
-            <div className="about-left-col about-animate-in about-animate-left">
+            {/* ZONE 1 (LEFT / TOP-LEFT): Section label, Headline, Introduction */}
+            <div className="about-intro-block about-animate-in about-animate-left">
               <div className="about-eyebrow mono">[ 02 / ABOUT ]</div>
               
               <h2 className="about-main-heading">
@@ -194,12 +194,35 @@ export default function Portfolio({
                   how complex information transforms into dependable, intelligent decisions.
                 </p>
                 <p>
-                  My focus lies at the confluence of artificial intelligence,
+                  My focus lies at the convergence of artificial intelligence,
                   quantitative finance, probability, optimization, and real-time decision architectures.
                 </p>
               </div>
+            </div>
 
-              {/* B.Tech Education Panel (Dark Smoked Glass) */}
+            {/* ZONE 2 (CENTER): Cinematic 3D Scene — Faceted Diamond Crystal + Orbital Rings + Platform + Explorer */}
+            <div className="about-center-corridor about-animate-in about-animate-up">
+              <div className="about-scene-container" aria-hidden="false">
+                <ChamberPlatformScene
+                  activeConceptIndex={activeConceptIndex}
+                  rippleTrigger={platformRippleTrigger}
+                  reduced={reduced}
+                  onPlatformHover={() => setPlatformRippleTrigger((prev) => prev + 1)}
+                />
+                {/* Cloaked Explorer Cutout Grounded upon the Rotating 3D Dais */}
+                <div className="about-character-stand" aria-hidden="true">
+                  <img
+                    src="/assets/chamber_character.png"
+                    alt="Cloaked explorer standing in gothic chamber"
+                    className="about-character-cutout"
+                  />
+                  <div className="about-character-base-mist" />
+                </div>
+              </div>
+            </div>
+
+            {/* ZONE 3 (LEFT-BOTTOM / MOBILE STEP 3): Education Panel & Download Resume */}
+            <div className="about-edu-block about-animate-in about-animate-left">
               <div className="about-education-card glass">
                 <div className="edu-top-row">
                   <div className="edu-icon-wrap" aria-hidden="true">
@@ -227,8 +250,8 @@ export default function Portfolio({
                 </div>
               </div>
 
-              {/* Download Resume Action (Desktop) */}
-              <div className="about-resume-wrap desktop-resume">
+              {/* Download Resume Action */}
+              <div className="about-resume-wrap">
                 <a
                   className="about-resume-btn mono"
                   href="/assets/hariharasuthan-resume.pdf"
@@ -243,29 +266,8 @@ export default function Portfolio({
               </div>
             </div>
 
-            {/* CENTER ZONE (40%): Cinematic 3D Scene — Orbital Sphere + Mechanical Platform */}
-            <div className="about-center-corridor about-animate-in about-animate-up">
-              <div className="about-scene-container" aria-hidden="false">
-                <ChamberPlatformScene
-                  activeConceptIndex={activeConceptIndex}
-                  rippleTrigger={platformRippleTrigger}
-                  reduced={reduced}
-                  onPlatformHover={() => setPlatformRippleTrigger((prev) => prev + 1)}
-                />
-                {/* Cloaked Explorer Cutout Grounded upon the Rotating 3D Dais */}
-                <div className="about-character-stand" aria-hidden="true">
-                  <img
-                    src="/assets/chamber_character.png"
-                    alt="Cloaked explorer standing in gothic chamber"
-                    className="about-character-cutout"
-                  />
-                  <div className="about-character-base-mist" />
-                </div>
-              </div>
-            </div>
-
-            {/* RIGHT ZONE (30%): Three Premium Glass Value Panels */}
-            <div className="about-right-col about-animate-in about-animate-right">
+            {/* ZONE 4 (RIGHT / MOBILE STEP 4): Three Premium Glass Value Panels */}
+            <div className="about-values-block about-right-col about-animate-in about-animate-right">
               <div className="about-values-stack">
                 {/* 01 CURIOSITY */}
                 <div
@@ -335,21 +337,6 @@ export default function Portfolio({
                     </p>
                   </div>
                 </div>
-              </div>
-
-              {/* Download Resume Action (Mobile fallback at end of section) */}
-              <div className="about-resume-wrap mobile-resume">
-                <a
-                  className="about-resume-btn mono"
-                  href="/assets/hariharasuthan-resume.pdf"
-                  download
-                  aria-label="Download Hariharasuthan resume PDF"
-                >
-                  <span className="bracket-left">┌</span>
-                  <span className="btn-label">DOWNLOAD RESUME</span>
-                  <ArrowRight size={14} className="btn-arrow" />
-                  <span className="bracket-right">┘</span>
-                </a>
               </div>
             </div>
           </div>
