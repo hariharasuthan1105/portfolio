@@ -99,6 +99,7 @@ export default function Portfolio({
   const [activeContactCard, setActiveContactCard] = useState<number | null>(null);
   const [activeConceptIndex, setActiveConceptIndex] = useState<number | null>(null);
   const [platformRippleTrigger, setPlatformRippleTrigger] = useState(0);
+  const isIsolated = typeof window !== "undefined" && Boolean(new URLSearchParams(window.location.search).get("isolate"));
 
   const openAwardModal = (i: number) => {
     setAwardModalIndex(i);
@@ -483,7 +484,7 @@ export default function Portfolio({
       </section>
 
       {/* 04 / PROJECTS: THE ARCHIVE OF CREATIONS (CINEMATIC EXHIBITION REDESIGN) */}
-      <section id="projects" className="section archive-section">
+      <section id="projects" className={`section archive-section ${isIsolated ? "is-isolated" : ""}`}>
         {/* Environment Background Layer (Gothic Cathedral with Statues & 3 Architectural Pedestals) */}
         <div className="archive-background-layer" aria-hidden="true" />
         <div className="archive-vignette-overlay" aria-hidden="true" />
@@ -496,39 +497,20 @@ export default function Portfolio({
 
         
 
-        {/* Left Title HUD (Desktop: 25% Zone, clean typography, Image A accurate) */}
-        <div className="archive-left-hud">
-          <div className="archive-title-block">
+        {/* Top Header Region: Clean negative space above the 3D exhibition */}
+        <div className="archive-top-hud">
+          <div className="archive-top-hud-inner">
             <div className="archive-eyebrow-row mono">
               <span className="archive-eyebrow-text">[ 04 / PROJECTS ]</span>
               <span className="archive-eyebrow-bars" aria-hidden="true">|||||||||||||||</span>
             </div>
             <h2 className="archive-heading section-heading-text">
-              THE ARCHIVE<br />OF CREATIONS
+              THE ARCHIVE OF CREATIONS
             </h2>
-            <div className="archive-desc-wrap">
-              <p className="archive-subhead mono">REAL PROJECTS. INTELLIGENT WORLDS.</p>
-              <p className="archive-desc">
-                A collection of AI-powered systems, built for a smarter, more connected future.
-              </p>
-            </div>
-            <div className="archive-actions">
-              <button
-                type="button"
-                className="archive-cta-btn mono"
-                onClick={() => setSelectedProjectIndex(0)}
-              >
-                <span>EXPLORE PROJECTS</span>
-                <ArrowRight size={14} />
-              </button>
-              <button
-                type="button"
-                className="archive-secondary-btn mono"
-                onClick={() => openProjectModal(selectedProjectIndex ?? 0)}
-              >
-                <span>VIEW ARCHITECTURE SPECS</span>
-                <ArrowUpRight size={13} />
-              </button>
+            <div className="archive-subhead-row mono">
+              <span className="archive-subhead-item">REAL PROJECTS. INTELLIGENT WORLDS.</span>
+              <span className="archive-subhead-sep">•</span>
+              <span className="archive-subhead-desc">THREE RECONSTRUCTED SPATIAL INSTALLATIONS</span>
             </div>
           </div>
         </div>
