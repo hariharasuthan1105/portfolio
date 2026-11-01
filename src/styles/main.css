@@ -7666,8 +7666,8 @@ html[data-motion="reduced"] *:after {
 .about-cinematic-v3 .about-values-stack { gap: 18px; }
 .about-cinematic-v3 .value-icon-box { flex-shrink: 0; }
 .about-cinematic-v3 .about-education-card { padding: 18px; background: #0b0b0bd9; }
-.about-cinematic-v3.chamber:before { background-position: center bottom; background-size: auto 140%; filter: grayscale(1) brightness(.72); }
-.about-cinematic-v3.chamber:after { background: linear-gradient(90deg, #030303ed, #03030388 25%, transparent 43%, transparent 57%, #03030388 75%, #030303ed), linear-gradient(0deg, #030303, transparent 18%, transparent 85%, #030303aa); }
+.about-cinematic-v3.chamber:before { background: url('/assets/chamber_sanctum_bg.jpg') center center / cover no-repeat; filter: saturate(0) contrast(1.12) brightness(0.96); opacity: 0.95; }
+.about-cinematic-v3.chamber:after { background: linear-gradient(90deg, #030303f2 0%, #03030399 22%, transparent 40%, transparent 60%, #03030399 78%, #030303f2 100%), linear-gradient(0deg, #030303 0%, transparent 15%, transparent 85%, #030303cc 100%); }
 .about-cinematic-v3 .about-cathedral-bg { background: none; }
 .about-cinematic-v3 .about-animate-in { transform: none; }
 .section.about.is-about-isolated:before,
