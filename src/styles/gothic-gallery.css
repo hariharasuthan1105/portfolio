@@ -14,7 +14,7 @@
 }
 
 #projects {
-  scroll-margin-top: 64px;
+  scroll-margin-top: calc(var(--topbar-height, 76px) + 14px);
 }
 
 /* Background image: monumental gothic cathedral gallery with high arches and marble pillars */
@@ -1114,7 +1114,8 @@ html[data-motion="reduced"] .cathedral-banner {
 /* Mobile Devices (<= 880px / 390 x 844 / 320 x 568) */
 @media (max-width: 880px) {
   .archive-section {
-    padding: 32px 0 44px;
+    padding: calc(var(--topbar-height, 66px) + 24px) 0 44px;
+    scroll-margin-top: calc(var(--topbar-height, 66px) + 14px);
   }
   .archive-top-hud {
     padding: 0 16px 18px;
