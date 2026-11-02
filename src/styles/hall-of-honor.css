@@ -1,0 +1,735 @@
+/* ==========================================================================
+   06 / ACHIEVEMENTS: THE HALL OF HONOR (RESPONSIVE 3D ALIGNED EXHIBITION)
+   ========================================================================== */
+
+.awards-section.hall-of-honor-section {
+  position: relative;
+  width: 100%;
+  min-height: auto;
+  background-color: #000000;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   TOP HALF: CINEMATIC 3D CEREMONIAL STAGE
+   Contains background cathedral plate, explorer in central aisle, and 3 trophies
+   ========================================================================== */
+
+.hall-cinematic-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(480px, 58vh, 640px);
+  min-height: 480px;
+  max-height: 660px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  background: #000000;
+  box-sizing: border-box;
+}
+
+/* High-Resolution Architectural Cathedral Plate */
+.hall-background-layer {
+  position: absolute;
+  inset: 0;
+  background: url("/assets/hall-of-honor-environment.webp") center center / cover no-repeat;
+  filter: saturate(0) contrast(1.08) brightness(0.94);
+  opacity: 0.96;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Subtle Vertical Vignettes: Top edge & bottom stage transition */
+.hall-vignette-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.1) 14%,
+    transparent 28%,
+    transparent 72%,
+    rgba(0, 0, 0, 0.6) 88%,
+    #050508 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Isolated 3D Mode (?isolate=hall3d) */
+.awards-section.hall-of-honor-section.is-hall-isolated .hall-background-layer,
+.awards-section.hall-of-honor-section.is-hall-isolated .hall-vignette-overlay {
+  display: none !important;
+}
+
+.awards-section.hall-of-honor-section.is-hall-isolated .hall-header-block,
+.awards-section.hall-of-honor-section.is-hall-isolated .hall-content-flow {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* Three.js Canvas Container across the Stage */
+.hall-scene-container {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.hall-canvas-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.hall-three-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: auto;
+  outline: none;
+}
+
+/* Top-Left Section Heading Block — Clear of Left Trophy */
+.hall-header-block {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+  max-width: 440px;
+  background: rgba(10, 10, 14, 0.76);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 24px 28px;
+  border-radius: 10px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+  margin: 36px 0 0 40px;
+  box-sizing: border-box;
+}
+
+.hall-header-block .eyebrow {
+  color: #a0a0b0;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.hall-main-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw, 3.4rem);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.08;
+  letter-spacing: 0.04em;
+  margin: 0 0 10px 0;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95);
+}
+
+.hall-lead-quote {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #b0b0b8;
+  margin: 0;
+  font-style: italic;
+}
+
+.hall-header-block .hall-accent-line {
+  width: 32px;
+  height: 2px;
+  background: #ffffff;
+  opacity: 0.6;
+  margin-top: 12px;
+  border-radius: 1px;
+}
+
+/* Exploration Hint placed subtly near bottom of stage */
+.hall-explore-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #9999aa;
+  pointer-events: none;
+  z-index: 8;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   BOTTOM HALF: DEDICATED RESPONSIVE CONTENT AREA BELOW THE CINEMATIC STAGE
+   Clean document flow, zero character overlap, full scrolling visibility
+   ========================================================================== */
+
+.hall-content-flow {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  background: #000000;
+  padding: 32px 0 60px;
+  box-sizing: border-box;
+}
+
+.hall-content-inner {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+/* Mobile Trophy Selector Controls (hidden on desktop) */
+.hall-mobile-controls {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  pointer-events: auto;
+}
+
+.hall-mobile-btn {
+  background: rgba(14, 14, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #dddddd;
+  padding: 6px 12px;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hall-mobile-btn:hover {
+  background: rgba(24, 24, 32, 0.95);
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.hall-mobile-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.hall-mobile-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #444455;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.hall-mobile-dot.active {
+  background: #ffffff;
+  transform: scale(1.3);
+}
+
+.hall-mobile-view-btn {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 6px 14px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hall-mobile-view-btn:hover {
+  background: #e0e0e0;
+}
+
+/* Three Equal-Width Responsive Achievement Cards */
+.hall-awards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+/* Individual Obsidian Award Podium Card */
+.hall-award-panel.hall-podium-card {
+  background: rgba(10, 10, 15, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 18px 22px 16px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 120px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.24s ease,
+              box-shadow 0.24s ease,
+              background 0.24s ease;
+  box-sizing: border-box;
+}
+
+.hall-award-panel.hall-podium-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+}
+
+.hall-award-panel.hall-podium-card:hover,
+.hall-award-panel.hall-podium-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 255, 255, 0.1);
+  background: rgba(16, 16, 24, 0.92);
+}
+
+.hall-award-panel.hall-podium-card.active-award {
+  border-color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9), 0 0 24px rgba(255, 255, 255, 0.2);
+  background: rgba(20, 20, 30, 0.96);
+}
+
+.badge-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.badge-index {
+  font-size: 9.5px;
+  color: #888899;
+  letter-spacing: 0.14em;
+}
+
+.badge-status {
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.hall-award-panel:hover .badge-status,
+.hall-award-panel.active-award .badge-status {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+.badge-body {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.badge-title {
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.2vw, 17px);
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  margin: 0 0 4px;
+  line-height: 1.25;
+}
+
+.badge-organizer {
+  display: block;
+  font-size: 9.5px;
+  color: #9999a8;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.badge-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: #888899;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  transition: color 0.2s ease;
+}
+
+.hall-award-panel:hover .badge-action,
+.hall-award-panel.active-award .badge-action {
+  color: #ffffff;
+}
+
+/* Expandable Certifications Drawer Below Cards */
+.hall-certifications-wrapper {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.certifications-toggle-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 10, 14, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 13px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #dadada;
+  transition: all 0.2s ease;
+}
+
+.certifications-toggle-btn:hover,
+.certifications-toggle-btn:focus-visible {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(16, 16, 22, 0.85);
+  color: #ffffff;
+}
+
+.cert-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cert-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: #ffffff;
+}
+
+.cert-count-pill {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  padding: 2px 7px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 4px;
+  color: #b0b0b0;
+}
+
+.cert-toggle-right {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #999999;
+}
+
+.certifications-drawer {
+  margin-top: 12px;
+  background: rgba(8, 8, 12, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 18px 22px;
+  border-radius: 6px;
+}
+
+.certifications-grid-inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.cert-item-card {
+  background: rgba(16, 16, 22, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-radius: 4px;
+  transition: border-color 0.2s ease;
+}
+
+.cert-item-card:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.cert-item-badge {
+  color: #ffffff;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.cert-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cert-item-issuer {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: #888888;
+  text-transform: uppercase;
+}
+
+.cert-item-name {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: #f0f0f0;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.cert-item-category {
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  color: #777777;
+}
+
+/* FOCUSED ACHIEVEMENT CITATION DIALOG */
+.award-citation-dialog {
+  max-width: 660px;
+  width: 90vw;
+  background: rgba(8, 8, 12, 0.95);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  color: #ffffff;
+  padding: 0;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 40px rgba(255, 255, 255, 0.08);
+}
+
+.award-citation-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.86);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.citation-dialog-inner {
+  padding: 30px;
+}
+
+.citation-dialog-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+}
+
+.citation-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.citation-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: #888888;
+}
+
+.citation-badge {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  background: #ffffff;
+  color: #000000;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+.citation-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.citation-title {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.2vw, 28px);
+  margin: 0 0 4px;
+  line-height: 1.2;
+}
+
+.citation-close-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s ease;
+}
+
+.citation-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #ffffff;
+}
+
+.citation-organizer-pill {
+  display: inline-block;
+  font-size: 10px;
+  color: #a0a0b0;
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+}
+
+.citation-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.citation-desc-block p {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #cccccc;
+  margin: 0;
+}
+
+.citation-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.citation-spec-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 14px;
+  border-radius: 4px;
+}
+
+.citation-spec-label {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: #888888;
+  margin-bottom: 4px;
+}
+
+.citation-spec-val {
+  font-size: 11.5px;
+  color: #ffffff;
+}
+
+.citation-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.citation-dismiss-btn {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 8px 18px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.citation-dismiss-btn:hover {
+  background: #d8d8d8;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS FOR SECTION 06 (HALL OF HONOR)
+   ========================================================================== */
+
+@media (max-width: 1280px) {
+  .hall-cinematic-stage {
+    height: clamp(440px, 54vh, 580px);
+  }
+  .hall-header-block {
+    margin: 28px 0 0 28px;
+    padding: 20px 24px;
+    max-width: 380px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hall-cinematic-stage {
+    height: 440px;
+  }
+  .hall-header-block {
+    margin: 20px 0 0 20px;
+    padding: 18px 20px;
+    max-width: 340px;
+  }
+  .hall-awards-grid {
+    gap: 16px;
+  }
+  .hall-content-inner {
+    padding: 0 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hall-cinematic-stage {
+    height: 380px;
+  }
+  .hall-header-block {
+    margin: 16px 0 0 16px;
+    padding: 14px 18px;
+    max-width: 280px;
+  }
+  .hall-mobile-controls {
+    display: flex;
+  }
+  .hall-awards-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .hall-content-inner {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hall-cinematic-stage {
+    height: 340px;
+  }
+  .hall-header-block {
+    margin: 12px 0 0 12px;
+    padding: 12px 14px;
+    max-width: 240px;
+  }
+  .hall-main-title {
+    font-size: 1.8rem;
+  }
+  .hall-lead-quote {
+    display: none;
+  }
+}

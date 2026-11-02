@@ -1,4 +1,6 @@
 @import "./gothic-gallery.css";
+@import "./skills-forge.css";
+@import "./hall-of-honor.css";
 
 :root {
   --font-display: "Pixelify Sans Variable", "Pixelify Sans", monospace;

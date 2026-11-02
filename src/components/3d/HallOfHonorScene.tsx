@@ -20,11 +20,11 @@ function DaisContactDisc({
 
   useFrame((state, delta) => {
     if (ringRef.current) {
-      const targetOpacity = isSelected ? 0.9 : isDimmed ? 0.2 : 0.6;
+      const targetOpacity = isSelected ? 0.85 : isDimmed ? 0.2 : 0.5;
       const mat = ringRef.current.material as THREE.MeshBasicMaterial;
       mat.opacity = THREE.MathUtils.lerp(mat.opacity, targetOpacity, delta * 4);
       if (isSelected) {
-        const pulse = 1 + Math.sin(state.clock.getElapsedTime() * 3.0) * 0.03;
+        const pulse = 1 + Math.sin(state.clock.getElapsedTime() * 3.0) * 0.025;
         ringRef.current.scale.set(pulse, pulse, 1);
       } else {
         ringRef.current.scale.set(1, 1, 1);
@@ -33,10 +33,10 @@ function DaisContactDisc({
   });
 
   return (
-    <group position={[0, -0.01, 0]}>
-      {/* Soft Contact Shadow on marble dais */}
+    <group position={[0, -0.005, 0]}>
+      {/* Soft Ground Contact Shadow on photographed stone dais */}
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[0.55 * scale, 32]} />
+        <circleGeometry args={[0.52 * scale, 32]} />
         <meshBasicMaterial
           color="#000000"
           transparent
@@ -45,15 +45,14 @@ function DaisContactDisc({
         />
       </mesh>
 
-      {/* Subtle Luminous Ring on Dais Perimeter */}
+      {/* Subtle Luminous Dais Perimeter Trim */}
       <mesh ref={ringRef} position={[0, 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.42 * scale, 0.46 * scale, 48]} />
+        <ringGeometry args={[0.44 * scale, 0.47 * scale, 48]} />
         <meshBasicMaterial
-          color={isSelected ? "#ffffff" : "#c0c4d0"}
+          color="#ffffff"
           transparent
-          opacity={0.6}
+          opacity={0.5}
           side={THREE.DoubleSide}
-          blending={THREE.AdditiveBlending}
           depthWrite={false}
         />
       </mesh>
@@ -62,12 +61,12 @@ function DaisContactDisc({
 }
 
 // ============================================================================
-// TROPHY 01: CONVOLVE 4.0 — SEMI-FINALIST
-// Left Podium: Small, polished silver gyroscopic atomic trophy matching reference.
-// Central silver cube with beveled edges and luminous core surrounded by 3
-// intersecting polished silver orbital rings on a slender caliper tripod base.
+// TROPHY 01: CONVOLVE 4.0 — SEMI-FINALIST (Left Foreground Podium)
+// Compact AI-inspired award sculpture with detailed black-chrome base,
+// beveled solid AI kernel, and 3 polished silver orbital gimbal rings.
+// Podiums remain stationary, only trophy sculpture rotates around vertical axis.
 // ============================================================================
-interface TrophyComponentProps {
+interface TrophyProps {
   isSelected: boolean;
   isDimmed: boolean;
   position: [number, number, number];
@@ -81,8 +80,8 @@ function ConvolveTrophy({
   position,
   onClick,
   scale = 1.0,
-}: TrophyComponentProps) {
-  const trophyGroupRef = useRef<THREE.Group>(null);
+}: TrophyProps) {
+  const sculptureRef = useRef<THREE.Group>(null);
   const ring1Ref = useRef<THREE.Group>(null);
   const ring2Ref = useRef<THREE.Group>(null);
   const ring3Ref = useRef<THREE.Group>(null);
@@ -91,14 +90,10 @@ function ConvolveTrophy({
 
   useFrame((state, delta) => {
     const t = state.clock.getElapsedTime();
-    if (trophyGroupRef.current) {
-      // Gentle slow rotation around vertical axis (slows down when selected)
-      const rotSpeed = isSelected ? 0.06 : hovered ? 0.14 : 0.22;
-      trophyGroupRef.current.rotation.y += delta * rotSpeed;
-
-      // Subtle breathing hover
-      const hover = Math.sin(t * 1.6) * 0.01;
-      trophyGroupRef.current.position.y = hover + (isSelected ? 0.02 : 0);
+    if (sculptureRef.current) {
+      // Rotation around its own vertical center
+      const rotSpeed = isSelected ? 0.08 : hovered ? 0.16 : 0.22;
+      sculptureRef.current.rotation.y += delta * rotSpeed;
     }
 
     if (ring1Ref.current) ring1Ref.current.rotation.z += delta * 0.35;
@@ -106,20 +101,61 @@ function ConvolveTrophy({
     if (ring3Ref.current) ring3Ref.current.rotation.y += delta * 0.3;
 
     if (coreRef.current) {
-      const pulse = 1 + Math.sin(t * 2.5) * 0.03;
+      const pulse = 1 + Math.sin(t * 2.5) * 0.025;
       coreRef.current.scale.set(pulse, pulse, pulse);
     }
   });
 
   return (
     <group position={position}>
-      {/* Dais Contact Shadow & Subtle Glowing Ring */}
+      {/* Dais Contact Shadow on the photographed podium */}
       <DaisContactDisc isSelected={isSelected} isDimmed={isDimmed} scale={scale} />
 
-      {/* Rotating 3D Trophy */}
+      {/* 1. STATIONARY PEDESTAL BASE (Does NOT rotate — sits firmly on marble dais) */}
+      <group>
+        {/* Tier 1: Lower Fluted Plinth */}
+        <mesh position={[0, 0.02 * scale, 0]}>
+          <cylinderGeometry args={[0.22 * scale, 0.26 * scale, 0.04 * scale, 32]} />
+          <meshStandardMaterial
+            color="#101118"
+            roughness={0.2}
+            metalness={0.92}
+          />
+        </mesh>
+
+        {/* Tier 2: Silver Plinth Bevel Collar */}
+        <mesh position={[0, 0.048 * scale, 0]}>
+          <cylinderGeometry args={[0.18 * scale, 0.21 * scale, 0.016 * scale, 32]} />
+          <meshStandardMaterial
+            color="#dadde6"
+            roughness={0.12}
+            metalness={0.96}
+          />
+        </mesh>
+
+        {/* Tier 3: Fluted Neck & Laurel Cup */}
+        <mesh position={[0, 0.075 * scale, 0]}>
+          <cylinderGeometry args={[0.14 * scale, 0.17 * scale, 0.04 * scale, 32]} />
+          <meshStandardMaterial
+            color="#14151e"
+            roughness={0.22}
+            metalness={0.9}
+          />
+        </mesh>
+        <mesh position={[0, 0.095 * scale, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.17 * scale, 0.012 * scale, 12, 32]} />
+          <meshStandardMaterial
+            color="#dadde6"
+            metalness={0.96}
+            roughness={0.12}
+          />
+        </mesh>
+      </group>
+
+      {/* 2. ROTATING AWARD SCULPTURE (Centered above base) */}
       <group
-        ref={trophyGroupRef}
-        position={[0, 0, 0]}
+        ref={sculptureRef}
+        position={[0, 0.36 * scale, 0]}
         onClick={(e) => {
           e.stopPropagation();
           onClick();
@@ -134,293 +170,98 @@ function ConvolveTrophy({
           document.body.style.cursor = "auto";
         }}
       >
-        {/* Generous Click Hitbox */}
-        <mesh position={[0, 0.35 * scale, 0]}>
-          <cylinderGeometry args={[0.55 * scale, 0.55 * scale, 0.85 * scale, 16]} />
+        {/* Invisible Generous Hitbox */}
+        <mesh>
+          <sphereGeometry args={[0.45 * scale, 16, 16]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
         </mesh>
 
-        {/* Tiered Base Stand */}
-        <mesh position={[0, 0.02 * scale, 0]}>
-          <cylinderGeometry args={[0.16 * scale, 0.22 * scale, 0.04 * scale, 32]} />
+        {/* Central Polished AI Kernel Cube */}
+        <mesh ref={coreRef}>
+          <boxGeometry args={[0.16 * scale, 0.16 * scale, 0.16 * scale]} />
           <meshStandardMaterial
-            color="#14141c"
-            roughness={0.12}
+            color={isSelected ? "#ffffff" : "#101218"}
             metalness={0.96}
+            roughness={0.08}
+            emissive={isSelected ? "#ffffff" : "#444855"}
+            emissiveIntensity={isSelected ? 0.75 : hovered ? 0.4 : 0.15}
           />
         </mesh>
 
-        {/* Curved Caliper Tripod holding gyroscopic core */}
-        {[0, (Math.PI * 2) / 3, (Math.PI * 4) / 3].map((angle, idx) => (
-          <group key={idx} rotation={[0, angle, 0]}>
-            <mesh position={[0.09 * scale, 0.11 * scale, 0]} rotation={[0, 0, -0.32]}>
-              <cylinderGeometry args={[0.012 * scale, 0.016 * scale, 0.2 * scale, 12]} />
-              <meshStandardMaterial
-                color={isSelected ? "#ffffff" : "#d0d4e0"}
-                metalness={0.98}
-                roughness={0.08}
-              />
-            </mesh>
-          </group>
-        ))}
+        {/* Cube Silver Wireframe Chamfer Edges */}
+        <lineSegments>
+          <edgesGeometry
+            args={[new THREE.BoxGeometry(0.162 * scale, 0.162 * scale, 0.162 * scale)]}
+          />
+          <lineBasicMaterial
+            color="#ffffff"
+            linewidth={2}
+          />
+        </lineSegments>
 
-        {/* Lower Laurel Wreath Cup */}
-        <group position={[0, 0.07 * scale, 0]}>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[0.16 * scale, 0.012 * scale, 12, 32]} />
+        {/* Inner Glowing White Star Spark */}
+        <mesh>
+          <octahedronGeometry args={[0.065 * scale, 0]} />
+          <meshBasicMaterial
+            color="#ffffff"
+            transparent
+            opacity={isSelected ? 0.95 : 0.75}
+          />
+        </mesh>
+
+        {/* Orbital Ring 1: Slanted 45° */}
+        <group ref={ring1Ref} rotation={[Math.PI / 4, 0, 0]}>
+          <mesh>
+            <torusGeometry args={[0.32 * scale, 0.014 * scale, 16, 48]} />
             <meshStandardMaterial
-              color={isSelected ? "#ffffff" : "#c4c8d4"}
+              color="#dadde6"
+              metalness={0.96}
+              roughness={0.1}
+            />
+          </mesh>
+          <mesh position={[0.32 * scale, 0, 0]}>
+            <sphereGeometry args={[0.02 * scale, 12, 12]} />
+            <meshBasicMaterial color="#ffffff" />
+          </mesh>
+        </group>
+
+        {/* Orbital Ring 2: Slanted -45° */}
+        <group ref={ring2Ref} rotation={[-Math.PI / 4, Math.PI / 6, 0]}>
+          <mesh>
+            <torusGeometry args={[0.36 * scale, 0.014 * scale, 16, 48]} />
+            <meshStandardMaterial
+              color="#c8ccd8"
+              metalness={0.96}
+              roughness={0.1}
+            />
+          </mesh>
+          <mesh position={[0.36 * scale, 0, 0]}>
+            <sphereGeometry args={[0.02 * scale, 12, 12]} />
+            <meshBasicMaterial color="#ffffff" />
+          </mesh>
+        </group>
+
+        {/* Orbital Ring 3: Equatorial */}
+        <group ref={ring3Ref} rotation={[0, 0, Math.PI / 8]}>
+          <mesh>
+            <torusGeometry args={[0.4 * scale, 0.014 * scale, 16, 48]} />
+            <meshStandardMaterial
+              color="#dadde6"
               metalness={0.96}
               roughness={0.1}
             />
           </mesh>
         </group>
-
-        {/* Main Gyroscopic Assembly Center */}
-        <group position={[0, 0.36 * scale, 0]}>
-          {/* Central Polished Cube (AI Kernel) */}
-          <mesh ref={coreRef}>
-            <boxGeometry args={[0.15 * scale, 0.15 * scale, 0.15 * scale]} />
-            <meshStandardMaterial
-              color={isSelected ? "#ffffff" : "#0e1017"}
-              metalness={0.98}
-              roughness={0.06}
-              emissive={isSelected ? "#ffffff" : "#556688"}
-              emissiveIntensity={isSelected ? 0.8 : hovered ? 0.45 : 0.15}
-            />
-          </mesh>
-
-          {/* Cube Silver Wireframe Edges */}
-          <lineSegments>
-            <edgesGeometry
-              args={[new THREE.BoxGeometry(0.152 * scale, 0.152 * scale, 0.152 * scale)]}
-            />
-            <lineBasicMaterial
-              color={isSelected ? "#ffffff" : "#e0e4f0"}
-              linewidth={2}
-            />
-          </lineSegments>
-
-          {/* Inner Glowing Star Spark */}
-          <mesh>
-            <octahedronGeometry args={[0.06 * scale, 0]} />
-            <meshBasicMaterial
-              color="#ffffff"
-              transparent
-              opacity={isSelected ? 0.95 : 0.75}
-            />
-          </mesh>
-
-          {/* Orbital Ring 1: Tilted 45° */}
-          <group ref={ring1Ref} rotation={[Math.PI / 4, 0, 0]}>
-            <mesh>
-              <torusGeometry args={[0.32 * scale, 0.014 * scale, 16, 48]} />
-              <meshStandardMaterial
-                color={isSelected ? "#ffffff" : "#d8dce8"}
-                metalness={0.98}
-                roughness={0.08}
-              />
-            </mesh>
-          </group>
-
-          {/* Orbital Ring 2: Tilted -45° with node bead */}
-          <group ref={ring2Ref} rotation={[-Math.PI / 4, Math.PI / 6, 0]}>
-            <mesh>
-              <torusGeometry args={[0.36 * scale, 0.014 * scale, 16, 48]} />
-              <meshStandardMaterial
-                color={isSelected ? "#ffffff" : "#c8ccd8"}
-                metalness={0.98}
-                roughness={0.08}
-              />
-            </mesh>
-            <mesh position={[0.36 * scale, 0, 0]}>
-              <sphereGeometry args={[0.018 * scale, 12, 12]} />
-              <meshBasicMaterial color="#ffffff" />
-            </mesh>
-          </group>
-
-          {/* Orbital Ring 3: Equatorial */}
-          <group ref={ring3Ref} rotation={[0, 0, Math.PI / 8]}>
-            <mesh>
-              <torusGeometry args={[0.4 * scale, 0.014 * scale, 16, 48]} />
-              <meshStandardMaterial
-                color={isSelected ? "#ffffff" : "#b0b8cc"}
-                metalness={0.98}
-                roughness={0.08}
-              />
-            </mesh>
-          </group>
-        </group>
       </group>
     </group>
   );
 }
 
 // ============================================================================
-// TROPHY 03: WORLD COMPUTER HACKER LEAGUE — REGIONAL ROUND QUALIFIER
-// Right Podium: Premium black-chrome shield/obelisk trophy matching reference.
-// Faceted vertical prism with fine silver network lines, floating horizontal ring,
-// and cryptographic emblem on grounded stationary pedestal.
-// ============================================================================
-function WCHLTrophy({
-  isSelected,
-  isDimmed,
-  position,
-  onClick,
-  scale = 1.0,
-}: TrophyComponentProps) {
-  const trophyGroupRef = useRef<THREE.Group>(null);
-  const ringRef = useRef<THREE.Group>(null);
-  const [hovered, setHovered] = useState(false);
-
-  useFrame((state, delta) => {
-    const t = state.clock.getElapsedTime();
-    if (trophyGroupRef.current) {
-      const rotSpeed = isSelected ? 0.06 : hovered ? 0.14 : 0.22;
-      trophyGroupRef.current.rotation.y += delta * rotSpeed;
-
-      const hover = Math.sin(t * 1.6 + 1.2) * 0.01;
-      trophyGroupRef.current.position.y = hover + (isSelected ? 0.02 : 0);
-    }
-
-    if (ringRef.current) {
-      ringRef.current.rotation.y -= delta * 0.45;
-      ringRef.current.position.y = 0.38 * scale + Math.sin(t * 2.2) * 0.012;
-    }
-  });
-
-  const prismGeometry = useMemo(() => {
-    return new THREE.CylinderGeometry(
-      0.075 * scale,
-      0.13 * scale,
-      0.65 * scale,
-      6
-    );
-  }, [scale]);
-
-  return (
-    <group position={position}>
-      {/* Dais Contact Shadow & Subtle Glowing Ring */}
-      <DaisContactDisc isSelected={isSelected} isDimmed={isDimmed} scale={scale} />
-
-      {/* Rotating 3D Trophy */}
-      <group
-        ref={trophyGroupRef}
-        position={[0, 0, 0]}
-        onClick={(e) => {
-          e.stopPropagation();
-          onClick();
-        }}
-        onPointerOver={(e) => {
-          e.stopPropagation();
-          setHovered(true);
-          document.body.style.cursor = "pointer";
-        }}
-        onPointerOut={() => {
-          setHovered(false);
-          document.body.style.cursor = "auto";
-        }}
-      >
-        {/* Generous Click Hitbox */}
-        <mesh position={[0, 0.38 * scale, 0]}>
-          <cylinderGeometry args={[0.55 * scale, 0.55 * scale, 0.85 * scale, 16]} />
-          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-        </mesh>
-
-        {/* Tiered Base Stand */}
-        <mesh position={[0, 0.02 * scale, 0]}>
-          <cylinderGeometry args={[0.16 * scale, 0.22 * scale, 0.04 * scale, 32]} />
-          <meshStandardMaterial
-            color="#14141c"
-            roughness={0.12}
-            metalness={0.96}
-          />
-        </mesh>
-
-        {/* Polished Chrome Neck Ring */}
-        <mesh position={[0, 0.055 * scale, 0]}>
-          <cylinderGeometry args={[0.11 * scale, 0.15 * scale, 0.035 * scale, 16]} />
-          <meshStandardMaterial
-            color="#d8dce8"
-            roughness={0.08}
-            metalness={0.98}
-          />
-        </mesh>
-
-        {/* Faceted Vertical Obelisk Prism */}
-        <mesh geometry={prismGeometry} position={[0, 0.38 * scale, 0]}>
-          <meshStandardMaterial
-            color={isSelected ? "#1a202c" : "#090b0f"}
-            metalness={0.96}
-            roughness={0.08}
-            emissive={isSelected ? "#ffffff" : "#334466"}
-            emissiveIntensity={isSelected ? 0.5 : hovered ? 0.3 : 0.1}
-          />
-        </mesh>
-
-        {/* Silver Facet Edges */}
-        <lineSegments position={[0, 0.38 * scale, 0]}>
-          <edgesGeometry args={[prismGeometry]} />
-          <lineBasicMaterial
-            color={isSelected ? "#ffffff" : "#d0d8e8"}
-            linewidth={2}
-          />
-        </lineSegments>
-
-        {/* Top Pyramidal Cap */}
-        <mesh position={[0, 0.74 * scale, 0]}>
-          <coneGeometry args={[0.075 * scale, 0.11 * scale, 6]} />
-          <meshStandardMaterial
-            color="#ffffff"
-            metalness={0.98}
-            roughness={0.05}
-          />
-        </mesh>
-
-        {/* Floating Horizontal Chrome Ring encircling midsection */}
-        <group ref={ringRef} position={[0, 0.38 * scale, 0]}>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[0.24 * scale, 0.012 * scale, 16, 48]} />
-            <meshStandardMaterial
-              color={isSelected ? "#ffffff" : "#eceef6"}
-              metalness={0.98}
-              roughness={0.06}
-            />
-          </mesh>
-          {[-0.24, 0.24].map((x, i) => (
-            <mesh key={i} position={[x * scale, 0, 0]}>
-              <sphereGeometry args={[0.015 * scale, 12, 12]} />
-              <meshBasicMaterial color="#ffffff" />
-            </mesh>
-          ))}
-        </group>
-
-        {/* Cryptographic Lock/Shield Emblem on front facet */}
-        <group position={[0, 0.38 * scale, 0.11 * scale]}>
-          <mesh>
-            <boxGeometry args={[0.055 * scale, 0.065 * scale, 0.01 * scale]} />
-            <meshStandardMaterial
-              color="#ffffff"
-              metalness={0.98}
-              roughness={0.06}
-              emissive="#ffffff"
-              emissiveIntensity={isSelected ? 0.8 : 0.3}
-            />
-          </mesh>
-          <mesh position={[0, 0.04 * scale, 0]} rotation={[0, 0, 0]}>
-            <torusGeometry args={[0.02 * scale, 0.005 * scale, 12, 16, Math.PI]} />
-            <meshStandardMaterial color="#ffffff" metalness={0.98} roughness={0.06} />
-          </mesh>
-        </group>
-      </group>
-    </group>
-  );
-}
-
-// ============================================================================
-// TROPHY 02: PATHWAY AI HACKATHON — FINALIST
-// Center Distant Altar: Small faceted crystalline trophy hovering inside the
-// distant ceremonial halo arch. Perfectly framed above the approaching explorer.
+// TROPHY 02: PATHWAY AI HACKATHON — FINALIST (Center Distant Altar)
+// Sits firmly on the distant elevated altar inside the background arch.
+// Refined, faceted crystal diamond sculpture with silver frame & laurel victory ring.
+// Strictly monochrome / grayscale (NO blue wireframes).
 // ============================================================================
 function PathwayAltarTrophy({
   isSelected,
@@ -428,39 +269,79 @@ function PathwayAltarTrophy({
   position,
   onClick,
   scale = 1.0,
-}: TrophyComponentProps) {
-  const trophyRef = useRef<THREE.Group>(null);
+}: TrophyProps) {
+  const sculptureRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
 
   useFrame((state, delta) => {
     const t = state.clock.getElapsedTime();
-    if (trophyRef.current) {
-      const rotSpeed = isSelected ? 0.05 : hovered ? 0.1 : 0.16;
-      trophyRef.current.rotation.y += delta * rotSpeed;
+    if (sculptureRef.current) {
+      const rotSpeed = isSelected ? 0.06 : hovered ? 0.12 : 0.18;
+      sculptureRef.current.rotation.y += delta * rotSpeed;
     }
 
     if (coreRef.current) {
-      const p = 1 + Math.sin(t * 2.8) * 0.035;
+      const p = 1 + Math.sin(t * 2.8) * 0.03;
       coreRef.current.scale.set(p, p, p);
     }
   });
 
   return (
     <group position={position}>
-      {/* Focused Altar Point Light */}
+      {/* Altar Contact Shadow on the elevated dais */}
+      <mesh position={[0, -0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[0.38 * scale, 32]} />
+        <meshBasicMaterial
+          color="#000000"
+          transparent
+          opacity={0.85}
+          depthWrite={false}
+        />
+      </mesh>
+
+      {/* Focused Altar Key Spotlight */}
       <pointLight
-        position={[0, 0.2 * scale, 0.5 * scale]}
-        intensity={isSelected ? 5.5 : 2.8}
+        position={[0, 0.3 * scale, 0.4 * scale]}
+        intensity={isSelected ? 6.5 : 3.5}
         color="#ffffff"
-        distance={4.0}
+        distance={4.5}
         decay={2}
       />
 
-      {/* Rotating Crystalline Trophy inside the Altar Arch */}
+      {/* 1. STATIONARY ALTAR PLINTH */}
+      <group>
+        <mesh position={[0, 0.03 * scale, 0]}>
+          <cylinderGeometry args={[0.2 * scale, 0.25 * scale, 0.05 * scale, 32]} />
+          <meshStandardMaterial
+            color="#141620"
+            roughness={0.25}
+            metalness={0.9}
+          />
+        </mesh>
+        <mesh position={[0, 0.065 * scale, 0]}>
+          <cylinderGeometry args={[0.16 * scale, 0.19 * scale, 0.02 * scale, 32]} />
+          <meshStandardMaterial
+            color="#dadde6"
+            roughness={0.12}
+            metalness={0.96}
+          />
+        </mesh>
+        {/* Laurel Wreath Base Collar */}
+        <mesh position={[0, 0.09 * scale, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.18 * scale, 0.014 * scale, 16, 48]} />
+          <meshStandardMaterial
+            color="#ffffff"
+            metalness={0.96}
+            roughness={0.1}
+          />
+        </mesh>
+      </group>
+
+      {/* 2. ROTATING FACETED CRYSTAL TROPHY SCULPTURE */}
       <group
-        ref={trophyRef}
-        position={[0, 0, 0]}
+        ref={sculptureRef}
+        position={[0, 0.35 * scale, 0]}
         onClick={(e) => {
           e.stopPropagation();
           onClick();
@@ -475,41 +356,32 @@ function PathwayAltarTrophy({
           document.body.style.cursor = "auto";
         }}
       >
-        {/* Generous Click Hitbox */}
-        <mesh position={[0, 0, 0]}>
-          <sphereGeometry args={[0.75 * scale, 16, 16]} />
+        {/* Generous Hitbox */}
+        <mesh>
+          <sphereGeometry args={[0.42 * scale, 16, 16]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
         </mesh>
 
-        {/* Silver Laurel Base Wreath */}
-        <mesh position={[0, -0.22 * scale, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.22 * scale, 0.016 * scale, 16, 48]} />
-          <meshStandardMaterial
-            color={isSelected ? "#ffffff" : "#d0d4e0"}
-            metalness={0.98}
-            roughness={0.08}
-          />
-        </mesh>
-
-        {/* Faceted Crystalline Diamond Body */}
+        {/* Faceted Crystalline Diamond Body (Grayscale / Dark Obsidian Crystal) */}
         <mesh ref={coreRef}>
           <octahedronGeometry args={[0.26 * scale, 1]} />
-          <meshStandardMaterial
-            color={isSelected ? "#ffffff" : "#1a2232"}
-            metalness={0.94}
-            roughness={0.06}
+          <meshPhysicalMaterial
+            color={isSelected ? "#ffffff" : "#141620"}
+            metalness={0.92}
+            roughness={0.08}
+            transmission={0.55}
             transparent
-            opacity={0.88}
-            emissive={isSelected ? "#ffffff" : "#3b5b88"}
-            emissiveIntensity={isSelected ? 0.95 : hovered ? 0.55 : 0.28}
+            opacity={0.9}
+            emissive={isSelected ? "#ffffff" : "#505466"}
+            emissiveIntensity={isSelected ? 0.9 : hovered ? 0.5 : 0.22}
           />
         </mesh>
 
-        {/* Silver Facet Edges */}
+        {/* Refined Machined Silver Facet Ribs */}
         <lineSegments>
-          <edgesGeometry args={[new THREE.OctahedronGeometry(0.263 * scale, 1)]} />
+          <edgesGeometry args={[new THREE.OctahedronGeometry(0.262 * scale, 1)]} />
           <lineBasicMaterial
-            color={isSelected ? "#ffffff" : "#d8e0f4"}
+            color="#ffffff"
             linewidth={2}
           />
         </lineSegments>
@@ -519,6 +391,199 @@ function PathwayAltarTrophy({
           <sphereGeometry args={[0.06 * scale, 16, 16]} />
           <meshBasicMaterial color="#ffffff" />
         </mesh>
+
+        {/* Slanted Silver Halo Victory Ring */}
+        <group rotation={[Math.PI / 6, 0, 0]}>
+          <mesh>
+            <torusGeometry args={[0.34 * scale, 0.012 * scale, 16, 48]} />
+            <meshStandardMaterial
+              color="#dadde6"
+              metalness={0.96}
+              roughness={0.12}
+            />
+          </mesh>
+        </group>
+      </group>
+    </group>
+  );
+}
+
+// ============================================================================
+// TROPHY 03: WORLD COMPUTER HACKER LEAGUE — QUALIFIER (Right Foreground Podium)
+// Replaces the thin wireframe with a complete compact award sculpture.
+// Black-chrome shield geometry, silver security emblem, beveled edges,
+// physical front and back surfaces, subtle decorative network details.
+// Matches left trophy's approximate screen-space size and pedestal alignment.
+// ============================================================================
+function WCHLTrophy({
+  isSelected,
+  isDimmed,
+  position,
+  onClick,
+  scale = 1.0,
+}: TrophyProps) {
+  const sculptureRef = useRef<THREE.Group>(null);
+  const ringRef = useRef<THREE.Group>(null);
+  const [hovered, setHovered] = useState(false);
+
+  useFrame((state, delta) => {
+    const t = state.clock.getElapsedTime();
+    if (sculptureRef.current) {
+      const rotSpeed = isSelected ? 0.08 : hovered ? 0.16 : 0.22;
+      sculptureRef.current.rotation.y += delta * rotSpeed;
+    }
+
+    if (ringRef.current) {
+      ringRef.current.rotation.y -= delta * 0.4;
+      ringRef.current.position.y = Math.sin(t * 2.0) * 0.012 * scale;
+    }
+  });
+
+  // Solid Faceted Shield / Hexagonal Prism Body
+  const prismGeometry = useMemo(() => {
+    return new THREE.CylinderGeometry(
+      0.09 * scale,
+      0.15 * scale,
+      0.54 * scale,
+      6
+    );
+  }, [scale]);
+
+  return (
+    <group position={position}>
+      {/* Dais Contact Shadow matching Left Podium */}
+      <DaisContactDisc isSelected={isSelected} isDimmed={isDimmed} scale={scale} />
+
+      {/* 1. STATIONARY PEDESTAL BASE (Identical base geometry to left podium) */}
+      <group>
+        {/* Tier 1: Lower Fluted Plinth */}
+        <mesh position={[0, 0.02 * scale, 0]}>
+          <cylinderGeometry args={[0.22 * scale, 0.26 * scale, 0.04 * scale, 32]} />
+          <meshStandardMaterial
+            color="#101118"
+            roughness={0.2}
+            metalness={0.92}
+          />
+        </mesh>
+
+        {/* Tier 2: Silver Plinth Bevel Collar */}
+        <mesh position={[0, 0.048 * scale, 0]}>
+          <cylinderGeometry args={[0.18 * scale, 0.21 * scale, 0.016 * scale, 32]} />
+          <meshStandardMaterial
+            color="#dadde6"
+            roughness={0.12}
+            metalness={0.96}
+          />
+        </mesh>
+
+        {/* Tier 3: Fluted Neck & Laurel Cup */}
+        <mesh position={[0, 0.075 * scale, 0]}>
+          <cylinderGeometry args={[0.14 * scale, 0.17 * scale, 0.04 * scale, 32]} />
+          <meshStandardMaterial
+            color="#14151e"
+            roughness={0.22}
+            metalness={0.9}
+          />
+        </mesh>
+        <mesh position={[0, 0.095 * scale, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.17 * scale, 0.012 * scale, 12, 32]} />
+          <meshStandardMaterial
+            color="#dadde6"
+            metalness={0.96}
+            roughness={0.12}
+          />
+        </mesh>
+      </group>
+
+      {/* 2. ROTATING AWARD SCULPTURE */}
+      <group
+        ref={sculptureRef}
+        position={[0, 0.38 * scale, 0]}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick();
+        }}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          setHovered(true);
+          document.body.style.cursor = "pointer";
+        }}
+        onPointerOut={() => {
+          setHovered(false);
+          document.body.style.cursor = "auto";
+        }}
+      >
+        {/* Invisible Hitbox */}
+        <mesh>
+          <cylinderGeometry args={[0.35 * scale, 0.35 * scale, 0.7 * scale, 16]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        </mesh>
+
+        {/* Solid Black-Chrome Shield / Prism Body */}
+        <mesh geometry={prismGeometry}>
+          <meshStandardMaterial
+            color={isSelected ? "#1a1e28" : "#0c0e14"}
+            metalness={0.96}
+            roughness={0.1}
+            emissive={isSelected ? "#ffffff" : "#444855"}
+            emissiveIntensity={isSelected ? 0.6 : hovered ? 0.35 : 0.12}
+          />
+        </mesh>
+
+        {/* Machined Silver Beveled Facet Edges */}
+        <lineSegments>
+          <edgesGeometry args={[prismGeometry]} />
+          <lineBasicMaterial
+            color="#ffffff"
+            linewidth={2}
+          />
+        </lineSegments>
+
+        {/* Top Pyramidal Silver Cap */}
+        <mesh position={[0, 0.31 * scale, 0]}>
+          <coneGeometry args={[0.09 * scale, 0.1 * scale, 6]} />
+          <meshStandardMaterial
+            color="#dadde6"
+            metalness={0.98}
+            roughness={0.08}
+          />
+        </mesh>
+
+        {/* Floating Horizontal Silver Security Ring */}
+        <group ref={ringRef}>
+          <mesh rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[0.22 * scale, 0.012 * scale, 16, 48]} />
+            <meshStandardMaterial
+              color="#dadde6"
+              metalness={0.96}
+              roughness={0.1}
+            />
+          </mesh>
+          {[-0.22, 0.22].map((x, i) => (
+            <mesh key={i} position={[x * scale, 0, 0]}>
+              <sphereGeometry args={[0.016 * scale, 12, 12]} />
+              <meshBasicMaterial color="#ffffff" />
+            </mesh>
+          ))}
+        </group>
+
+        {/* High-Relief Silver Cryptographic Shield / Lock Emblem on Front Facet */}
+        <group position={[0, 0.02 * scale, 0.13 * scale]}>
+          <mesh>
+            <boxGeometry args={[0.065 * scale, 0.075 * scale, 0.015 * scale]} />
+            <meshStandardMaterial
+              color="#ffffff"
+              metalness={0.98}
+              roughness={0.08}
+              emissive="#ffffff"
+              emissiveIntensity={isSelected ? 0.8 : 0.3}
+            />
+          </mesh>
+          <mesh position={[0, 0.045 * scale, 0]}>
+            <torusGeometry args={[0.024 * scale, 0.006 * scale, 12, 16, Math.PI]} />
+            <meshStandardMaterial color="#ffffff" metalness={0.98} roughness={0.08} />
+          </mesh>
+        </group>
       </group>
     </group>
   );
@@ -541,44 +606,49 @@ function ResponsiveCameraController({
 
   useFrame((_state, delta) => {
     let targetX = 0;
-    let targetY = 0.0;
+    let targetY = 0.05;
     let targetZ = 6.2;
 
     if (isMobile) {
-      targetZ = 6.6;
-      targetY = 0.1;
-      if (selectedAwardIndex === 0) targetX = -1.5;
-      else if (selectedAwardIndex === 1) targetX = 0;
-      else if (selectedAwardIndex === 2) targetX = 1.5;
+      if (selectedAwardIndex === 0) {
+        targetX = -1.62;
+        targetY = 0.08;
+        targetZ = 4.2;
+      } else if (selectedAwardIndex === 1) {
+        targetX = 0;
+        targetY = 0.72;
+        targetZ = 2.4;
+      } else if (selectedAwardIndex === 2) {
+        targetX = 1.62;
+        targetY = 0.08;
+        targetZ = 4.2;
+      } else {
+        targetX = 0;
+        targetY = 0.12;
+        targetZ = 6.4;
+      }
+      camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, delta * 3.8);
+      camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, delta * 3.8);
+      camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, delta * 3.8);
+      camera.lookAt(targetX, targetY - 0.2, 0);
+      return;
     } else if (isTablet) {
       targetZ = 6.4;
-      targetY = 0.05;
+      targetY = 0.08;
+      targetX = 0;
     } else {
       targetZ = 6.2;
-      targetY = 0.0;
+      targetY = 0.05;
       targetX = 0;
     }
 
     camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, delta * 3.5);
     camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, delta * 3.5);
     camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, delta * 3.5);
-    camera.lookAt(targetX * 0.3, targetY * 0.5, 0);
+    camera.lookAt(targetX * 0.25, 0, 0);
   });
 
   return null;
-}
-
-// ============================================================================
-// VISUAL DEBUG HELPER (?debug=hall)
-// ============================================================================
-function HallDebugHelper({ enabled }: { enabled: boolean }) {
-  if (!enabled) return null;
-  return (
-    <group>
-      <axesHelper args={[2.5]} />
-      <gridHelper args={[10.0, 20, "#ffffff", "#444444"]} position={[0, -0.22, 0]} />
-    </group>
-  );
 }
 
 // ============================================================================
@@ -617,13 +687,13 @@ export default function HallOfHonorScene({
   const isMobile = viewportWidth < 768;
   const isTablet = viewportWidth >= 768 && viewportWidth < 1200;
 
-  // Exact 3D world coordinates projected to match the background plate:
-  // Left podium surface: x = -1.65, y = -0.22, z = 0.3
-  // Right podium surface: x = +1.65, y = -0.22, z = 0.3
-  // Distant Altar inside halo arch: x = 0, y = 0.88, z = -4.8
-  const leftPos: [number, number, number] = [-1.65, -0.22, 0.3];
-  const altarPos: [number, number, number] = [0, 0.88, -4.8];
-  const rightPos: [number, number, number] = [1.65, -0.22, 0.3];
+  // Exact 3D world coordinates measured & calibrated to match the photographed podiums:
+  // Left podium surface: x = -1.62, y = -0.25, z = 0.3
+  // Right podium surface: x = +1.62, y = -0.25, z = 0.3
+  // Distant central altar: x = 0, y = 0.58, z = -3.8
+  const leftPos: [number, number, number] = [-1.62, -0.25, 0.3];
+  const altarPos: [number, number, number] = [0, 0.58, -3.8];
+  const rightPos: [number, number, number] = [1.62, -0.25, 0.3];
 
   return (
     <div
@@ -634,8 +704,8 @@ export default function HallOfHonorScene({
     >
       <Canvas
         camera={{
-          position: [0, 0.0, isMobile ? 6.6 : isTablet ? 6.4 : 6.2],
-          fov: isMobile ? 42 : isTablet ? 36 : 34,
+          position: [0, 0.05, 6.2],
+          fov: 34,
           near: 0.1,
           far: 50,
         }}
@@ -655,11 +725,16 @@ export default function HallOfHonorScene({
           selectedAwardIndex={selectedAwardIndex}
         />
 
-        {/* Debugging Helpers (?debug=hall) */}
-        <HallDebugHelper enabled={isDebug} />
+        {/* Visual Debug Helper (?debug=hall) */}
+        {isDebug && (
+          <group>
+            <axesHelper args={[2.5]} />
+            <gridHelper args={[12.0, 24, "#ffffff", "#33384a"]} position={[0, -0.25, 0]} />
+          </group>
+        )}
 
         {/* Monochromatic Cathedral Ambient Light */}
-        <ambientLight intensity={0.65} color="#b8c0d4" />
+        <ambientLight intensity={0.8} color="#b8c0d4" />
 
         {/* Cathedral Window Light streaming down */}
         <directionalLight
@@ -682,7 +757,7 @@ export default function HallOfHonorScene({
 
         {/* Focused Spotlights for each Trophy */}
         <spotLight
-          position={[-1.65, 3.2, 2.0]}
+          position={[-1.62, 3.2, 2.0]}
           target-position={leftPos}
           intensity={selectedAwardIndex === 0 ? 5.5 : 2.6}
           color="#ffffff"
@@ -698,7 +773,7 @@ export default function HallOfHonorScene({
           penumbra={0.6}
         />
         <spotLight
-          position={[1.65, 3.2, 2.0]}
+          position={[1.62, 3.2, 2.0]}
           target-position={rightPos}
           intensity={selectedAwardIndex === 2 ? 5.5 : 2.6}
           color="#ffffff"
@@ -708,7 +783,7 @@ export default function HallOfHonorScene({
 
         {/* In isolated mode: render grounded reflective marble floor & podiums */}
         {isIsolated && (
-          <group position={[0, -0.22, 0]}>
+          <group position={[0, -0.25, 0]}>
             <mesh rotation={[-Math.PI / 2, 0, 0]}>
               <planeGeometry args={[24, 24]} />
               <meshStandardMaterial
@@ -717,39 +792,10 @@ export default function HallOfHonorScene({
                 metalness={0.8}
               />
             </mesh>
-            {/* Ground Grid for visible floor contact verification */}
             <gridHelper args={[16, 32, "#ffffff", "#33384a"]} position={[0, 0.005, 0]} />
-            {/* Center Walkway Line */}
             <mesh position={[0, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
               <planeGeometry args={[1.8, 16]} />
               <meshBasicMaterial color="#222634" />
-            </mesh>
-            {/* Left Isolated Podium */}
-            <group position={[-1.65, 0, 0.3]}>
-              <mesh position={[0, -0.15, 0]}>
-                <cylinderGeometry args={[0.48, 0.54, 0.3, 32]} />
-                <meshStandardMaterial color="#1a1c26" roughness={0.2} metalness={0.92} />
-              </mesh>
-              <mesh position={[0, 0.005, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-                <ringGeometry args={[0.45, 0.49, 32]} />
-                <meshBasicMaterial color="#ffffff" />
-              </mesh>
-            </group>
-            {/* Right Isolated Podium */}
-            <group position={[1.65, 0, 0.3]}>
-              <mesh position={[0, -0.15, 0]}>
-                <cylinderGeometry args={[0.48, 0.54, 0.3, 32]} />
-                <meshStandardMaterial color="#1a1c26" roughness={0.2} metalness={0.92} />
-              </mesh>
-              <mesh position={[0, 0.005, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-                <ringGeometry args={[0.45, 0.49, 32]} />
-                <meshBasicMaterial color="#ffffff" />
-              </mesh>
-            </group>
-            {/* Altar Stage */}
-            <mesh position={[0, 0.4, -4.8]}>
-              <boxGeometry args={[3.2, 0.8, 1.8]} />
-              <meshStandardMaterial color="#202432" roughness={0.3} metalness={0.85} />
             </mesh>
           </group>
         )}
@@ -771,7 +817,7 @@ export default function HallOfHonorScene({
             isDimmed={selectedAwardIndex !== null && selectedAwardIndex !== 1}
             position={altarPos}
             onClick={() => onSelectAward(1)}
-            scale={0.48}
+            scale={0.85}
           />
 
           {/* Trophy 03: World Computer Hacker League (Right Front Podium) */}

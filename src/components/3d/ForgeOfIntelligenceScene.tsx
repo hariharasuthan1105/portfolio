@@ -1,5 +1,5 @@
 import React, { useRef, useMemo, useState, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Sparkles } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -125,22 +125,22 @@ function createPlaqueTexture(label: string): THREE.CanvasTexture {
   if (!ctx) return new THREE.CanvasTexture(canvas);
 
   // Deep obsidian plate
-  ctx.fillStyle = "#0c0c12";
+  ctx.fillStyle = "#0a0a0f";
   ctx.fillRect(0, 0, 512, 128);
 
   // Outer bright border
   ctx.strokeStyle = "#ffffff";
-  ctx.lineWidth = 6;
+  ctx.lineWidth = 5;
   ctx.strokeRect(6, 6, 500, 116);
 
   // Inner subtle accent frame
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.35)";
   ctx.lineWidth = 2;
   ctx.strokeRect(12, 12, 488, 104);
 
   // Label text
   ctx.fillStyle = "#ffffff";
-  ctx.font = "900 40px 'IBM Plex Mono', monospace, sans-serif";
+  ctx.font = "900 38px 'IBM Plex Mono', monospace, sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(label, 256, 64);
@@ -152,7 +152,8 @@ function createPlaqueTexture(label: string): THREE.CanvasTexture {
 
 // -----------------------------------------------------------------------------
 // GLOBE 01 — PROGRAMMING (Front-Left)
-// Polished black-glass sphere, dual silver Python ribbon motif, outer meridian ring
+// Dark polished chrome-obsidian sphere, dual interlocking silver serpentine calipers,
+// engraved equatorial seam, machined silver meridian gimbal ring.
 // -----------------------------------------------------------------------------
 function ProgrammingGlobe({
   isSelected,
@@ -165,96 +166,96 @@ function ProgrammingGlobe({
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const ringRef = useRef<THREE.Group>(null);
-  const innerGlyphRef = useRef<THREE.Group>(null);
+  const glyphRef = useRef<THREE.Group>(null);
 
   useFrame((_, delta) => {
     if (reduced) return;
-    const speed = isSelected ? 0.35 : 0.75;
+    const speed = isSelected ? 0.35 : 0.7;
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.45 * speed;
     }
     if (ringRef.current) {
-      ringRef.current.rotation.z += delta * 0.6 * speed;
+      ringRef.current.rotation.z += delta * 0.5 * speed;
       ringRef.current.rotation.x += delta * 0.2 * speed;
     }
-    if (innerGlyphRef.current) {
-      innerGlyphRef.current.rotation.y -= delta * 0.5 * speed;
+    if (glyphRef.current) {
+      glyphRef.current.rotation.y -= delta * 0.5 * speed;
     }
   });
 
   return (
     <group ref={groupRef}>
-      {/* Black Glass Base Sphere */}
+      {/* Dark Polished Chrome-Obsidian Core Sphere */}
       <mesh>
-        <sphereGeometry args={[0.38, 48, 48]} />
+        <sphereGeometry args={[0.34, 48, 48]} />
         <meshPhysicalMaterial
-          color="#060609"
-          roughness={0.08}
-          metalness={0.92}
+          color="#0c0d14"
+          roughness={0.12}
+          metalness={0.94}
           clearcoat={1.0}
-          clearcoatRoughness={0.06}
-          reflectivity={0.95}
+          clearcoatRoughness={0.08}
+          reflectivity={0.96}
         />
       </mesh>
 
-      {/* Equatorial Engraved Data Seam */}
+      {/* Equatorial Inscribed Silver Seam */}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[0.385, 0.006, 16, 64]} />
+        <torusGeometry args={[0.342, 0.005, 12, 64]} />
         <meshBasicMaterial color="#ffffff" transparent opacity={0.65} />
       </mesh>
 
-      {/* Inner Floating Python / Programming Motif */}
-      <group ref={innerGlyphRef}>
-        {/* Upper serpent head / hook */}
-        <mesh position={[0.04, 0.07, 0]} rotation={[0, 0, 0]}>
-          <torusGeometry args={[0.09, 0.024, 16, 32, Math.PI * 1.3]} />
+      {/* Dual Interlocking Silver Python / Algorithm Caliper Arms */}
+      <group ref={glyphRef}>
+        {/* Upper caliper curve */}
+        <mesh position={[0.035, 0.06, 0]}>
+          <torusGeometry args={[0.08, 0.02, 16, 32, Math.PI * 1.3]} />
           <meshStandardMaterial
-            color="#ffffff"
-            metalness={0.95}
+            color="#dadde6"
+            metalness={0.98}
             roughness={0.1}
             emissive="#ffffff"
-            emissiveIntensity={isSelected || isHovered ? 0.6 : 0.3}
+            emissiveIntensity={isSelected || isHovered ? 0.5 : 0.2}
           />
         </mesh>
-        <mesh position={[0.11, 0.12, 0]}>
-          <sphereGeometry args={[0.024, 16, 16]} />
+        <mesh position={[0.095, 0.105, 0]}>
+          <sphereGeometry args={[0.02, 14, 14]} />
           <meshBasicMaterial color="#ffffff" />
         </mesh>
 
-        {/* Lower serpent head / hook */}
-        <mesh position={[-0.04, -0.07, 0]} rotation={[0, 0, Math.PI]}>
-          <torusGeometry args={[0.09, 0.024, 16, 32, Math.PI * 1.3]} />
+        {/* Lower caliper curve */}
+        <mesh position={[-0.035, -0.06, 0]} rotation={[0, 0, Math.PI]}>
+          <torusGeometry args={[0.08, 0.02, 16, 32, Math.PI * 1.3]} />
           <meshStandardMaterial
-            color="#ffffff"
-            metalness={0.95}
+            color="#dadde6"
+            metalness={0.98}
             roughness={0.1}
             emissive="#ffffff"
-            emissiveIntensity={isSelected || isHovered ? 0.6 : 0.3}
+            emissiveIntensity={isSelected || isHovered ? 0.5 : 0.2}
           />
         </mesh>
-        <mesh position={[-0.11, -0.12, 0]}>
-          <sphereGeometry args={[0.024, 16, 16]} />
+        <mesh position={[-0.095, -0.105, 0]}>
+          <sphereGeometry args={[0.02, 14, 14]} />
           <meshBasicMaterial color="#ffffff" />
         </mesh>
       </group>
 
-      {/* Rotating Mechanical Meridian Ring */}
+      {/* Machined Silver Outer Meridian Ring */}
       <group ref={ringRef} rotation={[0.4, 0.3, 0]}>
         <mesh>
-          <torusGeometry args={[0.52, 0.016, 16, 64]} />
+          <torusGeometry args={[0.46, 0.014, 16, 64]} />
           <meshStandardMaterial
-            color="#d8d8e2"
+            color="#dadde6"
             metalness={0.96}
-            roughness={0.14}
+            roughness={0.12}
           />
         </mesh>
         {/* Cardinal tick notches */}
         {[0, Math.PI / 2, Math.PI, (Math.PI * 3) / 2].map((ang, i) => (
           <mesh
             key={i}
-            position={[Math.cos(ang) * 0.52, Math.sin(ang) * 0.52, 0]}
+            position={[Math.cos(ang) * 0.46, Math.sin(ang) * 0.46, 0]}
           >
-            <sphereGeometry args={[0.024, 12, 12]} />
+            <sphereGeometry args={[0.02, 12, 12]} />
             <meshBasicMaterial color="#ffffff" />
           </mesh>
         ))}
@@ -265,7 +266,8 @@ function ProgrammingGlobe({
 
 // -----------------------------------------------------------------------------
 // GLOBE 02 — AI / MACHINE LEARNING (Rear-Left)
-// Crystalline faceted globe, internal 3D neural network, pulsing nodes
+// Faceted dark chrome icosahedral shell, internal illuminated neural network graph,
+// sloped silver orbital gyro ring.
 // -----------------------------------------------------------------------------
 function AiMlGlobe({
   isSelected,
@@ -280,21 +282,20 @@ function AiMlGlobe({
   const networkRef = useRef<THREE.Group>(null);
   const ringRef = useRef<THREE.Group>(null);
 
-  // Neural network nodes
+  // Neural network nodes in 3D volume
   const nodes = useMemo(() => {
     return [
-      new THREE.Vector3(-0.16, 0.12, 0.06),
-      new THREE.Vector3(-0.14, -0.12, -0.04),
-      new THREE.Vector3(-0.02, 0.18, -0.08),
-      new THREE.Vector3(0.0, 0.0, 0.14),
-      new THREE.Vector3(0.04, -0.15, 0.08),
-      new THREE.Vector3(0.14, 0.13, -0.05),
-      new THREE.Vector3(0.16, -0.08, -0.1),
-      new THREE.Vector3(0.02, 0.02, -0.15),
+      new THREE.Vector3(-0.14, 0.1, 0.05),
+      new THREE.Vector3(-0.12, -0.1, -0.04),
+      new THREE.Vector3(-0.02, 0.15, -0.07),
+      new THREE.Vector3(0.0, 0.0, 0.12),
+      new THREE.Vector3(0.04, -0.13, 0.07),
+      new THREE.Vector3(0.12, 0.11, -0.04),
+      new THREE.Vector3(0.14, -0.07, -0.08),
+      new THREE.Vector3(0.02, 0.02, -0.13),
     ];
   }, []);
 
-  // Neural connections between nodes
   const connections = useMemo(() => {
     return [
       [0, 2], [0, 3], [1, 3], [1, 4], [2, 5],
@@ -304,7 +305,7 @@ function AiMlGlobe({
 
   useFrame((_, delta) => {
     if (reduced) return;
-    const speed = isSelected ? 0.35 : 0.75;
+    const speed = isSelected ? 0.35 : 0.7;
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.35 * speed;
     }
@@ -313,51 +314,49 @@ function AiMlGlobe({
       networkRef.current.rotation.x += delta * 0.15 * speed;
     }
     if (ringRef.current) {
-      ringRef.current.rotation.z += delta * 0.5 * speed;
+      ringRef.current.rotation.z += delta * 0.45 * speed;
     }
   });
 
   return (
     <group ref={groupRef}>
-      {/* Translucent Crystalline Geodesic Outer Shell */}
+      {/* Translucent Dark-Chrome Crystalline Outer Facet Shell */}
       <mesh>
-        <icosahedronGeometry args={[0.38, 2]} />
+        <icosahedronGeometry args={[0.34, 2]} />
         <meshPhysicalMaterial
-          color="#121218"
-          roughness={0.12}
-          metalness={0.7}
-          transmission={0.65}
+          color="#101118"
+          roughness={0.14}
+          metalness={0.92}
+          transmission={0.55}
           transparent
-          opacity={0.88}
+          opacity={0.86}
         />
       </mesh>
 
-      {/* Wireframe Facet Edges */}
+      {/* Fine Silver Facet Wireframe Edges */}
       <mesh>
-        <icosahedronGeometry args={[0.382, 2]} />
+        <icosahedronGeometry args={[0.342, 2]} />
         <meshBasicMaterial
-          color="#d0d0e0"
+          color="#d8dce8"
           wireframe
           transparent
-          opacity={isSelected || isHovered ? 0.55 : 0.3}
+          opacity={isSelected || isHovered ? 0.55 : 0.28}
         />
       </mesh>
 
-      {/* Internal Neural Network */}
+      {/* Internal Illuminated Neural Network */}
       <group ref={networkRef}>
-        {/* Nodes */}
         {nodes.map((pos, idx) => (
           <mesh key={idx} position={pos}>
-            <sphereGeometry args={[0.028, 14, 14]} />
+            <sphereGeometry args={[0.022, 14, 14]} />
             <meshStandardMaterial
               color="#ffffff"
               emissive="#ffffff"
-              emissiveIntensity={isSelected || isHovered ? 1.0 : 0.65}
+              emissiveIntensity={isSelected || isHovered ? 1.0 : 0.6}
             />
           </mesh>
         ))}
 
-        {/* Synapse Lines */}
         {connections.map(([fromIdx, toIdx], i) => {
           const from = nodes[fromIdx];
           const to = nodes[toIdx];
@@ -367,25 +366,25 @@ function AiMlGlobe({
 
           return (
             <mesh key={i} position={mid}>
-              <cylinderGeometry args={[0.007, 0.007, len, 8]} />
+              <cylinderGeometry args={[0.005, 0.005, len, 8]} />
               <meshBasicMaterial
                 color="#ffffff"
                 transparent
-                opacity={isSelected || isHovered ? 0.8 : 0.45}
+                opacity={isSelected || isHovered ? 0.75 : 0.4}
               />
             </mesh>
           );
         })}
       </group>
 
-      {/* Slanted Orbital Gyro Ring */}
-      <group ref={ringRef} rotation={[-0.5, 0.4, 0.2]}>
+      {/* Slanted Silver Gyro Ring */}
+      <group ref={ringRef} rotation={[-0.45, 0.35, 0.2]}>
         <mesh>
-          <torusGeometry args={[0.5, 0.014, 16, 64]} />
+          <torusGeometry args={[0.46, 0.012, 16, 64]} />
           <meshStandardMaterial
-            color="#c0c0cc"
-            metalness={0.94}
-            roughness={0.18}
+            color="#c8ccd8"
+            metalness={0.96}
+            roughness={0.14}
           />
         </mesh>
       </group>
@@ -395,7 +394,8 @@ function AiMlGlobe({
 
 // -----------------------------------------------------------------------------
 // GLOBE 03 — DATABASES (Rear-Right)
-// Smoked quartz sphere, internal stacked silver database cylinders, data bus
+// Smoked quartz sphere, central turned-silver data spine, 3 precision-turned
+// database platter discs with glowing silver seams, horizontal gimbal ring.
 // -----------------------------------------------------------------------------
 function DatabasesGlobe({
   isSelected,
@@ -412,67 +412,65 @@ function DatabasesGlobe({
 
   useFrame((state, delta) => {
     if (reduced) return;
-    const speed = isSelected ? 0.35 : 0.75;
+    const speed = isSelected ? 0.35 : 0.7;
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.4 * speed;
     }
     if (plattersRef.current) {
-      plattersRef.current.rotation.y -= delta * 0.5 * speed;
+      plattersRef.current.rotation.y -= delta * 0.45 * speed;
     }
     if (pulseRingRef.current) {
       const t = state.clock.getElapsedTime() * 2;
-      pulseRingRef.current.position.y = Math.sin(t) * 0.16;
+      pulseRingRef.current.position.y = Math.sin(t) * 0.14;
     }
   });
 
   return (
     <group ref={groupRef}>
-      {/* Outer Smoked Glass Sphere */}
+      {/* Outer Smoked Quartz Glass Sphere */}
       <mesh>
-        <sphereGeometry args={[0.38, 48, 48]} />
+        <sphereGeometry args={[0.34, 48, 48]} />
         <meshPhysicalMaterial
-          color="#08080d"
-          roughness={0.1}
-          metalness={0.88}
-          transmission={0.6}
+          color="#0a0b12"
+          roughness={0.12}
+          metalness={0.9}
+          transmission={0.55}
           transparent
           opacity={0.85}
         />
       </mesh>
 
-      {/* Internal Stacked Database Platters */}
+      {/* Internal Stacked Silver Database Architecture */}
       <group ref={plattersRef}>
         {/* Central Vertical Data Spine */}
         <mesh>
-          <cylinderGeometry args={[0.024, 0.024, 0.46, 16]} />
+          <cylinderGeometry args={[0.02, 0.02, 0.42, 16]} />
           <meshStandardMaterial
             color="#ffffff"
-            metalness={0.96}
-            roughness={0.1}
+            metalness={0.98}
+            roughness={0.08}
             emissive="#ffffff"
-            emissiveIntensity={isSelected || isHovered ? 0.6 : 0.3}
+            emissiveIntensity={isSelected || isHovered ? 0.6 : 0.25}
           />
         </mesh>
 
         {/* 3 Tiered Database Discs */}
-        {[-0.12, 0.0, 0.12].map((y, idx) => (
+        {[-0.1, 0.0, 0.1].map((y, idx) => (
           <group key={idx} position={[0, y, 0]}>
-            {/* Platter Disc */}
             <mesh>
-              <cylinderGeometry args={[0.22, 0.22, 0.034, 32]} />
+              <cylinderGeometry args={[0.2, 0.2, 0.028, 32]} />
               <meshStandardMaterial
-                color="#dadada"
-                metalness={0.95}
-                roughness={0.15}
+                color="#dadde6"
+                metalness={0.96}
+                roughness={0.12}
               />
             </mesh>
-            {/* Glowing Edge Seam */}
             <mesh>
-              <torusGeometry args={[0.222, 0.006, 12, 32]} />
+              <torusGeometry args={[0.202, 0.005, 12, 32]} />
               <meshBasicMaterial
                 color="#ffffff"
                 transparent
-                opacity={isSelected || isHovered ? 0.85 : 0.45}
+                opacity={isSelected || isHovered ? 0.8 : 0.45}
               />
             </mesh>
           </group>
@@ -480,18 +478,18 @@ function DatabasesGlobe({
 
         {/* Vertical Pulse Traveling Ring */}
         <mesh ref={pulseRingRef}>
-          <torusGeometry args={[0.24, 0.008, 12, 32]} />
-          <meshBasicMaterial color="#ffffff" transparent opacity={0.75} />
+          <torusGeometry args={[0.218, 0.006, 12, 32]} />
+          <meshBasicMaterial color="#ffffff" transparent opacity={0.7} />
         </mesh>
       </group>
 
-      {/* Horizontal Support Ring */}
+      {/* Horizontal Silver Support Ring */}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[0.5, 0.015, 16, 64]} />
+        <torusGeometry args={[0.46, 0.014, 16, 64]} />
         <meshStandardMaterial
-          color="#b0b0bc"
-          metalness={0.95}
-          roughness={0.15}
+          color="#dadde6"
+          metalness={0.96}
+          roughness={0.14}
         />
       </mesh>
     </group>
@@ -500,7 +498,8 @@ function DatabasesGlobe({
 
 // -----------------------------------------------------------------------------
 // GLOBE 04 — TOOLS & CLOUD (Front-Right)
-// Titanium sphere, stylized silver cloud sculpture, orbiting satellite ring
+// Dark titanium sphere with engraved coordinate lines, sculpted silver cloud relief
+// with physical thickness, inclined orbital ring with micro-satellites.
 // -----------------------------------------------------------------------------
 function ToolsCloudGlobe({
   isSelected,
@@ -516,118 +515,116 @@ function ToolsCloudGlobe({
 
   useFrame((_, delta) => {
     if (reduced) return;
-    const speed = isSelected ? 0.35 : 0.8;
+    const speed = isSelected ? 0.35 : 0.75;
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.45 * speed;
     }
     if (orbitGroupRef.current) {
-      orbitGroupRef.current.rotation.z += delta * 0.8 * speed;
+      orbitGroupRef.current.rotation.z += delta * 0.7 * speed;
     }
   });
 
   return (
     <group ref={groupRef}>
-      {/* Dark Brushed Titanium Sphere */}
+      {/* Dark Brushed Titanium Base Sphere */}
       <mesh>
-        <sphereGeometry args={[0.38, 48, 48]} />
+        <sphereGeometry args={[0.34, 48, 48]} />
         <meshStandardMaterial
-          color="#15151c"
-          metalness={0.92}
-          roughness={0.2}
+          color="#12141c"
+          metalness={0.94}
+          roughness={0.18}
         />
       </mesh>
 
-      {/* Latitude / Longitude Inscribed Rings */}
+      {/* Engraved Coordinate Meridian & Latitude Rings */}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[0.383, 0.005, 12, 64]} />
+        <torusGeometry args={[0.342, 0.004, 12, 64]} />
         <meshBasicMaterial color="#ffffff" transparent opacity={0.4} />
       </mesh>
       <mesh>
-        <torusGeometry args={[0.383, 0.005, 12, 64]} />
+        <torusGeometry args={[0.342, 0.004, 12, 64]} />
         <meshBasicMaterial color="#ffffff" transparent opacity={0.4} />
       </mesh>
 
-      {/* Central Sculpted Silver Cloud Emblem */}
-      <group position={[0, 0, 0.22]} scale={1.2}>
-        {/* Base horizontal pill */}
-        <mesh rotation={[0, 0, Math.PI / 2]} position={[0, -0.03, 0]}>
-          <cylinderGeometry args={[0.045, 0.045, 0.16, 16]} />
+      {/* Central Sculpted Silver Cloud Relief (Beveled Solid Depth) */}
+      <group position={[0, 0, 0.2]} scale={1.05}>
+        {/* Base horizontal cylinder */}
+        <mesh rotation={[0, 0, Math.PI / 2]} position={[0, -0.025, 0]}>
+          <cylinderGeometry args={[0.038, 0.038, 0.14, 16]} />
           <meshStandardMaterial
             color="#ffffff"
-            metalness={0.95}
-            roughness={0.12}
+            metalness={0.98}
+            roughness={0.1}
             emissive="#ffffff"
-            emissiveIntensity={isSelected || isHovered ? 0.6 : 0.3}
+            emissiveIntensity={isSelected || isHovered ? 0.55 : 0.25}
           />
         </mesh>
-        {/* Center puff */}
-        <mesh position={[0, 0.03, 0]}>
-          <sphereGeometry args={[0.075, 16, 16]} />
+        {/* Center lobe */}
+        <mesh position={[0, 0.025, 0]}>
+          <sphereGeometry args={[0.065, 16, 16]} />
           <meshStandardMaterial
             color="#ffffff"
-            metalness={0.95}
-            roughness={0.12}
+            metalness={0.98}
+            roughness={0.1}
             emissive="#ffffff"
-            emissiveIntensity={isSelected || isHovered ? 0.6 : 0.3}
+            emissiveIntensity={isSelected || isHovered ? 0.55 : 0.25}
           />
         </mesh>
-        {/* Left puff */}
-        <mesh position={[-0.065, -0.01, 0]}>
-          <sphereGeometry args={[0.055, 16, 16]} />
+        {/* Left lobe */}
+        <mesh position={[-0.055, -0.008, 0]}>
+          <sphereGeometry args={[0.048, 16, 16]} />
           <meshStandardMaterial
             color="#ffffff"
-            metalness={0.95}
-            roughness={0.12}
+            metalness={0.98}
+            roughness={0.1}
             emissive="#ffffff"
-            emissiveIntensity={isSelected || isHovered ? 0.6 : 0.3}
+            emissiveIntensity={isSelected || isHovered ? 0.55 : 0.25}
           />
         </mesh>
-        {/* Right puff */}
-        <mesh position={[0.065, -0.01, 0]}>
-          <sphereGeometry args={[0.055, 16, 16]} />
+        {/* Right lobe */}
+        <mesh position={[0.055, -0.008, 0]}>
+          <sphereGeometry args={[0.048, 16, 16]} />
           <meshStandardMaterial
             color="#ffffff"
-            metalness={0.95}
-            roughness={0.12}
+            metalness={0.98}
+            roughness={0.1}
             emissive="#ffffff"
-            emissiveIntensity={isSelected || isHovered ? 0.6 : 0.3}
+            emissiveIntensity={isSelected || isHovered ? 0.55 : 0.25}
           />
         </mesh>
       </group>
 
       {/* Inclined Orbital Satellite Ring */}
-      <group rotation={[0.55, 0.35, 0]}>
+      <group rotation={[0.5, 0.35, 0]}>
         <mesh>
-          <torusGeometry args={[0.54, 0.012, 16, 64]} />
+          <torusGeometry args={[0.48, 0.012, 16, 64]} />
           <meshStandardMaterial
-            color="#d8d8e0"
+            color="#dadde6"
             metalness={0.96}
-            roughness={0.15}
+            roughness={0.14}
           />
         </mesh>
 
-        {/* Orbiting Satellites */}
+        {/* Orbiting Micro-Satellites */}
         <group ref={orbitGroupRef}>
-          {/* Satellite 1 */}
-          <group position={[0.54, 0, 0]}>
+          <group position={[0.48, 0, 0]}>
             <mesh>
-              <boxGeometry args={[0.045, 0.045, 0.045]} />
+              <boxGeometry args={[0.04, 0.04, 0.04]} />
               <meshStandardMaterial color="#ffffff" metalness={0.95} />
             </mesh>
-            <mesh position={[0.045, 0, 0]}>
-              <boxGeometry args={[0.045, 0.02, 0.005]} />
+            <mesh position={[0.04, 0, 0]}>
+              <boxGeometry args={[0.04, 0.018, 0.004]} />
               <meshBasicMaterial color="#ffffff" />
             </mesh>
-            <mesh position={[-0.045, 0, 0]}>
-              <boxGeometry args={[0.045, 0.02, 0.005]} />
+            <mesh position={[-0.04, 0, 0]}>
+              <boxGeometry args={[0.04, 0.018, 0.004]} />
               <meshBasicMaterial color="#ffffff" />
             </mesh>
           </group>
 
-          {/* Satellite 2 (Opposite) */}
-          <group position={[-0.54, 0, 0]}>
+          <group position={[-0.48, 0, 0]}>
             <mesh>
-              <sphereGeometry args={[0.024, 12, 12]} />
+              <sphereGeometry args={[0.02, 12, 12]} />
               <meshBasicMaterial color="#ffffff" />
             </mesh>
           </group>
@@ -638,8 +635,9 @@ function ToolsCloudGlobe({
 }
 
 // -----------------------------------------------------------------------------
-// PHYSICALLY GROUNDED GOTHIC SKILL PODIUM
-// Circular granite plinth, engraved name plaque, support arms, contact shadow
+// PHYSICALLY GROUNDED ARCHITECTURAL SKILL PODIUM
+// Matching dimensions, consistent floor contact height, silver plinth trim,
+// twin machined caliper arms holding rotational axle.
 // -----------------------------------------------------------------------------
 interface PodiumProps {
   label: string;
@@ -665,109 +663,119 @@ function GothicSkillPodium({
 
   return (
     <group position={position} scale={scale}>
-      {/* Ground Contact Shadow (Sitting squarely on cathedral floor) */}
-      <mesh position={[0, -0.72, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0, 0.95, 32]} />
+      {/* 1. Ground Contact Shadow (Sitting squarely on marble floor) */}
+      <mesh position={[0, -0.68, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[0.54, 32]} />
         <meshBasicMaterial
           color="#000000"
           transparent
           opacity={0.88}
+          depthWrite={false}
         />
       </mesh>
 
-      {/* Dais Perimeter Glow Ring */}
-      <mesh position={[0, -0.71, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.92, 0.96, 48]} />
+      {/* 2. Perimeter Subtle Dais Accent Ring */}
+      <mesh position={[0, -0.678, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.48, 0.52, 48]} />
         <meshBasicMaterial
           color="#ffffff"
           transparent
-          opacity={isSelected ? 0.9 : hovered ? 0.6 : 0.3}
+          opacity={isSelected ? 0.85 : hovered ? 0.5 : 0.22}
         />
       </mesh>
 
-      {/* Stepped Stone Base (Lowest Tier) */}
+      {/* 3. Base Stepped Tier (Granite Fluted Plinth) */}
       <mesh position={[0, -0.62, 0]}>
-        <cylinderGeometry args={[0.72, 0.8, 0.16, 36]} />
+        <cylinderGeometry args={[0.38, 0.44, 0.08, 36]} />
         <meshStandardMaterial
-          color="#101014"
-          roughness={0.45}
-          metalness={0.5}
+          color="#0e0f14"
+          roughness={0.4}
+          metalness={0.6}
         />
       </mesh>
 
-      {/* Main Fluted Obsidian Plinth (Middle Tier) */}
-      <mesh position={[0, -0.42, 0]}>
-        <cylinderGeometry args={[0.58, 0.64, 0.26, 36]} />
+      {/* 4. Middle Obsidian Column Tier */}
+      <mesh position={[0, -0.52, 0]}>
+        <cylinderGeometry args={[0.30, 0.35, 0.12, 36]} />
         <meshStandardMaterial
-          color="#0a0a0d"
-          roughness={0.2}
-          metalness={0.85}
-        />
-      </mesh>
-
-      {/* Silver Plinth Bevel Trim */}
-      <mesh position={[0, -0.27, 0]}>
-        <cylinderGeometry args={[0.55, 0.59, 0.04, 36]} />
-        <meshStandardMaterial
-          color="#dadada"
+          color="#08080c"
           roughness={0.18}
-          metalness={0.95}
-        />
-      </mesh>
-
-      {/* Top Gimbal Platform Socket */}
-      <mesh position={[0, -0.2, 0]}>
-        <cylinderGeometry args={[0.46, 0.52, 0.12, 36]} />
-        <meshStandardMaterial
-          color="#121218"
-          roughness={0.25}
-          metalness={0.8}
-        />
-      </mesh>
-
-      {/* Engraved Plaque on Front of Plinth facing camera */}
-      <mesh position={[0, -0.42, 0.62]}>
-        <boxGeometry args={[0.66, 0.16, 0.04]} />
-        <meshStandardMaterial
-          map={plaqueTexture}
-          roughness={0.15}
           metalness={0.9}
         />
       </mesh>
 
-      {/* Twin Curved Support Arms holding globe rotational axle */}
-      <group position={[0, -0.1, 0]}>
+      {/* 5. Machined Silver Plinth Bevel Trim */}
+      <mesh position={[0, -0.45, 0]}>
+        <cylinderGeometry args={[0.31, 0.31, 0.02, 36]} />
+        <meshStandardMaterial
+          color="#dadde6"
+          roughness={0.14}
+          metalness={0.96}
+        />
+      </mesh>
+
+      {/* 6. Top Gimbal Socket Collar */}
+      <mesh position={[0, -0.40, 0]}>
+        <cylinderGeometry args={[0.24, 0.28, 0.08, 36]} />
+        <meshStandardMaterial
+          color="#101118"
+          roughness={0.22}
+          metalness={0.88}
+        />
+      </mesh>
+
+      {/* 7. Engraved Plaque on Front of Column Facing Camera */}
+      <mesh position={[0, -0.52, 0.34]}>
+        <boxGeometry args={[0.42, 0.11, 0.02]} />
+        <meshStandardMaterial
+          map={plaqueTexture}
+          roughness={0.14}
+          metalness={0.92}
+        />
+      </mesh>
+
+      {/* 8. Twin Machined Silver Caliper Arms (Connected to base & holding globe axle) */}
+      <group position={[0, -0.32, 0]}>
         {/* Left arm */}
-        <mesh position={[-0.42, 0.16, 0]} rotation={[0, 0, -0.18]}>
-          <cylinderGeometry args={[0.024, 0.03, 0.36, 16]} />
+        <mesh position={[-0.34, 0.18, 0]} rotation={[0, 0, -0.14]}>
+          <cylinderGeometry args={[0.016, 0.022, 0.36, 16]} />
           <meshStandardMaterial
-            color="#dadada"
+            color="#dadde6"
             metalness={0.96}
-            roughness={0.15}
+            roughness={0.12}
           />
         </mesh>
+        <mesh position={[-0.34, 0.34, 0]}>
+          <sphereGeometry args={[0.026, 12, 12]} />
+          <meshStandardMaterial color="#ffffff" metalness={0.98} />
+        </mesh>
+
         {/* Right arm */}
-        <mesh position={[0.42, 0.16, 0]} rotation={[0, 0, 0.18]}>
-          <cylinderGeometry args={[0.024, 0.03, 0.36, 16]} />
+        <mesh position={[0.34, 0.18, 0]} rotation={[0, 0, 0.14]}>
+          <cylinderGeometry args={[0.016, 0.022, 0.36, 16]} />
           <meshStandardMaterial
-            color="#dadada"
+            color="#dadde6"
             metalness={0.96}
-            roughness={0.15}
+            roughness={0.12}
           />
+        </mesh>
+        <mesh position={[0.34, 0.34, 0]}>
+          <sphereGeometry args={[0.026, 12, 12]} />
+          <meshStandardMaterial color="#ffffff" metalness={0.98} />
         </mesh>
       </group>
 
-      {/* Localized Uplight Spotlight beneath the globe */}
+      {/* 9. Localized Uplight Spotlight beneath the globe */}
       <pointLight
-        position={[0, -0.05, 0]}
-        intensity={isSelected ? 36 : hovered ? 20 : 10}
+        position={[0, -0.25, 0]}
+        intensity={isSelected ? 32 : hovered ? 18 : 8}
         color="#ffffff"
-        distance={3.2}
+        distance={2.8}
       />
 
-      {/* 3D Rotating Globe Mounted Above Podium */}
+      {/* 10. Rotating Skill Globe Mounted Between Caliper Arms */}
       <group
-        position={[0, 0.18, 0]}
+        position={[0, 0.02, 0]}
         onClick={(e) => {
           e.stopPropagation();
           onClick();
@@ -782,9 +790,9 @@ function GothicSkillPodium({
           document.body.style.cursor = "auto";
         }}
       >
-        {/* Invisible hit proxy sphere for easy clicking */}
+        {/* Generous Hit Proxy for Touch and Mouse Clicking */}
         <mesh visible={false}>
-          <sphereGeometry args={[0.65, 16, 16]} />
+          <sphereGeometry args={[0.55, 16, 16]} />
           <meshBasicMaterial transparent opacity={0} />
         </mesh>
 
@@ -792,6 +800,64 @@ function GothicSkillPodium({
       </group>
     </group>
   );
+}
+
+// -----------------------------------------------------------------------------
+// RESPONSIVE CAMERA CONTROLLER FOR SKILLS SCENE
+// -----------------------------------------------------------------------------
+function SkillsCameraController({
+  activeCategory,
+  isMobile,
+  isTablet,
+}: {
+  activeCategory: string;
+  isMobile: boolean;
+  isTablet: boolean;
+}) {
+  const { camera } = useThree();
+
+  useFrame((_, delta) => {
+    let targetX = 0;
+    let targetY = 0.42;
+    let targetZ = 6.0;
+
+    if (isMobile) {
+      targetY = -0.3;
+      targetZ = 4.0;
+      const cat = activeCategory.toLowerCase();
+      if (cat === "programming" || cat === "all skills") {
+        targetX = -1.35;
+      } else if (cat === "ai / ml" || cat === "other") {
+        targetX = -0.85;
+        targetZ = 3.2;
+      } else if (cat === "databases") {
+        targetX = 0.85;
+        targetZ = 3.2;
+      } else if (cat === "tools & cloud") {
+        targetX = 1.35;
+      }
+      camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, delta * 4.0);
+      camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, delta * 4.0);
+      camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, delta * 4.0);
+      camera.lookAt(targetX, -0.6, 0);
+      return;
+    } else if (isTablet) {
+      targetZ = 6.4;
+      targetY = 0.38;
+      targetX = 0;
+    } else {
+      targetZ = 6.0;
+      targetY = 0.42;
+      targetX = 0;
+    }
+
+    camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, delta * 3.5);
+    camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, delta * 3.5);
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, delta * 3.5);
+    camera.lookAt(targetX * 0.2, -0.15, 0);
+  });
+
+  return null;
 }
 
 // -----------------------------------------------------------------------------
@@ -808,76 +874,78 @@ export default function ForgeOfIntelligenceScene({
   onSelectNode: (node: SkillNodeData) => void;
   reduced?: boolean;
 }) {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [cameraZ, setCameraZ] = useState(5.8);
-  const [cameraY, setCameraY] = useState(0.0);
+  const [viewportWidth, setViewportWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 1200
+  );
 
-  // Check URL query parameters for isolate mode demonstration (?isolate=skills3d)
-  const isIsolated = useMemo(() => {
-    if (typeof window === "undefined") return false;
+  const { isIsolated, isDebug } = useMemo(() => {
+    if (typeof window === "undefined") {
+      return { isIsolated: false, isDebug: false };
+    }
     const params = new URLSearchParams(window.location.search);
-    return params.get("isolate") === "skills3d";
+    return {
+      isIsolated: params.get("isolate") === "skills3d",
+      isDebug: params.get("debug") === "skills",
+    };
   }, []);
 
-  // Responsive camera adjustments
   useEffect(() => {
-    const handleResize = () => {
-      const w = window.innerWidth;
-      if (w < 480) {
-        setCameraZ(7.4);
-        setCameraY(-0.1);
-      } else if (w < 768) {
-        setCameraZ(6.8);
-        setCameraY(-0.05);
-      } else if (w < 1100) {
-        setCameraZ(6.2);
-        setCameraY(0.0);
-      } else {
-        setCameraZ(5.8);
-        setCameraY(0.0);
-      }
-    };
-    handleResize();
+    const handleResize = () => setViewportWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = -(e.clientY / window.innerHeight - 0.5) * 2;
-      setMousePos({ x, y });
-    };
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Determine active globe from selected category or node
+  const isMobile = viewportWidth < 768;
+  const isTablet = viewportWidth >= 768 && viewportWidth < 1024;
+
+  // Active category mapping to one of the 4 globes
   const activeGlobeCategory = useMemo(() => {
     const cat = activeCategory.toLowerCase();
-    if (cat === "all skills" || cat === "programming") return "programming";
-    if (cat === "ai / ml") return "ai / ml";
-    if (cat === "databases") return "databases";
-    if (cat === "tools & cloud" || cat === "tools") return "tools & cloud";
-    if (cat === "web development") return "programming"; // mapped to front-left
-    if (cat === "other") return "ai / ml"; // mapped to rear-left
+    if (cat === "all skills" || cat === "programming" || cat === "web development") {
+      return "programming";
+    }
+    if (cat === "ai / ml" || cat === "other") {
+      return "ai / ml";
+    }
+    if (cat === "databases") {
+      return "databases";
+    }
+    if (cat === "tools & cloud" || cat === "tools") {
+      return "tools & cloud";
+    }
     return "programming";
   }, [activeCategory]);
 
-  // Handler when clicking any globe
   const handleGlobeClick = (categoryName: string, nodeId: string) => {
     const matchingNode = FORGE_NODES.find((n) => n.id === nodeId) || FORGE_NODES[0];
     onSelectNode(matchingNode);
   };
 
+  // Measured, perspective-calibrated 3D world coordinates on the cathedral ground plane:
+  // Ground plane: y = -0.92
+  // Foreground globes: x = ±1.35, y = -0.92, z = 0.4 (safely within central 54% column)
+  // Rear globes: x = ±0.85, y = -0.92, z = -1.8 (grounded on aisle, unobstructed center walkway)
+  const fgLeftPos: [number, number, number] = [-1.35, -0.92, 0.4];
+  const fgRightPos: [number, number, number] = [1.35, -0.92, 0.4];
+  const bgLeftPos: [number, number, number] = [-0.85, -0.92, -1.8];
+  const bgRightPos: [number, number, number] = [0.85, -0.92, -1.8];
+
+  const globeScale = 0.48;
+
   return (
     <div
       className={`forge-canvas-wrapper ${isIsolated ? "isolated-skills-mode" : ""}`}
       aria-hidden="false"
+      role="region"
+      aria-label="3D Forge of Intelligence Skill Arena"
     >
       <Canvas
-        camera={{ position: [0, cameraY, cameraZ], fov: 38 }}
+        camera={{
+          position: [0, 0.42, 6.0],
+          fov: 36,
+          near: 0.1,
+          far: 50,
+        }}
         dpr={[1, 1.5]}
         gl={{
           alpha: !isIsolated,
@@ -888,53 +956,47 @@ export default function ForgeOfIntelligenceScene({
       >
         {isIsolated && <color attach="background" args={["#060609"]} />}
 
-        {/* Cinematic Atmospheric Lighting */}
-        <ambientLight intensity={1.2} />
-        <directionalLight position={[0, 6, 4]} intensity={2.8} color="#ffffff" />
-        <directionalLight position={[-4, 3, 2]} intensity={1.5} color="#a0a0b0" />
-        <directionalLight position={[4, 3, 2]} intensity={1.5} color="#a0a0b0" />
-        <pointLight position={[0, 2.5, 0]} intensity={16} color="#e0e0ff" distance={8} />
+        <SkillsCameraController
+          activeCategory={activeCategory}
+          isMobile={isMobile}
+          isTablet={isTablet}
+        />
 
-        {/* In isolated 3D mode: render grounded floor runway & grid */}
+        {/* Development Debug Helper (?debug=skills) */}
+        {isDebug && (
+          <group>
+            <axesHelper args={[2.5]} />
+            <gridHelper args={[12.0, 24, "#ffffff", "#33384a"]} position={[0, -0.92, 0]} />
+          </group>
+        )}
+
+        {/* Cinematic Monochromatic Cathedral Lighting */}
+        <ambientLight intensity={1.1} color="#b8c0d4" />
+        <directionalLight position={[0, 7, 3]} intensity={2.6} color="#ffffff" />
+        <directionalLight position={[-4, 3, 2]} intensity={1.4} color="#a0a8bc" />
+        <directionalLight position={[4, 3, 2]} intensity={1.4} color="#a0a8bc" />
+
+        {/* Isolated Floor & Runway in ?isolate=skills3d mode */}
         {isIsolated && (
-          <group position={[0, -1.1, 0]}>
-            <gridHelper
-              args={[16, 24, "#444455", "#181822"]}
-              position={[0, 0, 0]}
-            />
-            {/* Center Runway */}
+          <group position={[0, -0.92, 0]}>
+            <gridHelper args={[16, 24, "#ffffff", "#222534"]} position={[0, 0, 0]} />
             <mesh position={[0, -0.01, -1]} rotation={[-Math.PI / 2, 0, 0]}>
-              <planeGeometry args={[2.4, 12]} />
-              <meshBasicMaterial color="#0c0c14" />
-            </mesh>
-            {/* Runway Edge Lines */}
-            <mesh position={[-1.2, 0.01, -1]} rotation={[-Math.PI / 2, 0, 0]}>
-              <planeGeometry args={[0.04, 12]} />
-              <meshBasicMaterial color="#ffffff" transparent opacity={0.6} />
-            </mesh>
-            <mesh position={[1.2, 0.01, -1]} rotation={[-Math.PI / 2, 0, 0]}>
-              <planeGeometry args={[0.04, 12]} />
-              <meshBasicMaterial color="#ffffff" transparent opacity={0.6} />
+              <planeGeometry args={[2.0, 12]} />
+              <meshBasicMaterial color="#0c0d16" />
             </mesh>
           </group>
         )}
 
-        {/* Interactive Subtle Parallax tilt */}
-        <group
-          rotation={[
-            mousePos.y * 0.025,
-            mousePos.x * 0.04,
-            0,
-          ]}
-        >
+        {/* Four Aligned Grounded Pedestals & Rotating Technical Globes */}
+        <group>
           {/* ------------------------------------------------------------- */}
           {/* GLOBE 01 — FRONT-LEFT: PROGRAMMING                            */}
-          {/* Grounded on floor dais, scale: 0.58                           */}
+          {/* Sits on foreground dais, matching base & shadow               */}
           {/* ------------------------------------------------------------- */}
           <GothicSkillPodium
             label="PROGRAMMING"
-            position={[-1.75, -0.68, 0.5]}
-            scale={0.58}
+            position={fgLeftPos}
+            scale={globeScale}
             isSelected={activeGlobeCategory === "programming"}
             onClick={() => handleGlobeClick("Programming", "python")}
             reduced={reduced}
@@ -948,12 +1010,12 @@ export default function ForgeOfIntelligenceScene({
 
           {/* ------------------------------------------------------------- */}
           {/* GLOBE 02 — REAR-LEFT: AI / ML                                 */}
-          {/* Grounded on midground aisle, scale: 0.44                      */}
+          {/* Grounded on aisle floor, natural perspective depth            */}
           {/* ------------------------------------------------------------- */}
           <GothicSkillPodium
             label="AI / ML"
-            position={[-1.18, -0.36, -1.4]}
-            scale={0.44}
+            position={bgLeftPos}
+            scale={globeScale}
             isSelected={activeGlobeCategory === "ai / ml"}
             onClick={() => handleGlobeClick("AI / ML", "ml")}
             reduced={reduced}
@@ -967,12 +1029,12 @@ export default function ForgeOfIntelligenceScene({
 
           {/* ------------------------------------------------------------- */}
           {/* GLOBE 03 — REAR-RIGHT: DATABASES                              */}
-          {/* Grounded on midground aisle, scale: 0.44                      */}
+          {/* Grounded on aisle floor, natural perspective depth            */}
           {/* ------------------------------------------------------------- */}
           <GothicSkillPodium
             label="DATABASES"
-            position={[1.18, -0.36, -1.4]}
-            scale={0.44}
+            position={bgRightPos}
+            scale={globeScale}
             isSelected={activeGlobeCategory === "databases"}
             onClick={() => handleGlobeClick("Databases", "databases")}
             reduced={reduced}
@@ -986,12 +1048,12 @@ export default function ForgeOfIntelligenceScene({
 
           {/* ------------------------------------------------------------- */}
           {/* GLOBE 04 — FRONT-RIGHT: TOOLS & CLOUD                         */}
-          {/* Grounded on floor dais, scale: 0.58                           */}
+          {/* Sits on foreground dais, matching base & shadow               */}
           {/* ------------------------------------------------------------- */}
           <GothicSkillPodium
             label="TOOLS & CLOUD"
-            position={[1.75, -0.68, 0.5]}
-            scale={0.58}
+            position={fgRightPos}
+            scale={globeScale}
             isSelected={activeGlobeCategory === "tools & cloud"}
             onClick={() => handleGlobeClick("Tools & Cloud", "cloud")}
             reduced={reduced}
@@ -1003,13 +1065,13 @@ export default function ForgeOfIntelligenceScene({
             />
           </GothicSkillPodium>
 
-          {/* Subtle Ambient Cathedral Dust Floating Particles */}
+          {/* Subtle Cathedral Floating Dust Motes */}
           {!reduced && (
             <Sparkles
-              count={70}
-              size={1.6}
+              count={isMobile ? 25 : 55}
+              size={1.3}
               scale={[8, 4, 8]}
-              speed={0.18}
+              speed={0.15}
               color="#ffffff"
             />
           )}

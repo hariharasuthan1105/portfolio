@@ -656,8 +656,13 @@ export default function Portfolio({
 
       {/* 06 / ACHIEVEMENTS — THE HALL OF HONOR */}
       <section id="achievements" className={`section awards-section hall-of-honor-section ${isHallIsolated ? "is-hall-isolated" : ""}`}>
-        <div className="section-inner hall-inner">
-          {/* TOP-LEFT — SECTION HEADING */}
+        {/* TOP CINEMATIC 3D STAGE: Authentic Cathedral Atmosphere, Podiums & Trophies */}
+        <div className="hall-cinematic-stage">
+          {/* Environment Background Layer */}
+          <div className="hall-background-layer" aria-hidden="true" />
+          <div className="hall-vignette-overlay" aria-hidden="true" />
+
+          {/* Section Heading Block (Top-Left) */}
           <div className="hall-header-block">
             <span className="eyebrow mono">[ 06 / ACHIEVEMENTS ]</span>
             <h2 className="hall-main-title">
@@ -669,25 +674,26 @@ export default function Portfolio({
             <div className="hall-accent-line" aria-hidden="true" />
           </div>
 
-          {/* Atmospheric 3D Hall of Honor Scene (God Rays, Ground Mist, 3D Trophies) */}
+          {/* Real-time 3D Scene Viewport (Left/Right Podiums & Center Altar) */}
           <div className="hall-scene-container" aria-hidden="false">
             <HallOfHonorScene
               selectedAwardIndex={selectedAwardIndex}
               onSelectAward={(i) => {
                 setSelectedAwardIndex(i);
-                openAwardModal(i);
               }}
               reduced={reduced}
             />
           </div>
 
-          {/* LOWER AREA — PODIUM BADGES & INTERACTION */}
-          <div className="hall-awards-container">
-            {/* Visual Instruction Hint */}
-            <div className="hall-explore-hint mono" aria-hidden="true">
-              [ SELECT A TROPHY TO EXPLORE ]
-            </div>
+          {/* Unobtrusive Exploration Hint */}
+          <div className="hall-explore-hint mono" aria-hidden="true">
+            [ SELECT A TROPHY TO EXPLORE ]
+          </div>
+        </div>
 
+        {/* DEDICATED RESPONSIVE CONTENT AREA BELOW THE CINEMATIC STAGE */}
+        <div className="hall-content-flow">
+          <div className="hall-content-inner">
             {/* Mobile Carousel Controls (shown on small screens) */}
             <div className="hall-mobile-controls" role="group" aria-label="Trophy Navigation">
               <button
@@ -730,12 +736,12 @@ export default function Portfolio({
               </button>
             </div>
 
-            {/* Three Compact Podium Badges (Unobtrusive & Reference-Accurate) */}
+            {/* Three Equal-Width Responsive Achievement Cards */}
             <div className="hall-awards-grid" role="region" aria-label="Authentic Engineering Honors">
               {ACHIEVEMENTS.map((award, i) => (
                 <article
                   key={award.id}
-                  className={`hall-award-panel hall-podium-badge ${selectedAwardIndex === i ? "active-award" : ""}`}
+                  className={`hall-award-panel hall-podium-card ${selectedAwardIndex === i ? "active-award" : ""}`}
                   onClick={() => {
                     setSelectedAwardIndex(i);
                     openAwardModal(i);
