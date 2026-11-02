@@ -101,6 +101,7 @@ export default function Portfolio({
   const [platformRippleTrigger, setPlatformRippleTrigger] = useState(0);
   const isIsolated = typeof window !== "undefined" && (new URLSearchParams(window.location.search).get("isolate") === "about3d");
   const isHallIsolated = typeof window !== "undefined" && (new URLSearchParams(window.location.search).get("isolate") === "hall3d");
+  const isSkillsIsolated = typeof window !== "undefined" && (new URLSearchParams(window.location.search).get("isolate") === "skills3d");
 
   const openAwardModal = (i: number) => {
     setAwardModalIndex(i);
@@ -340,24 +341,15 @@ export default function Portfolio({
       </section>
 
       {/* 03 / SKILLS: THE FORGE OF INTELLIGENCE */}
-      <section id="skills" className="section forge-section">
+      <section id="skills" className={`section forge-section ${isSkillsIsolated ? "is-skills-isolated" : ""}`}>
         {/* Environment Background Layer */}
         <div className="forge-background-layer" aria-hidden="true" />
 
         <div className="forge-container">
-          {/* Top Gothic Details & Hanging Banner */}
-          <div className="forge-top-bar" aria-hidden="true">
-            <div className="forge-banner-emblem">
-              <span className="banner-icon">♆</span>
-              <span className="banner-text mono">KNOWLEDGE FUELS A BRIGHTER TOMORROW.</span>
-            </div>
-          </div>
-
           <div className="forge-main-grid">
             {/* Left HUD: Title & Filter Nav */}
             <div className="forge-left-hud">
               <div className="forge-title-block">
-                <span className="eyebrow mono">[ 03 ]</span>
                 <h2 className="forge-heading">SKILLS</h2>
                 <h3 className="forge-subheading mono">THE FORGE OF INTELLIGENCE</h3>
               </div>
@@ -390,30 +382,39 @@ export default function Portfolio({
               </div>
 
               <div className="forge-tagline mono">
-                TECHNOLOGIES THAT POWER MY KINGDOM.
+                <span className="forge-tagline-bar">|</span> TECHNOLOGIES THAT POWER MY KINGDOM.
               </div>
             </div>
 
-            {/* Center 3D Stage: Intelligence Core & Orbital Nodes */}
+            {/* Center 3D Stage: Four Grounded Podiums & Rotating Technical Globes */}
             <div className="forge-stage">
               <ForgeOfIntelligenceScene
                 activeCategory={category}
                 selectedNodeId={selectedNodeId}
                 onSelectNode={(node) => {
                   setSelectedNodeId(node.id);
+                  setCategory(node.category);
                   setSelected(node.skills[0] || node.name);
                 }}
                 reduced={reduced}
               />
             </div>
 
-            {/* Right HUD: Selected Tech Inspector & Realities Card */}
+            {/* Right HUD: Selected Tech Telemetry Panel */}
             <div className="forge-right-hud">
               {/* Detailed Tool Inspector Glass Card */}
               <aside className="forge-inspector glass" aria-live="polite">
                 <div className="inspector-header">
-                  <span className="eyebrow mono">FORGE TELEMETRY // 03</span>
-                  <h4 className="inspector-title card-heading">{currentNode?.name || selected}</h4>
+                  <span className="eyebrow mono">
+                    FORGE TELEMETRY // {
+                      category.toLowerCase() === "programming" ? "01" :
+                      category.toLowerCase() === "ai / ml" ? "02" :
+                      category.toLowerCase() === "databases" ? "03" :
+                      category.toLowerCase() === "tools & cloud" ? "04" :
+                      category.toLowerCase() === "web development" ? "05" : "06"
+                    }
+                  </span>
+                  <h4 className="inspector-title card-heading">{selected.toUpperCase()}</h4>
                   <span className="inspector-category mono">{currentNode?.category || category}</span>
                 </div>
 
@@ -422,7 +423,7 @@ export default function Portfolio({
                 <div className="inspector-subskills">
                   <span className="subskills-label mono">VERIFIED CAPABILITIES:</span>
                   <div className="subskills-pills">
-                    {(currentNode?.skills || visible).map((s) => (
+                    {(skills[currentNode?.category || category] || visible.slice(0, 5)).map((s) => (
                       <button
                         key={s}
                         className={`subskill-pill mono ${selected === s ? "active" : ""}`}
@@ -434,22 +435,11 @@ export default function Portfolio({
                   </div>
                 </div>
 
-                <div className="inspector-footer mono">
-                  <span>EXPLORE · BUILD · DEPLOY</span>
+                <div className="forge-telemetry-badge mono">
+                  <span className="badge-gem">◈</span>
+                  <span>BUILD RELIABLE, SCALABLE SYSTEMS.</span>
                 </div>
               </aside>
-
-              {/* Bottom Right Floating Card */}
-              <div className="forge-quote-card glass" aria-hidden="true">
-                <div className="quote-globe-icon">
-                  <span className="globe-symbol">◈</span>
-                </div>
-                <div className="quote-text mono">
-                  SKILLS COMBINE<br />
-                  TO BUILD<br />
-                  BIGGER REALITIES.
-                </div>
-              </div>
             </div>
           </div>
 
