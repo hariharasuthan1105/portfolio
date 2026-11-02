@@ -72,12 +72,12 @@ async function runTestSuite() {
   // -------------------------------------------------------------
   // TEST B: Click ENTER THE KINGDOM -> Music starts synchronously
   // -------------------------------------------------------------
-  const enterBtn = page.locator(".hero-enter-btn");
+  const enterBtn = page.locator(".hero-btn-enter, .hero-enter-btn").first();
   if (await enterBtn.isVisible()) {
     await enterBtn.click();
   } else {
     // fallback click on audio toggle
-    await page.locator(".audio-toggle").click();
+    await page.locator(".audio-toggle").first().click();
   }
 
   // Wait for fade in and playback to begin
