@@ -1,0 +1,1239 @@
+/* ==========================================================================
+   04 - PROJECTS: THE ARCHIVE OF CREATIONS (CINEMATIC GOTHIC PORTRAIT GALLERY)
+   ========================================================================== */
+
+.archive-section {
+  position: relative;
+  min-height: 100vh;
+  background: #000000;
+  overflow: hidden;
+  padding: 40px 0 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#projects {
+  scroll-margin-top: 64px;
+}
+
+/* Background image: monumental gothic cathedral gallery with high arches and marble pillars */
+.archive-background-layer {
+  position: absolute;
+  inset: 0;
+  background: url('/assets/projects-gallery-bg.webp') no-repeat center 32%;
+  background-size: cover;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Fallback if webp not supported */
+@supports not (background-image: url('/assets/projects-gallery-bg.webp')) {
+  .archive-background-layer {
+    background-image: url('/assets/projects-gallery-bg.jpg');
+  }
+}
+
+/* Atmospheric depth vignette */
+.archive-vignette-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 38%, transparent 35%, rgba(0, 0, 0, 0.45) 70%, rgba(0, 0, 0, 0.95) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 0%, transparent 12%, transparent 68%, rgba(2, 2, 4, 0.88) 85%, #000000 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Top Header Region */
+.archive-top-hud {
+  position: relative;
+  z-index: 25;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 8px 48px 20px;
+  display: flex;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.archive-top-hud-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.archive-eyebrow-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.archive-eyebrow-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #9898a4;
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+}
+
+.archive-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw, 2.85rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: 2.5px;
+  text-shadow: 0 0 25px rgba(255, 255, 255, 0.35);
+}
+
+.archive-quote-subtitle {
+  font-family: var(--font-mono);
+  font-size: clamp(9.5px, 1.1vw, 11.5px);
+  letter-spacing: 1.8px;
+  color: #a2a2b0;
+  margin: 4px 0 0;
+  text-transform: uppercase;
+  max-width: 720px;
+}
+
+/* ==========================================================================
+   GOTHIC PORTRAIT GALLERY STAGE CONTAINER
+   ========================================================================== */
+
+.gothic-gallery-stage-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ==========================================================================
+   ATMOSPHERIC LIGHTING & MOVING CATHEDRAL BANNERS
+   ========================================================================== */
+
+.gallery-atmospheric-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 5;
+}
+
+/* Cathedral Window Light Shafts */
+.cathedral-window-rays {
+  position: absolute;
+  top: -40px;
+  height: 480px;
+  pointer-events: none;
+  opacity: 0.16;
+  filter: blur(24px);
+  mix-blend-mode: screen;
+  transform-origin: top center;
+  animation: cathedralRayBreathe 12s ease-in-out infinite alternate;
+}
+
+.cathedral-window-rays.ray-left {
+  left: 10%;
+  width: 180px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(200, 210, 240, 0.08) 55%, transparent 100%);
+  transform: rotate(-12deg);
+}
+
+.cathedral-window-rays.ray-center {
+  left: 45%;
+  width: 220px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(220, 225, 255, 0.1) 60%, transparent 100%);
+  animation-delay: -4s;
+}
+
+.cathedral-window-rays.ray-right {
+  right: 10%;
+  width: 180px;
+  background: linear-gradient(225deg, rgba(255, 255, 255, 0.3) 0%, rgba(200, 210, 240, 0.08) 55%, transparent 100%);
+  transform: rotate(12deg);
+  animation-delay: -8s;
+}
+
+@keyframes cathedralRayBreathe {
+  0% {
+    opacity: 0.12;
+    transform: scaleX(0.94);
+  }
+  100% {
+    opacity: 0.22;
+    transform: scaleX(1.08);
+  }
+}
+
+/* Candle Flame Flickers on Columns */
+.cathedral-candle-sconce {
+  position: absolute;
+  top: 38%;
+  display: flex;
+  gap: 8px;
+}
+
+.cathedral-candle-sconce.sconce-left { left: 5%; }
+.cathedral-candle-sconce.sconce-mid-left { left: 32%; }
+.cathedral-candle-sconce.sconce-mid-right { right: 32%; }
+.cathedral-candle-sconce.sconce-right { right: 5%; }
+
+.candle-flame {
+  width: 4px;
+  height: 8px;
+  border-radius: 50% 50% 35% 35%;
+  background: radial-gradient(circle at 50% 60%, #ffffff 0%, #d8d8d8 50%, rgba(255, 255, 255, 0) 100%);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+  animation: candleFlicker 3.2s ease-in-out infinite alternate;
+}
+
+.candle-flame.flame-2 {
+  animation-delay: -1.6s;
+  animation-duration: 2.8s;
+}
+
+@keyframes candleFlicker {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(0.92) translateY(0);
+  }
+  25% {
+    opacity: 0.85;
+    transform: scale(1.1) translateY(-1px);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(0.98) translateY(0);
+  }
+  75% {
+    opacity: 0.95;
+    transform: scale(1.18) translateY(-1.5px);
+  }
+}
+
+/* ==========================================================================
+   MOVING CATHEDRAL BANNERS (LEFT & RIGHT ARCHITECTURAL COLUMNS)
+   Natural fabric waving with anchored top attachment & fluid lower edge sway
+   ========================================================================== */
+
+.cathedral-banner {
+  position: absolute;
+  top: 0;
+  width: 90px;
+  height: 230px;
+  z-index: 6;
+  pointer-events: none;
+  transform-origin: 50% 0%;
+}
+
+.cathedral-banner.banner-left {
+  left: 2%;
+  animation: bannerWaveLeft 7.8s cubic-bezier(0.44, 0.05, 0.55, 0.95) infinite alternate;
+}
+
+.cathedral-banner.banner-right {
+  right: 2%;
+  animation: bannerWaveRight 8.6s cubic-bezier(0.44, 0.05, 0.55, 0.95) infinite alternate;
+  animation-delay: -2.4s;
+}
+
+.banner-hanging-rod {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(to right, #404048 0%, #ffffff 50%, #404048 100%);
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.banner-hanging-cords {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  right: 10px;
+  height: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.banner-fabric-body {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform-origin: 50% 0%;
+}
+
+.banner-crest-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.95));
+}
+
+.banner-shadow-fold {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.45) 0%, transparent 40%, rgba(255, 255, 255, 0.08) 65%, rgba(0, 0, 0, 0.55) 100%);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.7;
+}
+
+/* Natural Fabric Waving Keyframes */
+@keyframes bannerWaveLeft {
+  0% {
+    transform: rotate(0deg) skewY(0deg) scaleX(1);
+  }
+  35% {
+    transform: rotate(1.2deg) skewY(0.8deg) scaleX(0.985);
+  }
+  70% {
+    transform: rotate(-0.8deg) skewY(-0.6deg) scaleX(1.015);
+  }
+  100% {
+    transform: rotate(1.8deg) skewY(1.4deg) scaleX(0.975);
+  }
+}
+
+@keyframes bannerWaveRight {
+  0% {
+    transform: rotate(0deg) skewY(0deg) scaleX(1);
+  }
+  30% {
+    transform: rotate(-1.4deg) skewY(-1deg) scaleX(0.98);
+  }
+  65% {
+    transform: rotate(0.9deg) skewY(0.7deg) scaleX(1.018);
+  }
+  100% {
+    transform: rotate(-1.6deg) skewY(-1.2deg) scaleX(0.98);
+  }
+}
+
+/* Reduced Motion Override for Cathedral Banners */
+.cathedral-banner.motion-reduced,
+html[data-motion="reduced"] .cathedral-banner {
+  animation: none !important;
+  transform: none !important;
+}
+
+/* Fine Floating Dust Particles */
+.cathedral-dust-motes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.dust-mote {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 4px #ffffff;
+  animation: dustDrift 8s ease-in-out infinite alternate;
+}
+
+@keyframes dustDrift {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateY(-28px) translateX(12px);
+    opacity: 0.1;
+  }
+}
+
+/* ==========================================================================
+   TRIPTYCH GOTHIC WALL PORTRAIT GALLERY
+   Three monumental portraits mounted side-by-side on cathedral wall
+   ========================================================================== */
+
+.gothic-triptych-wall {
+  position: relative;
+  z-index: 15;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  width: 100%;
+  max-width: 1380px;
+  margin: 12px auto 16px;
+  align-items: start;
+}
+
+.gothic-portrait-station {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Center Portrait (Pathway AI): Prominent, slightly taller */
+.gothic-portrait-station.station-center-prominent {
+  margin-top: -12px;
+}
+
+/* ==========================================================================
+   OVERHEAD SLEEK TUBULAR GALLERY SPOTLIGHTS
+   ========================================================================== */
+
+.overhead-spotlight-fixture {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 8px;
+  z-index: 20;
+}
+
+.spotlight-casing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.spotlight-tube-mount {
+  width: 4px;
+  height: 10px;
+  background: #383842;
+  border-radius: 1px;
+}
+
+.spotlight-tube-lamp {
+  width: 64px;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #404048 0%, #e8e8f0 50%, #404048 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.8), 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.spotlight-beam-cone {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 280px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.08) 45%, transparent 75%);
+  clip-path: polygon(38% 0%, 62% 0%, 100% 100%, 0% 100%);
+  pointer-events: none;
+  opacity: 0.75;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+  mix-blend-mode: screen;
+}
+
+.spotlight-beam-cone.beam-active {
+  opacity: 1.15;
+  filter: brightness(1.2);
+}
+
+/* ==========================================================================
+   ORNATE GOTHIC PICTURE FRAME & ARTWORK CANVAS
+   ========================================================================== */
+
+.gothic-frame-assembly {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 4px;
+  background: #08080c;
+  padding: 10px;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.18),
+    inset 0 0 16px rgba(0, 0, 0, 0.9);
+}
+
+/* Desktop Hover Lift: 4px elevation */
+.gothic-frame-assembly:hover,
+.gothic-portrait-station.is-hovered .gothic-frame-assembly {
+  transform: translateY(-4px);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.95),
+    0 0 0 1.5px rgba(255, 255, 255, 0.45),
+    0 0 30px rgba(255, 255, 255, 0.25);
+}
+
+/* Selected State Frame Glow */
+.gothic-portrait-station.is-selected .gothic-frame-assembly {
+  transform: translateY(-4px);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.95),
+    0 0 0 2px #ffffff,
+    0 0 36px rgba(255, 255, 255, 0.4);
+}
+
+.gothic-frame-assembly:focus-visible {
+  box-shadow: 0 0 0 3px #ffffff, 0 0 24px rgba(255, 255, 255, 0.6);
+}
+
+/* Travelling Silver Highlight Gleam */
+.frame-gleam-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.gothic-portrait-station.is-hovered .frame-gleam-line,
+.gothic-portrait-station.is-selected .frame-gleam-line {
+  opacity: 1;
+}
+
+.frame-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #000000;
+}
+
+.portrait-canvas-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+}
+
+.gothic-portrait-station.is-hovered .portrait-canvas-image {
+  transform: scale(1.02);
+  filter: contrast(1.08) brightness(1.05);
+}
+
+.gothic-portrait-station.is-selected .portrait-canvas-image {
+  transform: scale(1.025);
+  filter: contrast(1.1) brightness(1.08);
+}
+
+.canvas-vignette-inner {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
+}
+
+.portrait-canvas-index {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.75);
+  padding: 2px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  backdrop-filter: blur(8px);
+}
+
+/* ==========================================================================
+   MOUNTED OBSIDIAN INSCRIPTION PLAQUE (BELOW EACH FRAME)
+   ========================================================================== */
+
+.obsidian-inscription-plaque {
+  position: relative;
+  width: 94%;
+  margin-top: 14px;
+  padding: 16px 18px;
+  background: rgba(8, 8, 12, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 4px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gothic-portrait-station.is-hovered .obsidian-inscription-plaque {
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.9), 0 0 16px rgba(255, 255, 255, 0.1);
+}
+
+.gothic-portrait-station.is-selected .obsidian-inscription-plaque {
+  border-color: #ffffff;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.plaque-top-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.plaque-project-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 1.4vw, 1.45rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: 1.5px;
+}
+
+.plaque-category-label {
+  font-size: 8.5px;
+  letter-spacing: 1.8px;
+  color: #8e8e9c;
+  text-transform: uppercase;
+}
+
+.plaque-summary-text {
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: #a4a4b2;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.plaque-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 8px;
+}
+
+.plaque-tech-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tech-badge-item {
+  font-size: 8.5px;
+  letter-spacing: 0.8px;
+  color: #c4c4d0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.plaque-view-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  font-size: 9px;
+  letter-spacing: 1.4px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.plaque-view-cta:hover,
+.plaque-view-cta.cta-active {
+  background: #ffffff;
+  color: #050505;
+  font-weight: 700;
+  border-color: #ffffff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+.cta-arrow {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
+
+.plaque-view-cta:hover .cta-arrow {
+  transform: translateX(2px);
+}
+
+/* Floor Reflection directly beneath each station */
+.portrait-floor-reflection {
+  width: 70%;
+  height: 24px;
+  margin-top: 8px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.14) 0%, transparent 70%);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   FOREGROUND EXPLORER SILHOUETTE & CONCENTRIC MARBLE FLOOR
+   ========================================================================== */
+
+.gallery-foreground-floor {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 18px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.concentric-marble-inlay {
+  position: absolute;
+  top: 10px;
+  width: 440px;
+  height: 120px;
+  border-radius: 50%;
+  transform: perspective(600px) rotateX(68deg);
+  pointer-events: none;
+}
+
+.marble-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.08);
+}
+
+.marble-ring.ring-outer {
+  inset: 0;
+}
+
+.marble-ring.ring-mid {
+  inset: 22px;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.marble-ring.ring-inner {
+  inset: 44px;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.marble-ring-spokes {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.05) 0deg 15deg, transparent 15deg 30deg);
+  opacity: 0.5;
+}
+
+.cloaked-explorer-figure {
+  position: relative;
+  z-index: 18;
+  width: 80px;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.explorer-silhouette-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.95)) brightness(0.9);
+}
+
+.explorer-ground-contact-shadow {
+  width: 60px;
+  height: 10px;
+  background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.95) 0%, transparent 70%);
+  margin-top: -6px;
+}
+
+/* ==========================================================================
+   MOBILE ACCESSIBLE NAVIGATION STRIP (HIDDEN ON DESKTOP)
+   ========================================================================== */
+
+.gallery-mobile-nav-strip {
+  display: none;
+}
+
+/* ==========================================================================
+   EXPANDED OBSIDIAN SPECIFICATIONS PANEL (CLICK-TO-REVEAL)
+   Reserved region below gallery with authentic problem/approach/specs
+   ========================================================================== */
+
+.gallery-expanded-specs-panel {
+  position: relative;
+  z-index: 30;
+  width: 100%;
+  max-width: 1360px;
+  margin: 36px auto 0;
+  padding: 32px 36px;
+  background: rgba(8, 8, 14, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 4px;
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow:
+    0 32px 72px rgba(0, 0, 0, 0.96),
+    0 0 40px rgba(255, 255, 255, 0.12);
+  animation: panelReveal 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  outline: none;
+}
+
+.gallery-expanded-specs-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+}
+
+.gallery-expanded-specs-panel::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-bottom: 2px solid #ffffff;
+  border-right: 2px solid #ffffff;
+}
+
+@keyframes panelReveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.specs-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 14px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.specs-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.specs-tag-pill {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #e2e2ec;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.specs-status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 9px;
+  letter-spacing: 1.6px;
+  color: #ffffff;
+}
+
+.specs-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 8px #ffffff;
+}
+
+.specs-close-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.specs-close-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+.specs-panel-body-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 36px;
+  align-items: start;
+}
+
+.specs-col-primary {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.specs-project-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.specs-project-headline {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #a4a4b4;
+  margin: 0;
+}
+
+.specs-narrative-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.narrative-label {
+  font-size: 9.5px;
+  letter-spacing: 1.8px;
+  color: #8c8c9c;
+  margin: 0;
+}
+
+.narrative-text {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.65;
+  color: #c8c8d4;
+  margin: 0;
+}
+
+.specs-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.gallery-primary-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: #ffffff;
+  color: #050505;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  border: 1px solid #ffffff;
+  border-radius: 2px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 18px rgba(255, 255, 255, 0.25);
+}
+
+.gallery-primary-action-btn:hover {
+  background: #e2e2ec;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(255, 255, 255, 0.4);
+}
+
+.gallery-secondary-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+  transition: all 0.25s ease;
+}
+
+.gallery-secondary-action-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: #ffffff;
+}
+
+.specs-col-secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.specs-features-card,
+.specs-stack-card,
+.specs-takeaway-card {
+  padding: 18px 20px;
+  background: rgba(14, 14, 20, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+
+.specs-card-heading {
+  font-size: 9.5px;
+  letter-spacing: 2px;
+  color: #8c8c9c;
+  margin: 0 0 12px 0;
+}
+
+.specs-features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.specs-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.5;
+  color: #dadadc;
+}
+
+.feature-check-icon {
+  color: #ffffff;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.specs-tech-pills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.specs-tech-tag {
+  font-size: 9.5px;
+  letter-spacing: 1px;
+  color: #dadada;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 4px 9px;
+  border-radius: 2px;
+}
+
+.specs-takeaway-text {
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.6;
+  color: #b8b8c4;
+  margin: 0;
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT BREAKPOINTS
+   ========================================================================== */
+
+/* Laptop (1366 x 768) */
+@media (max-width: 1366px) {
+  .gothic-triptych-wall {
+    gap: 20px;
+  }
+  .obsidian-inscription-plaque {
+    padding: 14px 14px;
+  }
+  .plaque-project-title {
+    font-size: 1.25rem;
+  }
+}
+
+/* Tablet Landscape & Portrait (1024 x 768 & 768 x 1024) */
+@media (max-width: 1080px) {
+  .gothic-gallery-stage-container {
+    padding: 0 20px;
+  }
+  .cathedral-banner {
+    width: 70px;
+    height: 180px;
+  }
+  .gothic-triptych-wall {
+    gap: 16px;
+  }
+  .plaque-summary-text {
+    display: none;
+  }
+  .specs-panel-body-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* Mobile Devices (<= 880px / 390 x 844 / 320 x 568) */
+@media (max-width: 880px) {
+  .archive-section {
+    padding: 32px 0 44px;
+  }
+  .archive-top-hud {
+    padding: 0 16px 18px;
+  }
+  .cathedral-banner {
+    display: none;
+  }
+  .cathedral-candle-sconce {
+    display: none;
+  }
+  .gallery-foreground-floor {
+    display: none;
+  }
+
+  /* Single prominent portrait on mobile with clean swipe / arrow controls */
+  .gothic-triptych-wall {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0;
+    scrollbar-width: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 360px;
+  }
+
+  .gothic-triptych-wall::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gothic-portrait-station {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    padding: 0 8px;
+    margin-top: 0 !important;
+  }
+
+  .gothic-frame-assembly {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .obsidian-inscription-plaque {
+    max-width: 320px;
+    margin: 12px auto 0;
+  }
+
+  .plaque-summary-text {
+    display: block;
+    -webkit-line-clamp: 2;
+  }
+
+  /* Mobile Navigation Strip */
+  .gallery-mobile-nav-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 16px;
+    z-index: 25;
+  }
+
+  .mobile-gallery-arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(14, 14, 20, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.8);
+    transition: all 0.2s ease;
+  }
+
+  .mobile-gallery-arrow:active {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .mobile-gallery-indicators {
+    display: flex;
+    gap: 8px;
+  }
+
+  .mobile-indicator-pip {
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #a0a0b0;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .mobile-indicator-pip.active {
+    background: #ffffff;
+    color: #000000;
+    font-weight: 700;
+    border-color: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+  }
+
+  .gallery-expanded-specs-panel {
+    margin: 20px 16px 0;
+    padding: 20px 18px;
+  }
+
+  .specs-panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .specs-close-btn {
+    align-self: flex-end;
+  }
+}

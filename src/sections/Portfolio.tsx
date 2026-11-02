@@ -36,7 +36,7 @@ import { Scene } from "../components/ui/Scene";
 import ForgeOfIntelligenceScene, {
   FORGE_NODES,
 } from "../components/3d/ForgeOfIntelligenceScene";
-import ArchiveGalleryScene from "../components/3d/ArchiveGalleryScene";
+import GothicPortraitGallery from "../components/gallery/GothicPortraitGallery";
 import { DocReconSchematic, PathwayAISchematic, HefinSchematic } from "../components/ui/ProjectSchematics";
 import JourneyTimelineScene, {
   MILESTONES,
@@ -467,295 +467,34 @@ export default function Portfolio({
           </details>
         </div>
       </section>
-
-      {/* 04 / PROJECTS: THE ARCHIVE OF CREATIONS (CINEMATIC EXHIBITION REDESIGN) */}
-      <section id="projects" className={`section archive-section ${isIsolated ? "is-isolated" : ""}`}>
-        {/* Environment Background Layer (Gothic Cathedral with Statues & 3 Architectural Pedestals) */}
+      {/* 04 / PROJECTS: THE ARCHIVE OF CREATIONS (CINEMATIC GOTHIC PROJECT PORTRAIT GALLERY) */}
+      <section id="projects" className="section archive-section">
+        {/* Environment Background Layer: Monumental Gothic Cathedral Art Gallery */}
         <div className="archive-background-layer" aria-hidden="true" />
         <div className="archive-vignette-overlay" aria-hidden="true" />
 
-        {/* Technical Corner Framing Brackets (Exact Image A Detail) */}
-        <div className="archive-corner-bracket corner-tl" aria-hidden="true">┌</div>
-        <div className="archive-corner-bracket corner-tr" aria-hidden="true">┐</div>
-        <div className="archive-corner-bracket corner-bl" aria-hidden="true">└</div>
-        <div className="archive-corner-bracket corner-br" aria-hidden="true">┘</div>
-
-        
-
-        {/* Top Header Region: Clean negative space above the 3D exhibition */}
+        {/* Top Header Region */}
         <div className="archive-top-hud">
           <div className="archive-top-hud-inner">
             <div className="archive-eyebrow-row mono">
               <span className="archive-eyebrow-text">[ 04 / PROJECTS ]</span>
-              <span className="archive-eyebrow-bars" aria-hidden="true">|||||||||||||||</span>
             </div>
             <h2 className="archive-heading section-heading-text">
               THE ARCHIVE OF CREATIONS
             </h2>
-            <div className="archive-subhead-row mono">
-              <span className="archive-subhead-item">REAL PROJECTS. INTELLIGENT WORLDS.</span>
-              <span className="archive-subhead-sep">•</span>
-              <span className="archive-subhead-desc">THREE RECONSTRUCTED SPATIAL INSTALLATIONS</span>
-            </div>
+            <p className="archive-quote-subtitle mono">
+              &ldquo;Real-world systems built at the intersection of data, intelligence, and purpose.&rdquo;
+            </p>
           </div>
         </div>
 
-        {/* Full-Width 3D Exhibition Stage (Centered directly over background pedestals) */}
-        <div className="archive-stage-area">
-          <div className="archive-stage">
-            <ArchiveGalleryScene
-              selectedProjectIndex={selectedProjectIndex}
-              onSelectProject={(i) => setSelectedProjectIndex(i)}
-              activeMobileIndex={activeMobileIndex}
-              reduced={reduced}
-            />
-          </div>
-
-          {/* Interactive Pedestal Plaques (Physical capsule badges on pedestal fronts) */}
-          <div className="archive-pedestal-plaques-overlay" aria-label="Project exhibit selection">
-            {projects.map((proj, idx) => (
-              <button
-                key={proj.name}
-                type="button"
-                className={`pedestal-plaque-btn plaque-${idx} ${selectedProjectIndex === idx ? "active" : ""}`}
-                onClick={() => setSelectedProjectIndex(idx)}
-                aria-label={`Select exhibit ${proj.shortName || proj.name}`}
-              >
-                <div className="plaque-icon-wrap" aria-hidden="true">
-                  {idx === 0 && <Layers size={18} />}
-                  {idx === 1 && <Cpu size={18} />}
-                  {idx === 2 && <Brain size={18} />}
-                </div>
-                <div className="plaque-text-wrap">
-                  <span className="plaque-name">{proj.shortName || (idx === 0 ? "DocRecon" : idx === 1 ? "Pathway AI" : "HEFIN")}</span>
-                  <span className="plaque-cat mono">
-                    {idx === 0 && "DOCUMENT INTELLIGENCE"}
-                    {idx === 1 && "SPATIAL INTELLIGENCE"}
-                    {idx === 2 && "DECENTRALIZED AI"}
-                  </span>
-                </div>
-              </button>
-            ))}
-          </div>
-
-          {/* Mobile Carousel Arrow Controls */}
-          <div className="archive-mobile-controls" aria-label="Mobile project navigation">
-            <button
-              type="button"
-              className="mobile-nav-arrow prev mono"
-              aria-label="Previous project exhibit"
-              onClick={() => {
-                const nextIdx = (activeMobileIndex - 1 + projects.length) % projects.length;
-                setActiveMobileIndex(nextIdx);
-                if (selectedProjectIndex !== null) setSelectedProjectIndex(nextIdx);
-              }}
-            >
-              ‹
-            </button>
-            <button
-              type="button"
-              className="mobile-nav-arrow next mono"
-              aria-label="Next project exhibit"
-              onClick={() => {
-                const nextIdx = (activeMobileIndex + 1) % projects.length;
-                setActiveMobileIndex(nextIdx);
-                if (selectedProjectIndex !== null) setSelectedProjectIndex(nextIdx);
-              }}
-            >
-              ›
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Identifier Strip (Rendered cleanly on mobile) */}
-        <div className="archive-mobile-identifier">
-          <span className="mobile-exhibit-num mono">0{activeMobileIndex + 1}</span>
-          <h3 className="mobile-exhibit-title card-heading">{projects[activeMobileIndex].shortName || projects[activeMobileIndex].name}</h3>
-          <span className="mobile-exhibit-subhead mono">
-            {activeMobileIndex === 0 && "DOCUMENT INTELLIGENCE"}
-            {activeMobileIndex === 1 && "SMART URBAN RAG"}
-            {activeMobileIndex === 2 && "DECENTRALIZED AI"}
-          </span>
-
-          <div className="mobile-pagination-dots" aria-label="Exhibit position">
-            {projects.map((_, idx) => (
-              <button
-                key={idx}
-                type="button"
-                className={`pagination-dot ${activeMobileIndex === idx ? "active" : ""}`}
-                aria-label={`Jump to exhibit 0${idx + 1}`}
-                onClick={() => {
-                  setActiveMobileIndex(idx);
-                  if (selectedProjectIndex !== null) setSelectedProjectIndex(idx);
-                }}
-              />
-            ))}
-          </div>
-
-          <button
-            type="button"
-            className="mobile-details-toggle mono"
-            onClick={() => {
-              if (selectedProjectIndex === activeMobileIndex) {
-                setSelectedProjectIndex(null);
-              } else {
-                setSelectedProjectIndex(activeMobileIndex);
-              }
-            }}
-          >
-            {selectedProjectIndex === activeMobileIndex ? "✕ HIDE DETAILS" : "VIEW DETAILS →"}
-          </button>
-        </div>
-
-        {/* Bottom Interaction Zone:
-            - Default State: ✦ SELECT AN EXHIBIT TO EXPLORE ✦ (No giant cards by default!)
-            - Selected State: Wide Obsidian Glassmorphism Detail Panel with verified information & real actions */}
-        <div className="archive-bottom-panel-zone">
-          {selectedProjectIndex === null ? (
-            <div className="archive-idle-prompt mono" aria-live="polite">
-              <span className="capsule-star">✦</span>
-              <span className="idle-text">SELECT AN EXHIBIT TO EXPLORE</span>
-              <span className="capsule-star">✦</span>
-            </div>
-          ) : (
-            <div
-              className="archive-expanded-panel glassmorphism"
-              role="region"
-              aria-label={`${projects[selectedProjectIndex].name} project details`}
-            >
-              {/* Panel Top Meta Bar */}
-              <div className="panel-top-bar">
-                <div className="panel-meta-group mono">
-                  <span className="panel-tag">
-                    0{selectedProjectIndex + 1} /{" "}
-                    {selectedProjectIndex === 0 && "DOCUMENT INTELLIGENCE"}
-                    {selectedProjectIndex === 1 && "SMART URBAN RAG"}
-                    {selectedProjectIndex === 2 && "DECENTRALIZED AI"}
-                  </span>
-                  <span className="panel-status-pill">
-                    <span className="status-dot" />
-                    <span>SELECTED</span>
-                  </span>
-                </div>
-
-                <div className="panel-header-actions">
-                  <button
-                    type="button"
-                    className="panel-close-btn mono"
-                    aria-label="Close project panel"
-                    onClick={() => setSelectedProjectIndex(null)}
-                  >
-                    ✕
-                  </button>
-                </div>
-              </div>
-
-              {/* Panel Body Grid: Left Info & Right Blueprint Schematic */}
-              <div className="panel-body-grid">
-                <div className="panel-info-col">
-                  <h3 className="panel-project-title card-heading">
-                    {projects[selectedProjectIndex].name}
-                  </h3>
-                  <p className="panel-project-headline">
-                    {projects[selectedProjectIndex].headline}
-                  </p>
-
-                  {/* Verified Technologies */}
-                  <div className="panel-tags-row mono">
-                    {projects[selectedProjectIndex].technologies.map((tag) => (
-                      <span key={tag} className="panel-tech-tag">
-                        [{tag}]
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Verified Description */}
-                  <p className="panel-project-desc">
-                    {selectedProjectIndex === 0 &&
-                      "DocRecon uses advanced PaddleOCR and spatial layout understanding to convert invoices, reports, and complex documents into structured JSON data with sub-second extraction."}
-                    {selectedProjectIndex === 1 &&
-                      "Pathway AI processes streaming urban telemetry and road safety sensor arrays using continuous vector indexing, enabling real-time risk scoring and factual answers without hallucinations."}
-                    {selectedProjectIndex === 2 &&
-                      "HEFIN connects sovereign edge LLM inference with decentralized IPFS storage networks, ensuring auditable state persistence and cryptographic data provenance across nodes."}
-                  </p>
-
-                  {/* Key Capabilities */}
-                  <div className="panel-features-block">
-                    <span className="panel-features-label mono">KEY VERIFIED FEATURES</span>
-                    <ul className="panel-features-list">
-                      {projects[selectedProjectIndex].features.map((feat) => (
-                        <li key={feat}>• {feat}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Action Buttons: Exact required links & actions */}
-                  <div className="panel-action-buttons">
-                    {selectedProjectIndex === 0 ? (
-                      <a
-                        href={projects[0].github}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="panel-primary-btn mono"
-                      >
-                        <span>VIEW SOURCE CODE</span>
-                        <ArrowUpRight size={14} />
-                      </a>
-                    ) : (
-                      <a
-                        href={projects[selectedProjectIndex].liveUrl || projects[selectedProjectIndex].github}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="panel-primary-btn mono"
-                      >
-                        <span>LAUNCH LIVE PROJECT</span>
-                        <ArrowUpRight size={14} />
-                      </a>
-                    )}
-
-                    {selectedProjectIndex !== 0 && (
-                      <a
-                        href={projects[selectedProjectIndex].github}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="panel-secondary-btn mono"
-                      >
-                        <span>VIEW SOURCE CODE</span>
-                        <Github size={13} />
-                      </a>
-                    )}
-
-                    <button
-                      type="button"
-                      className="panel-secondary-btn mono"
-                      onClick={() => openProjectModal(selectedProjectIndex)}
-                    >
-                      <span>VIEW FULL SPECS</span>
-                      <ArrowRight size={14} />
-                    </button>
-
-                    <button
-                      type="button"
-                      className="panel-close-text-btn mono"
-                      onClick={() => setSelectedProjectIndex(null)}
-                    >
-                      [ CLOSE DETAILS ]
-                    </button>
-                  </div>
-                </div>
-
-                {/* Right Schematic Visualizer Blueprint */}
-                <div className="panel-schematic-col">
-                  <div className="schematic-container">
-                    {selectedProjectIndex === 0 && <DocReconSchematic />}
-                    {selectedProjectIndex === 1 && <PathwayAISchematic />}
-                    {selectedProjectIndex === 2 && <HefinSchematic />}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+        {/* 2.5D Cinematic Gothic Wall Portrait Gallery (No 3D, Moving Cathedral Banners, Wall Spotlights, Explorer Silhouette) */}
+        <GothicPortraitGallery
+          projects={projects}
+          selectedProjectIndex={selectedProjectIndex}
+          onSelectProject={(i) => setSelectedProjectIndex(i)}
+          reduced={reduced}
+        />
       </section>
 
       {/* 05 / EXPERIENCE: THE JOURNEY ARCHIVE */}

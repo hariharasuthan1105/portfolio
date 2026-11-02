@@ -161,15 +161,16 @@ async function runTestSuite() {
 
     // --- TEST M: Project architecture modal / panel & specifications ---
     await page.goto(`${targetUrl}#projects`);
-    const plaqueBtn = await page.$('.pedestal-plaque-btn.plaque-0');
+    await page.waitForTimeout(600);
+    const plaqueBtn = (await page.$('.plaque-view-cta')) || (await page.$('.pedestal-plaque-btn.plaque-0'));
     if (plaqueBtn) {
       await plaqueBtn.click();
-      await page.waitForTimeout(400);
-      const panel = await page.$('.archive-expanded-panel');
-      const closeBtn = await page.$('.panel-close-btn');
+      await page.waitForTimeout(500);
+      const panel = (await page.$('.gallery-expanded-specs-panel')) || (await page.$('.archive-expanded-panel'));
+      const closeBtn = (await page.$('.specs-close-btn')) || (await page.$('.panel-close-btn'));
       if (closeBtn) await closeBtn.click();
       await page.waitForTimeout(300);
-      const panelClosed = !(await page.$('.archive-expanded-panel'));
+      const panelClosed = !(await page.$('.gallery-expanded-specs-panel')) && !(await page.$('.archive-expanded-panel'));
       record('M', 'Project architecture panel opens with authentic specs and closes cleanly', !!panel && panelClosed);
     } else {
       const exploreBtn = (await page.$('.archive-cta-btn')) || (await page.$('.project-card:nth-child(1) .project-open'));
