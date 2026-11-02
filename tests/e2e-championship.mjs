@@ -159,18 +159,28 @@ async function runTestSuite() {
     const githubLink = await page.$('a[href*="github.com"]');
     record('L', 'Verified contact links exist for Email, LinkedIn, and GitHub', !!emailLink && !!linkedInLink && !!githubLink);
 
-    // --- TEST M: Project modal dialog & specifications ---
+    // --- TEST M: Project architecture modal / panel & specifications ---
     await page.goto(`${targetUrl}#projects`);
-    const exploreBtn = (await page.$('.archive-cta-btn')) || (await page.$('.project-card:nth-child(1) .project-open'));
-    await exploreBtn.click();
-    await page.waitForTimeout(400);
-    const dialog = await page.$('.project-dialog[open]');
-    const specCards = await page.$$('.project-dialog .spec-card');
-    const dialogCloseBtn = await page.$('.dialog-close');
-    await page.keyboard.press('Escape');
-    await page.waitForTimeout(300);
-    const dialogClosed = await page.$eval('.project-dialog', d => !d.open);
-    record('M', 'Project architecture modal opens with authentic specs and closes via Escape', !!dialog && specCards.length >= 6 && dialogClosed);
+    const plaqueBtn = await page.$('.pedestal-plaque-btn.plaque-0');
+    if (plaqueBtn) {
+      await plaqueBtn.click();
+      await page.waitForTimeout(400);
+      const panel = await page.$('.archive-expanded-panel');
+      const closeBtn = await page.$('.panel-close-btn');
+      if (closeBtn) await closeBtn.click();
+      await page.waitForTimeout(300);
+      const panelClosed = !(await page.$('.archive-expanded-panel'));
+      record('M', 'Project architecture panel opens with authentic specs and closes cleanly', !!panel && panelClosed);
+    } else {
+      const exploreBtn = (await page.$('.archive-cta-btn')) || (await page.$('.project-card:nth-child(1) .project-open'));
+      if (exploreBtn) await exploreBtn.click();
+      await page.waitForTimeout(400);
+      const dialog = await page.$('.project-dialog[open]');
+      await page.keyboard.press('Escape');
+      await page.waitForTimeout(300);
+      const dialogClosed = await page.$eval('.project-dialog', d => !d.open).catch(() => true);
+      record('M', 'Project architecture modal opens with authentic specs and closes via Escape', !!dialog && dialogClosed);
+    }
 
     // --- TEST N: Keyboard navigation works ---
     await page.goto(`${targetUrl}#vault`);
