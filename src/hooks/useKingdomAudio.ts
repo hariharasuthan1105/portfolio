@@ -1,34 +1,25 @@
-import { useEffect, useState, useCallback } from "react";
-import { kingdomAudio, KingdomAudioState } from "../audio/KingdomAudioManager";
+import { useGlobalAudio } from "../audio/GlobalAudioContext";
 
 export function useKingdomAudio() {
-  const [audioState, setAudioState] = useState<KingdomAudioState>(() => kingdomAudio.getState());
-
-  useEffect(() => {
-    const unsubscribe = kingdomAudio.subscribe((state) => {
-      setAudioState(state);
-    });
-    return unsubscribe;
-  }, []);
-
-  const toggle = useCallback(() => {
-    kingdomAudio.toggle();
-  }, []);
-
-  const play = useCallback(() => {
-    kingdomAudio.play();
-  }, []);
-
-  const pause = useCallback(() => {
-    kingdomAudio.pause();
-  }, []);
+  const audio = useGlobalAudio();
 
   return {
-    isPlaying: audioState.isPlaying,
-    isReady: audioState.isReady,
-    volume: audioState.volume,
-    toggle,
-    play,
-    pause,
+    isPlaying: audio.isPlaying,
+    isReady: audio.isReady,
+    isPaused: audio.isPaused,
+    isMuted: audio.isMuted,
+    volume: audio.volume,
+    userVolume: audio.userVolume,
+    currentTime: audio.currentTime,
+    duration: audio.duration,
+    autoplayBlocked: audio.autoplayBlocked,
+    toggle: audio.toggle,
+    play: audio.play,
+    pause: audio.pause,
+    setVolume: audio.setVolume,
+    mute: audio.mute,
+    unmute: audio.unmute,
   };
 }
+
+export default useKingdomAudio;

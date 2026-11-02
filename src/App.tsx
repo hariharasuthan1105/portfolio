@@ -14,6 +14,8 @@ import { useMotionPreference } from "./hooks/useMotionPreference";
 import { useAtmosphericQuality } from "./components/3d/atmosphere/AtmosphericQualityController";
 import { PortalAnimationState } from "./components/3d/portalTransition/PortalTransitionManager";
 import { useKingdomAudio } from "./hooks/useKingdomAudio";
+import { GlobalAudioProvider } from "./audio/GlobalAudioContext";
+import PersistentAudioPlayer from "./components/audio/PersistentAudioPlayer";
 
 const Portfolio = lazy(() => import("./sections/Portfolio"));
 const Vault = lazy(() => import("./features/intelligence-vault/Vault"));
@@ -29,7 +31,7 @@ const links = [
   "Vault",
 ];
 
-export default function App() {
+function KingdomPortfolioShell() {
   const reduced = useMotionPreference();
   const { quality, cycleQuality } = useAtmosphericQuality(reduced);
   const low = quality === "low";
@@ -37,7 +39,7 @@ export default function App() {
   const [active, setActive] = useState("home");
   const [portalState, setPortalState] = useState<PortalAnimationState>("IDLE");
   const [intro, setIntro] = useState(false);
-  const { isPlaying: musicPlaying, toggle: toggleMusic, play: playMusic } = useKingdomAudio();
+  const { isPlaying: musicPlaying, toggle: toggleMusic, play: playMusic, autoplayBlocked } = useKingdomAudio();
 
   // Centralized Return-to-Home trigger
   const triggerReturnHome = useCallback(() => {
@@ -169,9 +171,9 @@ export default function App() {
           </button>
 
           <button
-            className={`icon-button audio-toggle ${musicPlaying ? "active" : ""}`}
-            aria-label={musicPlaying ? "Mute background music" : "Enable background music"}
-            title={musicPlaying ? "Mute background music" : "Enable background music"}
+            className={`icon-button audio-toggle ${musicPlaying ? "active" : ""} ${autoplayBlocked ? "autoplay-blocked" : ""}`}
+            aria-label={musicPlaying ? "Mute background music" : autoplayBlocked ? "Sound ready — click to enable" : "Enable background music"}
+            title={musicPlaying ? "Mute background music" : autoplayBlocked ? "Sound ready — click to enable" : "Enable background music"}
             onClick={toggleMusic}
           >
             {musicPlaying ? (
@@ -256,3 +258,28 @@ export default function App() {
     </>
   );
 }
+
+/**
+ * AppRoot Architecture:
+ * AppRoot
+ *   GlobalAudioProvider
+ *     PersistentAudioPlayer
+ *     PortfolioNavigation
+ *     Home
+ *     About
+ *     Skills
+ *     Projects
+ *     Experience
+ *     Achievements
+ *     Contact
+ *     IntelligenceVault
+ */
+export default function App() {
+  return (
+    <GlobalAudioProvider>
+      <PersistentAudioPlayer />
+      <KingdomPortfolioShell />
+    </GlobalAudioProvider>
+  );
+}
+

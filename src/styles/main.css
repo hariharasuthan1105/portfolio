@@ -380,6 +380,72 @@ nav a[aria-current]:after {
     height: 60%;
   }
 }
+
+/* Autoplay Ready / Blocked Prompt */
+.audio-toggle.autoplay-blocked {
+  color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+}
+
+.audio-autoplay-prompt {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  animation: audioPromptFadeIn 0.4s ease-out;
+}
+
+.audio-autoplay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(10, 12, 16, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.audio-autoplay-btn:hover {
+  background: rgba(22, 26, 32, 0.95);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 16px rgba(255, 255, 255, 0.2);
+}
+
+.audio-prompt-icon {
+  color: #ffffff;
+  animation: audioPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes audioPromptFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes audioPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
 .menu-toggle {
   display: none;
 }
