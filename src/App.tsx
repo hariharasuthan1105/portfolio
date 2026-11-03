@@ -70,6 +70,27 @@ function KingdomPortfolioShell() {
       reduced || low ? "reduced" : "full";
   }, [reduced, low]);
 
+  // Mobile Drawer Accessibility: Escape key handler & scroll lock
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && menu) {
+        setMenu(false);
+        const menuBtn = document.querySelector<HTMLButtonElement>(".menu-toggle");
+        menuBtn?.focus();
+      }
+    };
+    if (menu) {
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [menu]);
+
   // Section scroll tracker
   useEffect(() => {
     let frame = 0;
@@ -139,14 +160,15 @@ function KingdomPortfolioShell() {
 
       <header className="topbar">
         <a className="brand" href="#home" onClick={() => handleNavClick("home")}>
-          <BrandEmblem size={28} />
+          <BrandEmblem size={24} />
           <div className="brand-text">
             <span className="brand-name mono">HARIHARASUTHAN V</span>
             <span className="brand-role mono">[ AI &amp; DATA SCIENCE ]</span>
           </div>
         </a>
 
-        <nav aria-label="Main navigation" className={menu ? "open" : ""}>
+        {/* Desktop Primary Navigation */}
+        <nav aria-label="Main navigation" className="desktop-nav">
           {links.map((l, i) => (
             <a
               href={"#" + l.toLowerCase()}
@@ -161,8 +183,9 @@ function KingdomPortfolioShell() {
         </nav>
 
         <div className="nav-end">
+          {/* Desktop-only secondary controls */}
           <button
-            className="skip-intro-btn mono"
+            className="skip-intro-btn mono desktop-only-control"
             onClick={skipToAbout}
             aria-label="Skip to portfolio about section"
           >
@@ -170,6 +193,7 @@ function KingdomPortfolioShell() {
             <span>SKIP INTRO</span>
           </button>
 
+          {/* Music button - visible on all viewports */}
           <button
             className={`icon-button audio-toggle ${musicPlaying ? "active" : ""} ${autoplayBlocked ? "autoplay-blocked" : ""}`}
             aria-label={musicPlaying ? "Mute background music" : autoplayBlocked ? "Sound ready — click to enable" : "Enable background music"}
@@ -192,8 +216,9 @@ function KingdomPortfolioShell() {
             )}
           </button>
 
+          {/* Desktop-only quality button */}
           <button
-            className="icon-button quality-toggle"
+            className="icon-button quality-toggle desktop-only-control"
             aria-label={`Atmospheric VFX quality: ${quality.toUpperCase()}`}
             title={`VFX Quality: ${quality.toUpperCase()} (Click to toggle HIGH / MED / LOW)`}
             onClick={cycleQuality}
@@ -202,16 +227,96 @@ function KingdomPortfolioShell() {
             <span>{quality === "high" ? "HQ" : quality === "medium" ? "MED" : "LITE"}</span>
           </button>
 
+          {/* Mobile hamburger menu button */}
           <button
             className="menu-toggle icon-button"
-            aria-label="Toggle navigation"
+            aria-label={menu ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={menu}
+            aria-controls="mobile-navigation-drawer"
             onClick={() => setMenu(!menu)}
           >
             {menu ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </header>
+
+      {/* Mobile Navigation Drawer & Backdrop */}
+      <AnimatePresence>
+        {menu && (
+          <>
+            <motion.div
+              className="mobile-nav-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setMenu(false)}
+              aria-hidden="true"
+            />
+            <motion.nav
+              id="mobile-navigation-drawer"
+              className="mobile-nav-drawer"
+              aria-label="Mobile navigation"
+              role="dialog"
+              aria-modal="true"
+              initial={{ opacity: 0, y: -16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+            >
+              <div className="mobile-drawer-header">
+                <div className="drawer-brand mono">
+                  <BrandEmblem size={20} />
+                  <span>KINGDOM NAVIGATION</span>
+                </div>
+                <button
+                  className="icon-button drawer-close-btn"
+                  onClick={() => setMenu(false)}
+                  aria-label="Close navigation"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="mobile-nav-links">
+                {links.map((l, i) => (
+                  <a
+                    href={"#" + l.toLowerCase()}
+                    onClick={() => handleNavClick(l)}
+                    aria-current={active === l.toLowerCase() ? "location" : undefined}
+                    key={l}
+                    className="mobile-nav-link"
+                  >
+                    <span className="nav-index mono">0{i + 1}</span>
+                    <span className="nav-label">{l}</span>
+                  </a>
+                ))}
+              </div>
+
+              <div className="mobile-drawer-utilities">
+                <button
+                  className="drawer-util-btn mono"
+                  onClick={() => {
+                    setMenu(false);
+                    skipToAbout();
+                  }}
+                >
+                  <FastForward size={14} />
+                  <span>SKIP INTRO</span>
+                </button>
+
+                <button
+                  className="drawer-util-btn mono"
+                  onClick={cycleQuality}
+                >
+                  <SlidersHorizontal size={14} />
+                  <span>VFX: {quality.toUpperCase()}</span>
+                </button>
+              </div>
+            </motion.nav>
+          </>
+        )}
+      </AnimatePresence>
 
       <main>
         <Hero

@@ -93,7 +93,7 @@ export default function Portfolio({
   const [copyError, setCopyError] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const awardDialog = useRef<HTMLDialogElement>(null);
-  const [selectedAwardIndex, setSelectedAwardIndex] = useState<number | null>(null);
+  const [selectedAwardIndex, setSelectedAwardIndex] = useState<number | null>(0);
   const [awardModalIndex, setAwardModalIndex] = useState<number | null>(null);
   const [certificationsOpen, setCertificationsOpen] = useState(false);
   const [activeContactCard, setActiveContactCard] = useState<number | null>(null);
@@ -342,18 +342,22 @@ export default function Portfolio({
 
       {/* 03 / SKILLS: THE FORGE OF INTELLIGENCE */}
       <section id="skills" className={`section forge-section ${isSkillsIsolated ? "is-skills-isolated" : ""}`}>
-        {/* Environment Background Layer */}
+        {/* Environment Background Layer (Desktop only) */}
         <div className="forge-background-layer" aria-hidden="true" />
 
         <div className="forge-container">
-          <div className="forge-main-grid">
-            {/* Left HUD: Title & Filter Nav */}
-            <div className="forge-left-hud">
-              <div className="forge-title-block">
-                <h2 className="forge-heading">SKILLS</h2>
-                <h3 className="forge-subheading mono">THE FORGE OF INTELLIGENCE</h3>
-              </div>
+          {/* Top Title Block: [ 03 / SKILLS ] + THE FORGE OF INTELLIGENCE */}
+          <div className="forge-header-block">
+            <span className="eyebrow mono">[ 03 / SKILLS ]</span>
+            <h2 className="forge-heading section-heading-text display-heading">THE FORGE OF INTELLIGENCE</h2>
+            <div className="forge-tagline mono">
+              <span className="forge-tagline-bar">|</span> TECHNOLOGIES THAT POWER MY KINGDOM.
+            </div>
+          </div>
 
+          <div className="forge-main-grid">
+            {/* Left HUD: Title & Filter Nav on desktop; horizontal category selector on mobile */}
+            <div className="forge-left-hud">
               <div className="forge-category-nav" role="tablist" aria-label="Skill Categories">
                 {["All skills", ...Object.keys(skills)].map((c) => {
                   const isActive = category.toLowerCase() === c.toLowerCase();
@@ -380,13 +384,9 @@ export default function Portfolio({
                   );
                 })}
               </div>
-
-              <div className="forge-tagline mono">
-                <span className="forge-tagline-bar">|</span> TECHNOLOGIES THAT POWER MY KINGDOM.
-              </div>
             </div>
 
-            {/* Center 3D Stage: Four Grounded Podiums & Rotating Technical Globes */}
+            {/* Center 3D Stage: Four Grounded Podiums on desktop; Featured single globe on mobile */}
             <div className="forge-stage">
               <ForgeOfIntelligenceScene
                 activeCategory={category}

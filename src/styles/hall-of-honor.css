@@ -698,19 +698,43 @@
 
 @media (max-width: 768px) {
   .hall-cinematic-stage {
-    height: 380px;
+    height: clamp(280px, 60vw, 360px);
   }
   .hall-header-block {
-    margin: 16px 0 0 16px;
-    padding: 14px 18px;
-    max-width: 280px;
+    margin: 14px 14px 0;
+    padding: 12px 16px;
+    max-width: calc(100% - 28px);
   }
   .hall-mobile-controls {
     display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .hall-mobile-btn,
+  .hall-mobile-view-btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+  }
+  .hall-mobile-dot {
+    width: 10px;
+    height: 10px;
   }
   .hall-awards-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 14px;
+  }
+  .hall-award-panel {
+    display: none;
+  }
+  .hall-award-panel.active-award {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
   }
   .hall-content-inner {
     padding: 0 16px;
@@ -719,12 +743,12 @@
 
 @media (max-width: 480px) {
   .hall-cinematic-stage {
-    height: 340px;
+    height: clamp(260px, 68vw, 320px);
   }
   .hall-header-block {
-    margin: 12px 0 0 12px;
-    padding: 12px 14px;
-    max-width: 240px;
+    margin: 10px 10px 0;
+    padding: 10px 12px;
+    max-width: calc(100% - 20px);
   }
   .hall-main-title {
     font-size: 1.8rem;

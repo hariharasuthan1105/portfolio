@@ -816,21 +816,34 @@ function SkillsCameraController({
 }) {
   const { camera } = useThree();
 
+  useEffect(() => {
+    if (isMobile) {
+      camera.position.set(0, -0.22, 3.65);
+      camera.lookAt(0, -0.62, 0);
+    } else if (isTablet) {
+      camera.position.set(0, 0.38, 6.5);
+      camera.lookAt(0, -0.15, 0);
+    } else {
+      camera.position.set(0, 0.42, 6.0);
+      camera.lookAt(0, -0.15, 0);
+    }
+  }, [isMobile, isTablet, camera]);
+
   useFrame((_, delta) => {
     let targetX = 0;
     let targetY = 0.42;
     let targetZ = 6.0;
 
     if (isMobile) {
-      targetY = 0.05;
-      targetZ = 4.5;
+      targetY = -0.22;
+      targetZ = 3.65;
       camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, delta * 4.0);
       camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, delta * 4.0);
       camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, delta * 4.0);
-      camera.lookAt(targetX, -0.6, 0);
+      camera.lookAt(targetX, -0.62, 0);
       return;
     } else if (isTablet) {
-      targetZ = 6.4;
+      targetZ = 6.5;
       targetY = 0.38;
       targetX = 0;
     } else {
@@ -883,8 +896,8 @@ export default function ForgeOfIntelligenceScene({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const isMobile = viewportWidth < 768;
-  const isTablet = viewportWidth >= 768 && viewportWidth < 1024;
+  const isMobile = viewportWidth < 900;
+  const isTablet = viewportWidth >= 900 && viewportWidth < 1024;
 
   // Active category mapping to one of the 4 globes
   const activeGlobeCategory = useMemo(() => {
@@ -986,12 +999,27 @@ export default function ForgeOfIntelligenceScene({
         {/* Mobile presents one category-selected exhibit; wider scenes retain all four. */}
         <group>
           {isMobile ? (
-            <GothicSkillPodium label={mobileNode.name} position={[0, -0.92, 0]} scale={0.78}
-              isSelected onClick={() => handleGlobeClick(mobileNode.category, mobileNode.id)} reduced={reduced}>
-              {mobileExhibit === "ai / ml" ? <AiMlGlobe isSelected isHovered={false} reduced={reduced} />
-                : mobileExhibit === "databases" ? <DatabasesGlobe isSelected isHovered={false} reduced={reduced} />
-                  : mobileExhibit === "tools & cloud" ? <ToolsCloudGlobe isSelected isHovered={false} reduced={reduced} />
-                    : <ProgrammingGlobe isSelected isHovered={false} reduced={reduced} />}
+            <GothicSkillPodium
+              label={
+                activeGlobeCategory === "ai / ml" ? "AI / ML" :
+                activeGlobeCategory === "databases" ? "DATABASES" :
+                activeGlobeCategory === "tools & cloud" ? "TOOLS & CLOUD" : "PROGRAMMING"
+              }
+              position={[0, -0.58, 0]}
+              scale={0.70}
+              isSelected
+              onClick={() => handleGlobeClick(mobileNode.category, mobileNode.id)}
+              reduced={reduced}
+            >
+              {activeGlobeCategory === "ai / ml" ? (
+                <AiMlGlobe isSelected isHovered={false} reduced={reduced} />
+              ) : activeGlobeCategory === "databases" ? (
+                <DatabasesGlobe isSelected isHovered={false} reduced={reduced} />
+              ) : activeGlobeCategory === "tools & cloud" ? (
+                <ToolsCloudGlobe isSelected isHovered={false} reduced={reduced} />
+              ) : (
+                <ProgrammingGlobe isSelected isHovered={false} reduced={reduced} />
+              )}
             </GothicSkillPodium>
           ) : <>
           {/* ------------------------------------------------------------- */}
