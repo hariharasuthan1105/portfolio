@@ -67,7 +67,7 @@
 /* Responsive Grid with Measured Proportions: Left UI ~23%, Central Scene ~54%, Right UI ~23% */
 .forge-main-grid {
   display: grid;
-  grid-template-columns: minmax(240px, 23%) minmax(0, 54%) minmax(260px, 23%);
+  grid-template-columns: minmax(190px, 0.78fr) minmax(0, 1.8fr) minmax(220px, 0.82fr);
   gap: 28px;
   align-items: center;
   min-height: 580px;
@@ -421,7 +421,7 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
   .forge-section {
     padding: 70px 0 50px;
   }
@@ -480,4 +480,36 @@
   .forge-category-nav {
     grid-template-columns: 1fr;
   }
+}
+
+/* Reconstructed small-screen flow: selector, one exhibit, telemetry, full index. */
+@media (max-width: 900px) {
+  .forge-section { min-height: auto; padding: calc(var(--topbar-height, 64px) + 28px) 0 42px; }
+  .forge-container { padding-inline: clamp(16px, 4vw, 28px); }
+  .forge-main-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; min-height: 0; }
+  .forge-left-hud { display: contents; }
+  .forge-title-block { grid-row: 1; margin: 0; }
+  .forge-heading { font-size: clamp(30px, 8vw, 48px); }
+  .forge-category-nav { grid-row: 2; display: flex; flex-flow: row wrap; gap: 6px; padding: 7px; }
+  .forge-cat-btn { flex: 1 1 145px; justify-content: center; min-height: 44px; padding: 9px 10px; border: 1px solid #ffffff20; border-radius: 4px; }
+  .forge-cat-btn .cat-arrow { display: none; }
+  .forge-tagline { display: none; }
+  .forge-stage { grid-row: 3; width: 100%; height: clamp(280px, 78vw, 380px); min-height: 280px; overflow: hidden; }
+  .forge-canvas-wrapper { position: absolute; inset: 0; }
+  .forge-right-hud { grid-row: 4; width: 100%; max-width: none; margin: 0; }
+  .forge-inspector { padding: clamp(16px, 4vw, 24px); }
+  .inspector-desc { overflow-wrap: anywhere; }
+  .subskills-pills { display: flex; flex-wrap: wrap; }
+  .subskill-pill { max-width: 100%; white-space: normal; overflow-wrap: anywhere; min-height: 38px; }
+  .forge-section .skill-list { margin-top: 18px; padding: 14px; }
+}
+@media (max-width: 390px) {
+  .forge-category-nav { gap: 4px; }
+  .forge-cat-btn { flex-basis: 120px; }
+  .forge-stage { height: 290px; min-height: 290px; }
+}
+@media (min-width: 901px) and (max-width: 1200px) {
+  .forge-main-grid { grid-template-columns: minmax(170px, .75fr) minmax(0, 1.5fr) minmax(200px, .8fr); gap: 16px; }
+  .forge-container { padding-inline: 24px; }
+  .forge-stage { height: 500px; }
 }

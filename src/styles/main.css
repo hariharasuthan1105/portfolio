@@ -7837,3 +7837,49 @@ html[data-motion="reduced"] *:after {
     margin-bottom: 8px !important;
   }
 }
+
+/* Responsive alignment pass: persistent compact navigation and Vault panels. */
+@media (max-width: 600px) {
+  :root { --topbar-height: 60px; scroll-padding-top: 60px; }
+  .topbar { height: 60px; padding-inline: max(14px, env(safe-area-inset-left)); gap: 8px; }
+  .brand { gap: 7px; }
+  .brand .brand-name { font-size: 10px; letter-spacing: .5px; }
+  .brand .brand-role { display: none; }
+  .brand-emblem-svg { width: 24px; height: 24px; }
+  .nav-end { gap: 5px; }
+  .skip-intro-btn, .quality-toggle { display: none !important; }
+  .audio-toggle, .menu-toggle { min-width: 44px; min-height: 44px; }
+  .topbar nav { top: 60px; max-height: calc(100dvh - 60px); overflow-y: auto; padding: 14px; }
+  .topbar nav.open { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .topbar nav a { min-height: 48px; }
+  .vault-cinematic-chamber { min-height: 0; min-height: 72svh; background-position: center; }
+  .vault-chamber-overlay-inner { padding: 22px 16px max(24px, env(safe-area-inset-bottom)); min-height: 72svh; box-sizing: border-box; }
+  .vault-chamber-header { padding: 18px 16px; width: 100%; }
+  .vault-title-row { align-items: flex-start; gap: 9px; }
+  .vault-main-title { font-size: clamp(22px, 7vw, 32px); overflow-wrap: anywhere; }
+  .vault-subheading { line-height: 1.6; }
+  .key-progress { display: grid; grid-template-columns: 1fr; gap: 7px; }
+  .key-chip { min-width: 0; }
+  .vault-challenges-wrapper { padding: 34px 14px 48px; }
+  .vault-challenges-wrapper .section-inner { width: 100%; padding: 0; }
+  .vault-grid { grid-template-columns: minmax(0,1fr); gap: 14px; }
+  .challenge { min-width: 0; padding: 18px 15px; }
+  .challenge header { gap: 9px; }
+  .challenge-description, .trials-instructions { overflow-wrap: anywhere; }
+  .fictional-doc, .network-board, .rag-pipeline { max-width: 100%; }
+  .doc-meta-bar { flex-wrap: wrap; gap: 5px; }
+  .vault-reveal { padding: 22px 14px; }
+  .reveal-eyebrow { line-height: 1.7; }
+  .superpower-heading { font-size: clamp(21px, 6.5vw, 28px); line-height: 1.25; overflow-wrap: anywhere; }
+  .superpower-pillars { grid-template-columns: minmax(0,1fr); }
+  .pillar-card { min-width: 0; }
+  .vault-actions-row { align-items: stretch; }
+  footer { flex-wrap: wrap; justify-content: center; padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+}
+@media (min-width: 601px) and (max-width: 900px) {
+  .vault-cinematic-chamber { min-height: 620px; }
+  .vault-chamber-header { max-width: min(520px, 68vw); }
+  .vault-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .vault-grid .challenge:last-child { grid-column: 1 / -1; }
+  .superpower-pillars { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}

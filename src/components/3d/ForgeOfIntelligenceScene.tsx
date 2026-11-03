@@ -822,20 +822,8 @@ function SkillsCameraController({
     let targetZ = 6.0;
 
     if (isMobile) {
-      targetY = -0.3;
-      targetZ = 4.0;
-      const cat = activeCategory.toLowerCase();
-      if (cat === "programming" || cat === "all skills") {
-        targetX = -1.35;
-      } else if (cat === "ai / ml" || cat === "other") {
-        targetX = -0.85;
-        targetZ = 3.2;
-      } else if (cat === "databases") {
-        targetX = 0.85;
-        targetZ = 3.2;
-      } else if (cat === "tools & cloud") {
-        targetX = 1.35;
-      }
+      targetY = 0.05;
+      targetZ = 4.5;
       camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, delta * 4.0);
       camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, delta * 4.0);
       camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, delta * 4.0);
@@ -931,6 +919,14 @@ export default function ForgeOfIntelligenceScene({
   const bgRightPos: [number, number, number] = [0.85, -0.92, -1.8];
 
   const globeScale = 0.48;
+  const mobileNode = FORGE_NODES.find((node) => node.id === selectedNodeId) ?? FORGE_NODES[0];
+  const mobileExhibit = mobileNode.category.toLowerCase() === "ai / ml" || mobileNode.category.toLowerCase() === "other"
+    ? "ai / ml"
+    : mobileNode.category.toLowerCase() === "databases"
+      ? "databases"
+      : mobileNode.category.toLowerCase() === "tools & cloud"
+        ? "tools & cloud"
+        : "programming";
 
   return (
     <div
@@ -987,8 +983,17 @@ export default function ForgeOfIntelligenceScene({
           </group>
         )}
 
-        {/* Four Aligned Grounded Pedestals & Rotating Technical Globes */}
+        {/* Mobile presents one category-selected exhibit; wider scenes retain all four. */}
         <group>
+          {isMobile ? (
+            <GothicSkillPodium label={mobileNode.name} position={[0, -0.92, 0]} scale={0.78}
+              isSelected onClick={() => handleGlobeClick(mobileNode.category, mobileNode.id)} reduced={reduced}>
+              {mobileExhibit === "ai / ml" ? <AiMlGlobe isSelected isHovered={false} reduced={reduced} />
+                : mobileExhibit === "databases" ? <DatabasesGlobe isSelected isHovered={false} reduced={reduced} />
+                  : mobileExhibit === "tools & cloud" ? <ToolsCloudGlobe isSelected isHovered={false} reduced={reduced} />
+                    : <ProgrammingGlobe isSelected isHovered={false} reduced={reduced} />}
+            </GothicSkillPodium>
+          ) : <>
           {/* ------------------------------------------------------------- */}
           {/* GLOBE 01 — FRONT-LEFT: PROGRAMMING                            */}
           {/* Sits on foreground dais, matching base & shadow               */}
@@ -1065,6 +1070,7 @@ export default function ForgeOfIntelligenceScene({
             />
           </GothicSkillPodium>
 
+          </>}
           {/* Subtle Cathedral Floating Dust Motes */}
           {!reduced && (
             <Sparkles
