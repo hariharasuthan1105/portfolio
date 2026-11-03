@@ -93,7 +93,7 @@ export default function Portfolio({
   const [copyError, setCopyError] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const awardDialog = useRef<HTMLDialogElement>(null);
-  const [selectedAwardIndex, setSelectedAwardIndex] = useState<number | null>(null);
+  const [selectedAwardIndex, setSelectedAwardIndex] = useState<number | null>(0);
   const [awardModalIndex, setAwardModalIndex] = useState<number | null>(null);
   const [certificationsOpen, setCertificationsOpen] = useState(false);
   const [activeContactCard, setActiveContactCard] = useState<number | null>(null);
@@ -342,18 +342,22 @@ export default function Portfolio({
 
       {/* 03 / SKILLS: THE FORGE OF INTELLIGENCE */}
       <section id="skills" className={`section forge-section ${isSkillsIsolated ? "is-skills-isolated" : ""}`}>
-        {/* Environment Background Layer */}
+        {/* Environment Background Layer (Desktop only) */}
         <div className="forge-background-layer" aria-hidden="true" />
 
         <div className="forge-container">
-          <div className="forge-main-grid">
-            {/* Left HUD: Title & Filter Nav */}
-            <div className="forge-left-hud">
-              <div className="forge-title-block">
-                <h2 className="forge-heading">SKILLS</h2>
-                <h3 className="forge-subheading mono">THE FORGE OF INTELLIGENCE</h3>
-              </div>
+          {/* Top Title Block: [ 03 / SKILLS ] + THE FORGE OF INTELLIGENCE */}
+          <div className="forge-header-block">
+            <span className="eyebrow mono">[ 03 / SKILLS ]</span>
+            <h2 className="forge-heading section-heading-text display-heading">THE FORGE OF INTELLIGENCE</h2>
+            <div className="forge-tagline mono">
+              <span className="forge-tagline-bar">|</span> TECHNOLOGIES THAT POWER MY KINGDOM.
+            </div>
+          </div>
 
+          <div className="forge-main-grid">
+            {/* Left HUD: Title & Filter Nav on desktop; horizontal category selector on mobile */}
+            <div className="forge-left-hud">
               <div className="forge-category-nav" role="tablist" aria-label="Skill Categories">
                 {["All skills", ...Object.keys(skills)].map((c) => {
                   const isActive = category.toLowerCase() === c.toLowerCase();
@@ -380,13 +384,9 @@ export default function Portfolio({
                   );
                 })}
               </div>
-
-              <div className="forge-tagline mono">
-                <span className="forge-tagline-bar">|</span> TECHNOLOGIES THAT POWER MY KINGDOM.
-              </div>
             </div>
 
-            {/* Center 3D Stage: Four Grounded Podiums & Rotating Technical Globes */}
+            {/* Center 3D Stage: Four Grounded Podiums on desktop; Featured single globe on mobile */}
             <div className="forge-stage">
               <ForgeOfIntelligenceScene
                 activeCategory={category}
@@ -656,8 +656,13 @@ export default function Portfolio({
 
       {/* 06 / ACHIEVEMENTS — THE HALL OF HONOR */}
       <section id="achievements" className={`section awards-section hall-of-honor-section ${isHallIsolated ? "is-hall-isolated" : ""}`}>
-        <div className="section-inner hall-inner">
-          {/* TOP-LEFT — SECTION HEADING */}
+        {/* TOP CINEMATIC 3D STAGE: Authentic Cathedral Atmosphere, Podiums & Trophies */}
+        <div className="hall-cinematic-stage">
+          {/* Environment Background Layer */}
+          <div className="hall-background-layer" aria-hidden="true" />
+          <div className="hall-vignette-overlay" aria-hidden="true" />
+
+          {/* Section Heading Block (Top-Left) */}
           <div className="hall-header-block">
             <span className="eyebrow mono">[ 06 / ACHIEVEMENTS ]</span>
             <h2 className="hall-main-title">
@@ -669,25 +674,26 @@ export default function Portfolio({
             <div className="hall-accent-line" aria-hidden="true" />
           </div>
 
-          {/* Atmospheric 3D Hall of Honor Scene (God Rays, Ground Mist, 3D Trophies) */}
+          {/* Real-time 3D Scene Viewport (Left/Right Podiums & Center Altar) */}
           <div className="hall-scene-container" aria-hidden="false">
             <HallOfHonorScene
               selectedAwardIndex={selectedAwardIndex}
               onSelectAward={(i) => {
                 setSelectedAwardIndex(i);
-                openAwardModal(i);
               }}
               reduced={reduced}
             />
           </div>
 
-          {/* LOWER AREA — PODIUM BADGES & INTERACTION */}
-          <div className="hall-awards-container">
-            {/* Visual Instruction Hint */}
-            <div className="hall-explore-hint mono" aria-hidden="true">
-              [ SELECT A TROPHY TO EXPLORE ]
-            </div>
+          {/* Unobtrusive Exploration Hint */}
+          <div className="hall-explore-hint mono" aria-hidden="true">
+            [ SELECT A TROPHY TO EXPLORE ]
+          </div>
+        </div>
 
+        {/* DEDICATED RESPONSIVE CONTENT AREA BELOW THE CINEMATIC STAGE */}
+        <div className="hall-content-flow">
+          <div className="hall-content-inner">
             {/* Mobile Carousel Controls (shown on small screens) */}
             <div className="hall-mobile-controls" role="group" aria-label="Trophy Navigation">
               <button
@@ -730,12 +736,12 @@ export default function Portfolio({
               </button>
             </div>
 
-            {/* Three Compact Podium Badges (Unobtrusive & Reference-Accurate) */}
+            {/* Three Equal-Width Responsive Achievement Cards */}
             <div className="hall-awards-grid" role="region" aria-label="Authentic Engineering Honors">
               {ACHIEVEMENTS.map((award, i) => (
                 <article
                   key={award.id}
-                  className={`hall-award-panel hall-podium-badge ${selectedAwardIndex === i ? "active-award" : ""}`}
+                  className={`hall-award-panel hall-podium-card ${selectedAwardIndex === i ? "active-award" : ""}`}
                   onClick={() => {
                     setSelectedAwardIndex(i);
                     openAwardModal(i);

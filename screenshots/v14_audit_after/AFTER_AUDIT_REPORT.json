@@ -1,0 +1,242 @@
+[
+  {
+    "viewport": "desktop_2560x1440",
+    "width": 2560,
+    "height": 1440,
+    "category": "desktop",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 2560,
+    "clientWidth": 2560,
+    "navMetrics": {
+      "topbarHeight": 76,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": false
+    }
+  },
+  {
+    "viewport": "desktop_1920x1080",
+    "width": 1920,
+    "height": 1080,
+    "category": "desktop",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 1920,
+    "clientWidth": 1920,
+    "navMetrics": {
+      "topbarHeight": 76,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": false
+    }
+  },
+  {
+    "viewport": "desktop_1536x864",
+    "width": 1536,
+    "height": 864,
+    "category": "desktop",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 1536,
+    "clientWidth": 1536,
+    "navMetrics": {
+      "topbarHeight": 76,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": false
+    }
+  },
+  {
+    "viewport": "desktop_1440x900",
+    "width": 1440,
+    "height": 900,
+    "category": "desktop",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "navMetrics": {
+      "topbarHeight": 76,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": false
+    }
+  },
+  {
+    "viewport": "laptop_1366x768",
+    "width": 1366,
+    "height": 768,
+    "category": "laptop",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 1366,
+    "clientWidth": 1366,
+    "navMetrics": {
+      "topbarHeight": 76,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": false
+    }
+  },
+  {
+    "viewport": "laptop_1280x800",
+    "width": 1280,
+    "height": 800,
+    "category": "laptop",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 1280,
+    "clientWidth": 1280,
+    "navMetrics": {
+      "topbarHeight": 76,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": false
+    }
+  },
+  {
+    "viewport": "laptop_1024x768",
+    "width": 1024,
+    "height": 768,
+    "category": "laptop",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 1024,
+    "clientWidth": 1024,
+    "navMetrics": {
+      "topbarHeight": 66,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": true
+    }
+  },
+  {
+    "viewport": "tablet_820x1180",
+    "width": 820,
+    "height": 1180,
+    "category": "tablet",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 820,
+    "clientWidth": 820,
+    "navMetrics": {
+      "topbarHeight": 66,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": true
+    }
+  },
+  {
+    "viewport": "tablet_768x1024",
+    "width": 768,
+    "height": 1024,
+    "category": "tablet",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "navMetrics": {
+      "topbarHeight": 66,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": true
+    }
+  },
+  {
+    "viewport": "tablet_landscape_1024x768",
+    "width": 1024,
+    "height": 768,
+    "category": "tablet",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 1024,
+    "clientWidth": 1024,
+    "navMetrics": {
+      "topbarHeight": 66,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": true
+    }
+  },
+  {
+    "viewport": "mobile_430x932",
+    "width": 430,
+    "height": 932,
+    "category": "mobile",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 430,
+    "clientWidth": 430,
+    "navMetrics": {
+      "topbarHeight": 64,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": true
+    }
+  },
+  {
+    "viewport": "mobile_390x844",
+    "width": 390,
+    "height": 844,
+    "category": "mobile",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "navMetrics": {
+      "topbarHeight": 64,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": true
+    }
+  },
+  {
+    "viewport": "mobile_375x812",
+    "width": 375,
+    "height": 812,
+    "category": "mobile",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 375,
+    "clientWidth": 375,
+    "navMetrics": {
+      "topbarHeight": 64,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": true
+    }
+  },
+  {
+    "viewport": "mobile_360x800",
+    "width": 360,
+    "height": 800,
+    "category": "mobile",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 360,
+    "clientWidth": 360,
+    "navMetrics": {
+      "topbarHeight": 64,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": true
+    }
+  },
+  {
+    "viewport": "mobile_320x568",
+    "width": 320,
+    "height": 568,
+    "category": "mobile",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 320,
+    "clientWidth": 320,
+    "navMetrics": {
+      "topbarHeight": 64,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": true
+    }
+  },
+  {
+    "viewport": "mobile_landscape_844x390",
+    "width": 844,
+    "height": 390,
+    "category": "mobile_landscape",
+    "hasHorizontalOverflow": false,
+    "scrollWidth": 844,
+    "clientWidth": 844,
+    "navMetrics": {
+      "topbarHeight": 66,
+      "isMenuInside": true,
+      "isAudioInside": true,
+      "menuVisible": true
+    }
+  }
+]

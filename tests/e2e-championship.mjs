@@ -74,7 +74,7 @@ async function runTestSuite() {
     await page.waitForTimeout(600);
     const enterBtn = await page.$('.hero-btn-enter');
     await enterBtn.click();
-    await page.waitForTimeout(2000); // allow warp to complete and land on about
+    await page.waitForTimeout(3500); // allow 2.45s warp animation to complete and land on about
     const scrollYAfterEnter = await page.evaluate(() => window.scrollY);
     record('C', 'Castle entrance warp animation completes and transitions to about', scrollYAfterEnter > 300, `ScrollY: ${scrollYAfterEnter}`);
 

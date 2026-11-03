@@ -1,4 +1,6 @@
 @import "./gothic-gallery.css";
+@import "./skills-forge.css";
+@import "./hall-of-honor.css";
 
 :root {
   --font-display: "Pixelify Sans Variable", "Pixelify Sans", monospace;
@@ -12,8 +14,16 @@
   font-synthesis: none;
   --silver: #a7a7ad;
   --line: #ffffff26;
+  --topbar-height: 76px;
+  --gutter: clamp(16px, 3.5vw, 48px);
+  --content-max-width: 1440px;
   scroll-behavior: smooth;
-  scroll-padding-top: 76px;
+  scroll-padding-top: var(--topbar-height);
+}
+
+main section[id],
+section[id] {
+  scroll-margin-top: calc(var(--topbar-height) + 14px);
 }
 
 /* ==========================================================================
@@ -194,7 +204,7 @@ small {
   color: #c3c3c8;
 }
 .topbar {
-  height: 76px;
+  height: var(--topbar-height, 76px);
   position: fixed;
   top: 0;
   left: 0;
@@ -202,11 +212,13 @@ small {
   z-index: 30;
   display: flex;
   align-items: center;
-  padding: 0 3.1%;
+  justify-content: space-between;
+  padding: 0 max(var(--gutter, 16px), env(safe-area-inset-right)) 0 max(var(--gutter, 16px), env(safe-area-inset-left));
   border-bottom: 1px solid var(--line);
   background: #050607d9;
   backdrop-filter: blur(20px);
-  gap: 28px;
+  -webkit-backdrop-filter: blur(20px);
+  gap: 16px;
 }
 .brand {
   display: flex;
@@ -215,6 +227,8 @@ small {
   font: 500 13px var(--mono);
   letter-spacing: 1px;
   white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
 }
 .brand-emblem-svg {
   flex-shrink: 0;
@@ -378,8 +392,206 @@ nav a[aria-current]:after {
     height: 60%;
   }
 }
+
+/* Autoplay Ready / Blocked Prompt */
+.audio-toggle.autoplay-blocked {
+  color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+}
+
+.audio-autoplay-prompt {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  animation: audioPromptFadeIn 0.4s ease-out;
+}
+
+.audio-autoplay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(10, 12, 16, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.audio-autoplay-btn:hover {
+  background: rgba(22, 26, 32, 0.95);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 16px rgba(255, 255, 255, 0.2);
+}
+
+.audio-prompt-icon {
+  color: #ffffff;
+  animation: audioPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes audioPromptFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes audioPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
 .menu-toggle {
   display: none;
+}
+
+/* Mobile Navigation Backdrop & Modal Drawer */
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 998;
+}
+
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  max-height: 92svh;
+  overflow-y: auto;
+  background: #09090efc;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.95);
+  z-index: 999;
+  padding: max(16px, env(safe-area-inset-top)) clamp(16px, 4vw, 28px) max(24px, env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mobile-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.drawer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+}
+
+.drawer-close-btn {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.mobile-nav-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .mobile-nav-links {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 6px;
+  color: #e2e2e8;
+  text-decoration: none;
+  font-family: var(--font-technical);
+  font-size: 12.5px;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link[aria-current="location"] {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+
+.mobile-nav-link .nav-index {
+  color: #888894;
+  font-size: 10px;
+}
+
+.mobile-nav-link[aria-current="location"] .nav-index {
+  color: #ffffff;
+}
+
+.mobile-drawer-utilities {
+  display: flex;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.drawer-util-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.drawer-util-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
 }
 .skip-link {
   position: fixed;
@@ -2599,6 +2811,11 @@ nav a[aria-current]:after {
 .portal-header-block {
   display: flex;
   flex-direction: column;
+  background: radial-gradient(ellipse at 30% 40%, rgba(4, 5, 8, 0.85) 0%, rgba(4, 5, 8, 0.55) 70%, transparent 100%);
+  padding: 16px 20px 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .portal-header-block .eyebrow {
@@ -2815,13 +3032,13 @@ nav a[aria-current]:after {
 
 .portal-card-value {
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 1.3vw, 1.35rem);
+  font-size: clamp(0.95rem, 2.6vw, 1.35rem);
   font-weight: 600;
   color: #ffffff;
   line-height: 1.35;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-all;
+  overflow-wrap: anywhere;
   margin-bottom: 6px;
 }
 
@@ -3512,7 +3729,8 @@ input[type="range"] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4px;
+  flex-wrap: wrap;
+  gap: 6px;
   margin: 14px 0;
 }
 
@@ -4097,7 +4315,11 @@ html[data-motion="reduced"] *:after {
     height: 620px;
   }
 }
-@media (max-width: 900px) {
+@media (max-width: 1120px) {
+  :root {
+    --topbar-height: 66px;
+    scroll-padding-top: 66px;
+  }
   .brand {
     font-size: 11px;
   }
@@ -4106,6 +4328,10 @@ html[data-motion="reduced"] *:after {
   }
   .menu-toggle {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
   }
   .topbar nav {
     display: none;
@@ -4113,25 +4339,40 @@ html[data-motion="reduced"] *:after {
     top: 66px;
     left: 0;
     right: 0;
-    background: #09090bf5;
-    padding: 20px;
-    backdrop-filter: blur(20px);
+    background: #09090bf8;
+    padding: 16px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.92);
   }
   .topbar nav.open {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0;
+    gap: 8px;
   }
   .topbar nav a {
-    padding: 17px;
+    padding: 14px 16px;
+    min-height: 46px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   .topbar nav small {
     display: inline;
+    color: var(--silver);
+    font-size: 9px;
   }
   .topbar nav a[aria-current]:after {
-    bottom: 8px;
-    left: 35px;
-    right: 65%;
+    display: none;
+  }
+  .topbar nav a[aria-current] {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #ffffff;
   }
   .nav-end {
     margin-left: auto;
@@ -4364,6 +4605,11 @@ html[data-motion="reduced"] *:after {
   }
   footer {
     font-size: 8px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    padding: 24px 16px 36px;
   }
   footer span {
     display: none;
@@ -4371,33 +4617,61 @@ html[data-motion="reduced"] *:after {
 }
 @media (max-width: 600px) {
   :root {
-    scroll-padding-top: 66px;
+    --topbar-height: 64px;
+    scroll-padding-top: 64px;
   }
   .topbar {
-    padding: 0 20px;
+    padding: 0 14px;
+    height: 64px;
   }
   .brand {
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.7px;
+    gap: 8px;
+    flex-shrink: 1;
+    min-width: 0;
   }
-  .brand span {
-    font-size: 7px;
+  .brand .brand-name {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .brand .brand-role {
+    display: none;
+  }
+  .skip-intro-btn {
+    padding: 6px 8px;
+    min-width: 32px;
+  }
+  .skip-intro-btn span {
+    display: none;
   }
   .nav-end {
     gap: 6px;
+    flex-shrink: 0;
+  }
+  .menu-toggle {
+    display: inline-flex !important;
+    flex-shrink: 0;
+  }
+  .topbar nav.open {
+    grid-template-columns: 1fr;
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
   }
   .hero {
     height: 100svh;
     min-height: 740px;
     max-height: none;
-    padding-top: 66px;
+    padding-top: 64px;
   }
   .hero-hud-panel {
     top: 76px;
-    left: 16px;
-    right: 16px;
+    left: 14px;
+    right: 14px;
     width: auto;
-    padding: 20px 18px;
+    padding: 18px 16px;
     background: rgba(8, 9, 13, 0.82);
   }
   .eyebrow-badge {
@@ -4406,9 +4680,10 @@ html[data-motion="reduced"] *:after {
     margin-bottom: 10px;
   }
   .hero-title {
-    font-size: 40px;
-    line-height: 0.92;
+    font-size: clamp(1.85rem, 7.5vw, 2.5rem);
+    line-height: 0.95;
     margin: 0 0 10px;
+    word-break: break-word;
   }
   .identity-name {
     font-size: 13px;
@@ -4479,16 +4754,6 @@ html[data-motion="reduced"] *:after {
     left: 25px;
     font-size: 6px;
     letter-spacing: 0.5px;
-  }
-  .scroll-cue {
-    bottom: 23px;
-    right: 25px;
-    font-size: 6px;
-    gap: 4px;
-    letter-spacing: 0.4px;
-  }
-  .scroll-cue svg {
-    width: 11px;
   }
   .project-strip {
     padding: 0 14px;
@@ -4946,10 +5211,18 @@ html[data-motion="reduced"] *:after {
     flex-wrap: wrap;
   }
   .hero-btn-enter {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 10px 16px;
     font-size: 9.5px;
   }
   .hero-btn-explore {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 10px 14px;
     font-size: 9px;
   }
@@ -4967,10 +5240,15 @@ html[data-motion="reduced"] *:after {
     right: auto;
     margin: 12px 14px 20px;
     padding-bottom: 12px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
   .status-badge {
     font-size: 7.5px;
-    padding: 5px 8px;
+    padding: 6px 10px;
+    white-space: normal;
+    text-align: center;
   }
 }
 /* Final atmospheric and readability refinements. */
@@ -5716,399 +5994,7 @@ html[data-motion="reduced"] *:after {
   }
 }
 
-/* ==========================================================================
-   03 — SKILLS: THE FORGE OF INTELLIGENCE (3D DIMENSIONAL UI)
-   ========================================================================== */
-
-/* ==========================================================================
-   03 / SKILLS: THE FORGE OF INTELLIGENCE (IMMERSIVE 3D SKILLS ARENA)
-   ========================================================================== */
-
-.forge-section {
-  position: relative;
-  min-height: 100vh;
-  background: #000000;
-  overflow: hidden;
-  padding: 90px 0 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.forge-background-layer {
-  position: absolute;
-  inset: 0;
-  background: url('/assets/forge-environment.webp') no-repeat center center / cover;
-  filter: saturate(0) contrast(1.06) brightness(0.95);
-  opacity: 0.96;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.forge-background-layer::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    transparent 0%,
-    rgba(0, 0, 0, 0.35) 60%,
-    rgba(0, 0, 0, 0.92) 100%
-  );
-  pointer-events: none;
-}
-
-/* Isolated 3D Mode (?isolate=skills3d) */
-.forge-section.is-skills-isolated {
-  background: #060609 !important;
-}
-
-.forge-section.is-skills-isolated .forge-background-layer {
-  display: none !important;
-}
-
-.forge-section.is-skills-isolated .forge-left-hud,
-.forge-section.is-skills-isolated .forge-right-hud,
-.forge-section.is-skills-isolated .skill-list {
-  opacity: 0.2;
-  pointer-events: none;
-}
-
-.forge-container {
-  position: relative;
-  z-index: 5;
-  width: 100%;
-  max-width: 1720px;
-  margin: 0 auto;
-  padding: 0 44px;
-}
-
-/* 3-Column Spatial Layout */
-.forge-main-grid {
-  display: grid;
-  grid-template-columns: 290px 1fr 340px;
-  gap: 32px;
-  align-items: center;
-  min-height: 640px;
-  width: 100%;
-}
-
-.forge-main-grid > * {
-  min-width: 0;
-}
-
-/* Left HUD: Title & Filter Nav */
-.forge-left-hud {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  z-index: 10;
-  min-width: 0;
-}
-
-.forge-title-block {
-  margin-bottom: 4px;
-}
-
-.forge-heading {
-  font-family: var(--font-display);
-  font-size: clamp(2.6rem, 3.8vw, 3.8rem);
-  font-weight: 700;
-  line-height: 1;
-  color: #ffffff;
-  margin: 0 0 8px 0;
-  letter-spacing: 1px;
-  text-shadow: 0 0 24px rgba(255, 255, 255, 0.25);
-}
-
-.forge-subheading {
-  font-family: 'IBM Plex Mono', monospace;
-  font-weight: 500;
-  font-size: 11px;
-  color: #a0a0ab;
-  letter-spacing: 2px;
-  margin: 0;
-}
-
-.forge-category-nav {
-  display: flex;
-  flex-direction: column;
-  background: rgba(12, 12, 16, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 8px;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
-  overflow: hidden;
-}
-
-.forge-cat-btn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 13px 20px;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  color: #9898a4;
-  cursor: pointer;
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  min-height: 48px;
-}
-
-.forge-cat-btn:last-child {
-  border-bottom: 0;
-}
-
-.forge-cat-btn .cat-name {
-  font-size: 11px;
-  letter-spacing: 1.6px;
-  font-weight: 500;
-}
-
-.forge-cat-btn .cat-arrow {
-  opacity: 0.35;
-  transform: translateX(-3px);
-  transition: all 0.22s ease;
-}
-
-.forge-cat-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: #ffffff;
-}
-
-.forge-cat-btn:hover .cat-arrow {
-  opacity: 0.85;
-  transform: translateX(0);
-}
-
-.forge-cat-btn.active {
-  background: #d4d4d8;
-  color: #09090b;
-  font-weight: 700;
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.25);
-}
-
-.forge-cat-btn.active .cat-arrow {
-  opacity: 1;
-  color: #09090b;
-  transform: translateX(0);
-}
-
-.forge-tagline {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 10px;
-  color: #888894;
-  letter-spacing: 1.5px;
-  padding-left: 2px;
-}
-
-.forge-tagline-bar {
-  color: #ffffff;
-  opacity: 0.55;
-  font-weight: bold;
-}
-
-/* Center 3D Stage */
-.forge-stage {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  height: 640px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  overflow: visible;
-}
-
-.forge-canvas-wrapper {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.forge-three-canvas {
-  width: 100% !important;
-  height: 100% !important;
-  outline: none;
-}
-
-/* Right HUD: Telemetry Inspector */
-.forge-right-hud {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  z-index: 10;
-}
-
-.forge-inspector {
-  padding: 26px 28px;
-  background: rgba(12, 12, 16, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 10px;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
-}
-
-.inspector-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 14px;
-  margin-bottom: 16px;
-}
-
-.inspector-header .eyebrow {
-  display: block;
-  font-size: 9px;
-  letter-spacing: 2.2px;
-  color: #9090a0;
-  margin-bottom: 8px;
-}
-
-.inspector-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 2.4vw, 2.4rem);
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0 0 10px 0;
-  letter-spacing: 1px;
-}
-
-.inspector-category {
-  display: inline-block;
-  font-size: 9px;
-  letter-spacing: 1.4px;
-  color: #d0d0d8;
-  background: rgba(255, 255, 255, 0.06);
-  padding: 3px 10px;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.inspector-desc {
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: #b0b0b8;
-  margin: 0 0 20px 0;
-}
-
-.inspector-subskills {
-  margin-bottom: 20px;
-}
-
-.subskills-label {
-  display: block;
-  font-size: 9.5px;
-  letter-spacing: 1.8px;
-  color: #888894;
-  margin-bottom: 10px;
-}
-
-.subskills-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.subskill-pill {
-  padding: 6px 14px;
-  font-size: 10.5px;
-  letter-spacing: 0.8px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  color: #d0d0d8;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.subskill-pill:hover {
-  background: rgba(255, 255, 255, 0.16);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
-.subskill-pill.active {
-  background: #ffffff;
-  color: #000000;
-  font-weight: 700;
-  border-color: #ffffff;
-  box-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
-}
-
-.forge-telemetry-badge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 9px;
-  letter-spacing: 1.6px;
-  color: #b0b0bc;
-}
-
-.forge-telemetry-badge .badge-gem {
-  font-size: 13px;
-  color: #ffffff;
-}
-
-/* Responsive Breakpoints for Forge */
-@media (max-width: 1200px) {
-  .forge-main-grid {
-    grid-template-columns: 260px 1fr 280px;
-    gap: 20px;
-  }
-  .forge-stage {
-    height: 560px;
-  }
-}
-
-@media (max-width: 900px) {
-  .forge-section {
-    padding: 70px 0 50px;
-  }
-  .forge-container {
-    padding: 0 20px;
-  }
-  .forge-main-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  .forge-left-hud {
-    order: 1;
-    gap: 16px;
-  }
-  .forge-category-nav {
-    flex-direction: row;
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .forge-category-nav::-webkit-scrollbar {
-    display: none;
-  }
-  .forge-cat-btn {
-    border-bottom: 0;
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 10px 16px;
-    flex-shrink: 0;
-  }
-  .forge-cat-btn .cat-arrow {
-    display: none;
-  }
-  .forge-stage {
-    height: 480px;
-    order: 2;
-  }
-  .forge-right-hud {
-    order: 3;
-  }
-}
+/* Section 03 (Skills) styles centralized in src/styles/skills-forge.css */
 
 /* ==========================================================================
    ACCESSIBILITY UTILITIES
@@ -7289,14 +7175,23 @@ html[data-motion="reduced"] *:after {
     order: 1;
   }
   .journey-stage {
-    height: 480px;
+    height: clamp(280px, 68vw, 420px);
     order: 2;
   }
   .journey-right-hud {
     order: 3;
   }
   .journey-heading {
-    font-size: 38px;
+    font-size: clamp(24px, 6vw, 38px);
+  }
+  .inspector-nav-btn {
+    min-height: 44px;
+    padding: 10px 14px;
+  }
+  .milestone-step-btn {
+    min-width: 38px;
+    min-height: 44px;
+    font-size: 10px;
   }
 }
 
@@ -7307,7 +7202,7 @@ html[data-motion="reduced"] *:after {
 @media (max-width: 768px) {
   .hero-title,
   .display-heading {
-    font-size: clamp(2.25rem, 9vw, 3.5rem) !important;
+    font-size: clamp(1.75rem, 7.2vw, 3.2rem) !important;
   }
   .section-heading,
   .section-heading-text,
@@ -7319,22 +7214,23 @@ html[data-motion="reduced"] *:after {
   .hall-main-title,
   .portal-main-title,
   .vault-main-title {
-    font-size: clamp(2rem, 7vw, 3rem) !important;
+    font-size: clamp(1.6rem, 5.8vw, 2.75rem) !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
   .card-heading,
   .project-body h3,
   .project-card h3,
   .award-panel-title,
-  .portal-card-value,
   .challenge header h3 {
-    font-size: clamp(1.1rem, 4vw, 1.35rem) !important;
+    font-size: clamp(1rem, 3.6vw, 1.35rem) !important;
   }
   .subsection-heading,
   .inspector-title,
   .forge-subheading,
   .journey-subhead,
   .citation-title {
-    font-size: clamp(1rem, 3.5vw, 1.25rem) !important;
+    font-size: clamp(0.9rem, 3.2vw, 1.25rem) !important;
   }
 }
 
@@ -7586,7 +7482,7 @@ html[data-motion="reduced"] *:after {
   .about-cinematic-v3 .about-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .about-cinematic-v3 .about-left-col { display: contents; }
   .about-cinematic-v3 .about-intro-block { grid-row: 1; }
-  .about-cinematic-v3 .about-center-corridor { grid-row: 2; height: 450px; min-height: 0; border-radius: 0; background: url('/assets/chamber_sanctum_bg.jpg') center bottom / auto 140% no-repeat; }
+  .about-cinematic-v3 .about-center-corridor { grid-row: 2; height: clamp(280px, 70vw, 400px); min-height: 0; border-radius: 0; background: url('/assets/chamber_sanctum_bg.jpg') center bottom / auto 140% no-repeat; }
   .about-cinematic-v3 .about-center-corridor:after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg,#030303,transparent 12%,transparent 90%,#030303),linear-gradient(90deg,#030303,transparent 15%,transparent 85%,#030303); }
   .about-cinematic-v3 .about-edu-block { grid-row: 3; margin: 0; }
   .about-cinematic-v3 .about-right-col { grid-row: 4; margin: 0; }
@@ -7699,4 +7595,52 @@ html[data-motion="reduced"] *:after {
     font-size: 9.5px !important;
     margin-bottom: 8px !important;
   }
+}
+
+/* Responsive alignment pass: persistent compact navigation and Vault panels. */
+@media (max-width: 1024px) {
+  .desktop-nav { display: none !important; }
+  .desktop-only-control { display: none !important; }
+  .menu-toggle { display: inline-flex !important; }
+}
+
+@media (max-width: 600px) {
+  :root { --topbar-height: 60px; scroll-padding-top: 60px; }
+  .topbar { height: 60px; padding-inline: max(14px, env(safe-area-inset-left)); gap: 8px; }
+  .brand { gap: 7px; min-width: 0; }
+  .brand .brand-name { font-size: 11px; letter-spacing: .5px; }
+  .brand .brand-role { display: none; }
+  .brand-emblem-svg { width: 22px; height: 22px; }
+  .nav-end { gap: 6px; }
+  .audio-toggle, .menu-toggle { min-width: 44px; min-height: 44px; }
+  .vault-cinematic-chamber { min-height: 0; min-height: 72svh; background-position: center; }
+  .vault-chamber-overlay-inner { padding: 22px 16px max(24px, env(safe-area-inset-bottom)); min-height: 72svh; box-sizing: border-box; }
+  .vault-chamber-header { padding: 18px 16px; width: 100%; }
+  .vault-title-row { align-items: flex-start; gap: 9px; }
+  .vault-main-title { font-size: clamp(22px, 7vw, 32px); overflow-wrap: anywhere; }
+  .vault-subheading { line-height: 1.6; }
+  .key-progress { display: grid; grid-template-columns: 1fr; gap: 7px; }
+  .key-chip { min-width: 0; }
+  .vault-challenges-wrapper { padding: 34px 14px 48px; }
+  .vault-challenges-wrapper .section-inner { width: 100%; padding: 0; }
+  .vault-grid { grid-template-columns: minmax(0,1fr); gap: 14px; }
+  .challenge { min-width: 0; padding: 18px 15px; }
+  .challenge header { gap: 9px; }
+  .challenge-description, .trials-instructions { overflow-wrap: anywhere; }
+  .fictional-doc, .network-board, .rag-pipeline { max-width: 100%; }
+  .doc-meta-bar { flex-wrap: wrap; gap: 5px; }
+  .vault-reveal { padding: 22px 14px; }
+  .reveal-eyebrow { line-height: 1.7; }
+  .superpower-heading { font-size: clamp(21px, 6.5vw, 28px); line-height: 1.25; overflow-wrap: anywhere; }
+  .superpower-pillars { grid-template-columns: minmax(0,1fr); }
+  .pillar-card { min-width: 0; }
+  .vault-actions-row { align-items: stretch; }
+  footer { flex-wrap: wrap; justify-content: center; padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+}
+@media (min-width: 601px) and (max-width: 900px) {
+  .vault-cinematic-chamber { min-height: 620px; }
+  .vault-chamber-header { max-width: min(520px, 68vw); }
+  .vault-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .vault-grid .challenge:last-child { grid-column: 1 / -1; }
+  .superpower-pillars { grid-template-columns: repeat(2, minmax(0,1fr)); }
 }

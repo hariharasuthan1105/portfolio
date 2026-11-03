@@ -1,0 +1,9 @@
+[
+  {
+    "viewport": "mobile_390x844",
+    "section": "navigation",
+    "element": ".menu-toggle",
+    "observedDefect": "Mobile hamburger menu button pushed outside viewport / unreachable",
+    "severity": "CRITICAL"
+  }
+]
