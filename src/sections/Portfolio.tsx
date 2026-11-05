@@ -896,7 +896,11 @@ export default function Portfolio({
                     </div>
                     <div className="portal-card-content">
                       <span className="mono portal-card-label">01 // DIRECT EMAIL</span>
-                      <strong className="portal-card-value">{profile.email}</strong>
+                      <strong className="portal-card-value email-value">
+                        <span className="email-user">{profile.email.split("@")[0]}</span>
+                        <wbr />
+                        <span className="email-domain">@{profile.email.split("@")[1]}</span>
+                      </strong>
                       <span className="mono portal-card-action">
                         <span>OPEN EMAIL</span>
                         <ArrowUpRight size={13} />
