@@ -163,13 +163,14 @@
 }
 
 .forge-cat-btn.active {
-  background: #ffffff;
-  color: #000000;
-  font-weight: 600;
+  background: var(--bg-surface-elevated, #2A2F37);
+  color: var(--accent-sunshine, #FFD447);
+  font-weight: 700;
+  border-left: 3px solid var(--accent-sunshine, #FFD447);
 }
 
 .forge-cat-btn.active .cat-arrow {
-  color: #000000;
+  color: var(--accent-sunshine, #FFD447);
   transform: translateX(3px);
 }
 
@@ -217,9 +218,9 @@
 
 .forge-inspector {
   padding: clamp(18px, 2.2vw, 28px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(10, 10, 14, 0.85);
+  border-radius: 12px;
+  border: 1px solid var(--border-graphite, #373D45);
+  background: var(--bg-card, rgba(34, 38, 44, 0.85));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.85);
@@ -301,9 +302,10 @@
 }
 
 .subskill-pill.active {
-  background: #ffffff;
-  color: #000000;
-  border-color: #ffffff;
+  background: var(--bg-surface-elevated, #2A2F37);
+  color: var(--accent-sunshine, #FFD447);
+  border-color: var(--accent-sunshine, #FFD447);
+  box-shadow: 0 0 10px var(--accent-sunshine-glow, rgba(255, 212, 71, 0.22));
   font-weight: 600;
 }
 
@@ -319,7 +321,7 @@
 }
 
 .badge-gem {
-  color: #ffffff;
+  color: var(--accent-sunshine, #FFD447);
 }
 
 /* Full Accessible Skill Index */
@@ -467,9 +469,10 @@
   }
 
   .forge-cat-btn.active {
-    background: #ffffff;
-    color: #000000;
-    border-color: #ffffff;
+    background: var(--bg-surface-elevated, #2A2F37);
+    color: var(--accent-sunshine, #FFD447);
+    border-color: var(--accent-sunshine, #FFD447);
+    box-shadow: 0 0 12px var(--accent-sunshine-glow, rgba(255, 212, 71, 0.22));
   }
 
   /* 3. Properly Framed Cinematic 3D Scene */

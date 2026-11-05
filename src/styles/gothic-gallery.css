@@ -798,14 +798,14 @@ html[data-motion="reduced"] .cathedral-banner {
   max-width: 1360px;
   margin: 36px auto 0;
   padding: 32px 36px;
-  background: rgba(8, 8, 14, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 4px;
+  background: var(--bg-card, rgba(34, 38, 44, 0.95));
+  border: 1px solid var(--border-graphite, #373D45);
+  border-radius: 14px;
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
   box-shadow:
     0 32px 72px rgba(0, 0, 0, 0.96),
-    0 0 40px rgba(255, 255, 255, 0.12);
+    0 0 40px rgba(0, 0, 0, 0.5);
   animation: panelReveal 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   outline: none;
 }
@@ -815,10 +815,11 @@ html[data-motion="reduced"] .cathedral-banner {
   position: absolute;
   top: 0;
   left: 0;
-  width: 12px;
-  height: 12px;
-  border-top: 2px solid #ffffff;
-  border-left: 2px solid #ffffff;
+  width: 14px;
+  height: 14px;
+  border-top: 2px solid var(--accent-sunshine, #FFD447);
+  border-left: 2px solid var(--accent-sunshine, #FFD447);
+  border-top-left-radius: 14px;
 }
 
 .gallery-expanded-specs-panel::after {
@@ -826,10 +827,11 @@ html[data-motion="reduced"] .cathedral-banner {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 12px;
-  height: 12px;
-  border-bottom: 2px solid #ffffff;
-  border-right: 2px solid #ffffff;
+  width: 14px;
+  height: 14px;
+  border-bottom: 2px solid var(--accent-sunshine, #FFD447);
+  border-right: 2px solid var(--accent-sunshine, #FFD447);
+  border-bottom-right-radius: 14px;
 }
 
 @keyframes panelReveal {
@@ -882,8 +884,8 @@ html[data-motion="reduced"] .cathedral-banner {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 0 8px #ffffff;
+  background: var(--accent-sunshine, #FFD447);
+  box-shadow: 0 0 8px var(--accent-sunshine, #FFD447);
 }
 
 .specs-close-btn {
@@ -891,20 +893,20 @@ html[data-motion="reduced"] .cathedral-banner {
   align-items: center;
   gap: 6px;
   padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-graphite);
+  color: var(--text-secondary);
   font-size: 10px;
   letter-spacing: 1.5px;
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: 6px;
   transition: all 0.2s ease;
 }
 
 .specs-close-btn:hover {
-  background: #ffffff;
-  color: #000000;
-  border-color: #ffffff;
+  background: var(--bg-surface-elevated);
+  color: var(--accent-sunshine);
+  border-color: var(--accent-sunshine);
 }
 
 .specs-panel-body-grid {
@@ -969,22 +971,22 @@ html[data-motion="reduced"] .cathedral-banner {
   align-items: center;
   gap: 8px;
   padding: 10px 22px;
-  background: #ffffff;
-  color: #050505;
+  background: var(--accent-sunshine, #FFD447);
+  color: var(--bg-darker, #0D0F12);
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-decoration: none;
-  border: 1px solid #ffffff;
-  border-radius: 2px;
+  border: 1px solid var(--accent-sunshine, #FFD447);
+  border-radius: 6px;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 18px rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 18px var(--accent-sunshine-glow, rgba(255, 212, 71, 0.25));
 }
 
 .gallery-primary-action-btn:hover {
-  background: #e2e2ec;
+  background: var(--accent-sunshine-hover, #F5C72E);
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 6px 24px rgba(255, 212, 71, 0.4);
 }
 
 .gallery-secondary-action-btn {
@@ -992,19 +994,20 @@ html[data-motion="reduced"] .cathedral-banner {
   align-items: center;
   gap: 8px;
   padding: 10px 18px;
-  background: rgba(255, 255, 255, 0.06);
-  color: #ffffff;
+  background: var(--bg-surface);
+  color: var(--text-primary);
   font-size: 10px;
   letter-spacing: 1.4px;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 2px;
+  border: 1px solid var(--border-graphite);
+  border-radius: 6px;
   transition: all 0.25s ease;
 }
 
 .gallery-secondary-action-btn:hover {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: #ffffff;
+  background: var(--bg-surface-elevated);
+  border-color: var(--text-secondary);
+  color: #ffffff;
 }
 
 .specs-col-secondary {
@@ -1017,9 +1020,9 @@ html[data-motion="reduced"] .cathedral-banner {
 .specs-stack-card,
 .specs-takeaway-card {
   padding: 18px 20px;
-  background: rgba(14, 14, 20, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 3px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-graphite);
+  border-radius: 10px;
 }
 
 .specs-card-heading {
