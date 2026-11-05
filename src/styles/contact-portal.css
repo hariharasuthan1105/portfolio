@@ -1,0 +1,718 @@
+/* ==========================================================================
+   SECTION 07: THE PORTAL — LUXURY GRAPHITE & SUNSHINE CONTACT INTERFACE
+   Deep Graphite #14171B | Cloud White #F3F5F4 | Sunshine Yellow #FFD447
+   ========================================================================== */
+
+.contact-section.contact-portal-section {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--bg-primary, #14171B);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(64px, 8vh, 96px) 0 60px;
+  box-sizing: border-box;
+  overflow: visible;
+  isolation: isolate;
+  scroll-margin-top: calc(var(--topbar-height, 64px) + 12px);
+}
+
+/* Authentic High-Resolution Gothic Architectural Portal Background */
+.contact-section.contact-portal-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/assets/contact-portal-environment.webp") center center / cover no-repeat;
+  filter: saturate(0) contrast(1.06) brightness(0.92);
+  opacity: 0.98;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Restrained Vignette & Gradient Overlays (Preserves Focal Celestial Orb, Cloaked Explorer & Cathedral Arch) */
+.contact-section.contact-portal-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at 50% 50%,
+      transparent 0%,
+      rgba(13, 15, 18, 0.35) 55%,
+      rgba(13, 15, 18, 0.88) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(13, 15, 18, 0.95) 0%,
+      rgba(13, 15, 18, 0.25) 16%,
+      transparent 32%,
+      transparent 70%,
+      rgba(13, 15, 18, 0.45) 86%,
+      rgba(13, 15, 18, 0.95) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(13, 15, 18, 0.92) 0%,
+      rgba(13, 15, 18, 0.6) 24%,
+      transparent 42%,
+      transparent 58%,
+      rgba(13, 15, 18, 0.6) 76%,
+      rgba(13, 15, 18, 0.92) 100%
+    );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Three.js Real-Time VFX Canvas Overlay */
+.contact-portal-scene-container {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none !important;
+}
+
+.contact-portal-scene-container * {
+  pointer-events: none !important;
+}
+
+.contact-portal-canvas-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  pointer-events: none !important;
+}
+
+.contact-portal-three-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+}
+
+/* Main Inner Container */
+.contact-portal-inner {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1540px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0 clamp(20px, 3.6vw, 48px);
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   DESKTOP 3-ZONE BALANCED LAYOUT (>= 1025px)
+   LEFT:   ~35% (Introduction, Heading, Lead Quote, Scope, Status)
+   CENTER: ~31% (Unobstructed Perspective Window to Orb & Cathedral)
+   RIGHT:  ~34% (Three Glassmorphism Contact Action Cards)
+   ========================================================================== */
+.contact-portal-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 36fr) minmax(260px, 30fr) minmax(320px, 34fr);
+  align-items: center;
+  width: 100%;
+  gap: clamp(18px, 2.5vw, 40px);
+  box-sizing: border-box;
+}
+
+.contact-portal-layout > * {
+  min-width: 0;
+}
+
+/* ==========================================================================
+   ZONE 1 (LEFT): Introduction, Responsive Heading, Status Pill
+   ========================================================================== */
+.portal-left-zone {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  z-index: 5;
+}
+
+.portal-header-block {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, rgba(20, 23, 27, 0.82) 0%, rgba(13, 15, 18, 0.65) 100%);
+  border: 1px solid var(--border-graphite, #373D45);
+  border-radius: 12px;
+  padding: clamp(22px, 2.6vw, 32px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+}
+
+.portal-header-block .eyebrow {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  color: var(--text-secondary, #A7ADB4);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  margin-bottom: 10px;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+/* Responsive Manrope Controlled Heading */
+.contact-heading,
+.portal-main-title {
+  font-family: var(--font-display, "Manrope", system-ui, sans-serif);
+  font-size: clamp(2.2rem, 3.1vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+  color: var(--text-primary, #F3F5F4);
+  margin: 0 0 14px 0;
+  max-width: 100%;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.85);
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+.contact-heading .heading-line,
+.portal-main-title .heading-line {
+  display: block;
+}
+
+.portal-lead-quote {
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: clamp(13.5px, 1.1vw, 15px);
+  line-height: 1.55;
+  color: var(--text-primary, #F3F5F4);
+  margin: 0 0 10px 0;
+  font-style: italic;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+}
+
+.portal-sub-desc {
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: clamp(12.5px, 0.95vw, 13.5px);
+  line-height: 1.6;
+  color: var(--text-secondary, #A7ADB4);
+  margin: 0 0 22px 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+}
+
+.portal-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: var(--bg-darker, #0D0F12);
+  border: 1px solid var(--border-graphite, #373D45);
+  border-radius: 999px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary, #A7ADB4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  width: fit-content;
+}
+
+.portal-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-sunshine, #FFD447);
+  box-shadow: 0 0 8px rgba(255, 212, 71, 0.8);
+  animation: portalPulseDot 2.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes portalPulseDot {
+  0%, 100% {
+    transform: scale(0.9);
+    opacity: 0.6;
+    box-shadow: 0 0 6px rgba(255, 212, 71, 0.4);
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+    box-shadow: 0 0 14px rgba(255, 212, 71, 0.9);
+  }
+}
+
+.portal-status-pill.mobile-only {
+  display: none;
+}
+
+/* ==========================================================================
+   ZONE 2 (CENTER): Unobstructed Perspective Window (>= 1025px)
+   Clear line of sight to celestial orb, cloaked character, & cathedral arch
+   ========================================================================== */
+.portal-center-zone {
+  min-height: 280px;
+  pointer-events: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.portal-mobile-artwork-plate {
+  display: none;
+}
+
+/* ==========================================================================
+   ZONE 3 (RIGHT): Three Vertically Aligned Glassmorphism Cards
+   ========================================================================== */
+.portal-right-zone {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  min-width: 0;
+  z-index: 5;
+}
+
+.portal-cards-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 440px;
+}
+
+.portal-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.portal-contact-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg-card, #22262C);
+  border: 1px solid var(--border-graphite, #373D45);
+  border-radius: 12px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  text-decoration: none;
+  color: var(--text-primary, #F3F5F4);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.22s ease,
+              background-color 0.22s ease,
+              box-shadow 0.22s ease;
+  overflow: hidden;
+  min-width: 0;
+  min-height: 48px;
+}
+
+.portal-contact-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.65s ease;
+  pointer-events: none;
+}
+
+.portal-contact-card:hover::before,
+.portal-contact-card:focus-visible::before {
+  left: 140%;
+}
+
+.portal-contact-card:hover,
+.portal-contact-card.active-card {
+  transform: translateY(-2px);
+  border-color: var(--accent-sunshine, #FFD447);
+  background-color: var(--bg-surface-elevated, #2A2F37);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.65), 0 0 16px rgba(255, 212, 71, 0.15);
+}
+
+.portal-contact-card:focus-visible {
+  outline: 2px solid var(--accent-sunshine, #FFD447);
+  outline-offset: 2px;
+  transform: translateY(-2px);
+  border-color: var(--accent-sunshine, #FFD447);
+}
+
+.portal-contact-card:active {
+  transform: translateY(0);
+}
+
+.portal-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--accent-sunshine, #FFD447);
+  flex-shrink: 0;
+  transition: all 0.22s ease;
+}
+
+.portal-contact-card:hover .portal-card-icon,
+.portal-contact-card.active-card .portal-card-icon {
+  background: rgba(255, 212, 71, 0.12);
+  border-color: var(--accent-sunshine, #FFD447);
+  color: var(--accent-sunshine, #FFD447);
+  box-shadow: 0 0 12px rgba(255, 212, 71, 0.2);
+}
+
+.portal-card-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.portal-card-label {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--text-secondary, #A7ADB4);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.portal-card-value {
+  font-family: var(--font-display, 'Manrope', sans-serif);
+  font-size: clamp(0.92rem, 1.08vw, 1.05rem);
+  font-weight: 600;
+  color: var(--text-primary, #F3F5F4);
+  line-height: 1.35;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+  margin-bottom: 5px;
+  min-width: 0;
+}
+
+.portal-card-value.email-value {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.portal-card-action {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  color: var(--text-secondary, #A7ADB4);
+  transition: color 0.22s ease;
+}
+
+.portal-contact-card:hover .portal-card-action,
+.portal-contact-card.active-card .portal-card-action {
+  color: var(--accent-sunshine, #FFD447);
+}
+
+.portal-contact-card:hover .portal-card-action svg,
+.portal-contact-card.active-card .portal-card-action svg {
+  transform: translate(2px, -2px);
+  color: var(--accent-sunshine, #FFD447);
+}
+
+.portal-card-action svg {
+  transition: transform 0.22s ease, color 0.22s ease;
+}
+
+.portal-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  margin-top: 8px;
+  margin-left: 2px;
+  padding: 8px 14px;
+  min-height: 44px;
+  background: var(--bg-primary, #14171B);
+  border: 1px solid var(--border-graphite, #373D45);
+  border-radius: 6px;
+  color: var(--text-secondary, #A7ADB4);
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.22s ease;
+  box-sizing: border-box;
+}
+
+.portal-copy-btn:hover {
+  background: var(--bg-surface-elevated, #2A2F37);
+  border-color: var(--accent-sunshine, #FFD447);
+  color: var(--accent-sunshine, #FFD447);
+}
+
+.portal-copy-btn:focus-visible {
+  outline: 2px solid var(--accent-sunshine, #FFD447);
+  outline-offset: 2px;
+  color: var(--accent-sunshine, #FFD447);
+  border-color: var(--accent-sunshine, #FFD447);
+}
+
+.portal-copy-btn:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   LAPTOP ADAPTATIONS (1025px - 1439px)
+   ========================================================================== */
+@media (min-width: 1025px) and (max-width: 1439px) {
+  .contact-portal-layout {
+    grid-template-columns: minmax(300px, 37fr) minmax(220px, 26fr) minmax(300px, 37fr);
+    gap: 20px;
+  }
+  .contact-heading,
+  .portal-main-title {
+    font-size: clamp(2.0rem, 2.7vw, 3.0rem);
+  }
+  .portal-header-block {
+    padding: 22px 24px;
+  }
+}
+
+/* ==========================================================================
+   TABLET & MOBILE RESPONSIVE BEHAVIOR (<= 1024px)
+   Stacked layout with exact required mobile ordering:
+   1. Section label (.eyebrow)
+   2. Heading (.contact-heading)
+   3. Introductory text (.portal-lead-quote, .portal-sub-desc)
+   4. Compact cathedral artwork (.portal-center-zone)
+   5. Email contact card (.portal-cards-stack > 01)
+   6. LinkedIn contact card (.portal-cards-stack > 02)
+   7. GitHub contact card (.portal-cards-stack > 03)
+   8. Location and availability information (.portal-status-pill.mobile-only)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .contact-section.contact-portal-section {
+    min-height: auto;
+    padding: calc(var(--topbar-height, 64px) + 24px) 0 48px;
+  }
+
+  .contact-portal-inner {
+    min-height: auto;
+    padding: 0 clamp(16px, 4vw, 24px);
+  }
+
+  .contact-portal-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  /* 1, 2, 3: Header block with label, heading, and quotes */
+  .portal-left-zone {
+    order: 1;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .portal-header-block {
+    padding: clamp(18px, 4vw, 26px);
+  }
+
+  .contact-heading,
+  .portal-main-title {
+    font-size: clamp(1.9rem, 5.2vw, 2.8rem);
+  }
+
+  .portal-status-pill.desktop-only {
+    display: none;
+  }
+
+  /* 4: Compact Cathedral Artwork Plate */
+  .portal-center-zone {
+    order: 2;
+    min-height: auto;
+    width: 100%;
+    display: block;
+    pointer-events: auto;
+  }
+
+  .portal-mobile-artwork-plate {
+    display: flex;
+    position: relative;
+    width: 100%;
+    min-height: clamp(200px, 48vw, 300px);
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    border: 1px solid var(--border-graphite, #373D45);
+    background: var(--bg-darker, #0D0F12);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65);
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+
+  .portal-plate-bg {
+    position: absolute;
+    inset: 0;
+    background: url("/assets/contact-portal-environment.webp") no-repeat center 35% / cover;
+    filter: saturate(0) contrast(1.08) brightness(0.95);
+    opacity: 0.95;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .portal-plate-vignette {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse at 50% 50%,
+        transparent 0%,
+        rgba(13, 15, 18, 0.3) 55%,
+        rgba(13, 15, 18, 0.85) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(13, 15, 18, 0.5) 0%,
+        transparent 25%,
+        transparent 75%,
+        rgba(13, 15, 18, 0.85) 100%
+      );
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .portal-plate-badge {
+    position: relative;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+    font-size: 9.5px;
+    letter-spacing: 1.4px;
+    color: var(--text-secondary, #A7ADB4);
+    background: rgba(13, 15, 18, 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-graphite, #373D45);
+    padding: 6px 12px;
+    border-radius: 6px;
+    width: fit-content;
+  }
+
+  .portal-plate-badge .plate-gem {
+    color: var(--accent-sunshine, #FFD447);
+  }
+
+  /* 5, 6, 7: Right Contact Cards */
+  .portal-right-zone {
+    order: 3;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .portal-cards-stack {
+    max-width: 100%;
+  }
+
+  /* 8: Location and availability information at bottom of mobile view */
+  .portal-status-pill.mobile-only {
+    display: inline-flex;
+    margin-top: 18px;
+    align-self: flex-start;
+  }
+}
+
+/* Mobile Screens (<= 600px) */
+@media (max-width: 600px) {
+  .contact-portal-inner {
+    padding: 0 16px;
+  }
+
+  .contact-heading,
+  .portal-main-title {
+    font-size: clamp(1.75rem, 7.5vw, 2.3rem);
+  }
+
+  .portal-contact-card {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .portal-card-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .portal-card-value {
+    font-size: 13px;
+  }
+
+  .portal-copy-btn {
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
+  }
+
+  .portal-status-pill.mobile-only {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+    font-size: 8.5px;
+  }
+}
+
+/* Small Mobile Screens (<= 360px) */
+@media (max-width: 360px) {
+  .contact-heading,
+  .portal-main-title {
+    font-size: clamp(1.5rem, 8vw, 1.85rem);
+    letter-spacing: -0.03em;
+  }
+
+  .portal-mobile-artwork-plate {
+    min-height: 180px;
+  }
+
+  .portal-card-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .portal-card-value {
+    font-size: 12px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .portal-status-dot {
+    animation: none !important;
+  }
+  .portal-contact-card,
+  .portal-contact-card::before,
+  .portal-card-icon,
+  .portal-card-action,
+  .portal-card-action svg,
+  .portal-copy-btn {
+    transition: none !important;
+  }
+}

@@ -824,32 +824,43 @@ export default function Portfolio({
 
         <div className="section-inner contact-portal-inner">
           <div className="contact-portal-layout">
-            {/* LEFT ZONE — 30%: Heading, Quote, Scope & Status */}
+            {/* LEFT ZONE — 35%: Heading, Quote, Scope & Status */}
             <div className="portal-left-zone">
               <div className="portal-header-block">
                 <span className="eyebrow mono">[ 07 / THE PORTAL ]</span>
-                <h2 className="portal-main-title section-heading-text">
-                  LET'S BUILD<br />SOMETHING<br />MEANINGFUL.
+                <h2 className="portal-main-title contact-heading section-heading-text display-heading">
+                  <span className="heading-line">LET&apos;S</span>
+                  <span className="heading-line">BUILD</span>
+                  <span className="heading-line">SOMETHING</span>
+                  <span className="heading-line">MEANINGFUL.</span>
                 </h2>
                 <p className="portal-lead-quote">
-                  "A single conversation can spark groundbreaking innovation."
+                  &ldquo;A single conversation can spark groundbreaking innovation.&rdquo;
                 </p>
                 <p className="portal-sub-desc">
                   Open to opportunities, research collaborations, and engineering discussions in AI, data science, and intelligent systems.
                 </p>
-                <div className="portal-status-pill mono">
+                <div className="portal-status-pill desktop-only mono">
                   <span className="portal-status-dot" aria-hidden="true" />
                   <span>COIMBATORE, INDIA · OPEN TO OPPORTUNITIES</span>
                 </div>
               </div>
             </div>
 
-            {/* CENTER ZONE — 30%: Unobstructed Perspective Bridge */}
+            {/* CENTER ZONE — 30%: Unobstructed Perspective Bridge & Compact Mobile Plate */}
             <div className="portal-center-zone" aria-hidden="true">
               {/* Preserves full visibility of central celestial orbital sphere, cloaked explorer, and gothic architecture */}
+              <div className="portal-mobile-artwork-plate" aria-hidden="true">
+                <div className="portal-plate-bg" />
+                <div className="portal-plate-vignette" />
+                <div className="portal-plate-badge mono">
+                  <span className="plate-gem">◈</span>
+                  <span>SANCTUM PORTAL // COIMBATORE</span>
+                </div>
+              </div>
             </div>
 
-            {/* RIGHT ZONE — 40%: Three Vertically Aligned Glassmorphism Contact Cards */}
+            {/* RIGHT ZONE — 35%: Three Vertically Aligned Glassmorphism Contact Cards */}
             <div className="portal-right-zone">
               <div className="portal-cards-stack" role="region" aria-label="Direct Contact Actions">
                 {/* 01 — DIRECT EMAIL */}
@@ -951,6 +962,12 @@ export default function Portfolio({
                     </div>
                   </a>
                 </div>
+              </div>
+
+              {/* Mobile Location & Availability Pill */}
+              <div className="portal-status-pill mobile-only mono">
+                <span className="portal-status-dot" aria-hidden="true" />
+                <span>COIMBATORE, INDIA · OPEN TO OPPORTUNITIES</span>
               </div>
             </div>
           </div>
