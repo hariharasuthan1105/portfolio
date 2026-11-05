@@ -33,9 +33,6 @@ import {
   awards,
 } from "../data/profile";
 import { Scene } from "../components/ui/Scene";
-import ForgeOfIntelligenceScene, {
-  FORGE_NODES,
-} from "../components/3d/ForgeOfIntelligenceScene";
 import GothicPortraitGallery from "../components/gallery/GothicPortraitGallery";
 import { DocReconSchematic, PathwayAISchematic, HefinSchematic } from "../components/ui/ProjectSchematics";
 import JourneyTimelineScene, {
@@ -50,6 +47,15 @@ import {
   PathwayAIHologram,
   HefinHologram,
 } from "../components/ui/ProjectHolograms";
+
+const TELEMETRY_DATA: Record<string, { code: string; domain: string }> = {
+  Programming: { code: "01", domain: "SYSTEMS ARCHITECTURE & ASYNC PATTERNS" },
+  "AI / ML": { code: "02", domain: "DEEP LEARNING & PREDICTIVE MODELING" },
+  "Web Development": { code: "03", domain: "REACTIVE UIS & DISTRIBUTED HTTP SERVICES" },
+  Databases: { code: "04", domain: "SCHEMA NORMALIZATION & DOCUMENT STORAGE" },
+  "Tools & Cloud": { code: "05", domain: "CONTINUOUS INTEGRATION & EDGE HOSTING" },
+  Other: { code: "06", domain: "QUANTUM CIRCUITS & ALGORITHMIC COMPLEXITY" },
+};
 
 function Heading({ n, title, sub }: { n: string; title: string; sub: string }) {
   return (
@@ -83,7 +89,6 @@ export default function Portfolio({
 }) {
   const [category, setCategory] = useState("All skills");
   const [selected, setSelected] = useState("Python");
-  const [selectedNodeId, setSelectedNodeId] = useState("python");
   const [selectedProjectIndex, setSelectedProjectIndex] = useState<number | null>(null);
   const [activeMobileIndex, setActiveMobileIndex] = useState(0);
   const [activeMilestoneIndex, setActiveMilestoneIndex] = useState(1);
@@ -126,8 +131,16 @@ export default function Portfolio({
   }, [selectedProjectIndex]);
 
 
-  const currentNode =
-    FORGE_NODES.find((n) => n.id === selectedNodeId) || FORGE_NODES[0];
+  const getCategoryForSkill = (skill: string) => {
+    for (const [cat, list] of Object.entries(skills)) {
+      if (list.includes(skill)) return cat;
+    }
+    return "Programming";
+  };
+
+  const activeCategory = category === "All skills" ? getCategoryForSkill(selected) : category;
+  const currentTelemetry = TELEMETRY_DATA[activeCategory] || { code: "01", domain: "CORE ENGINEERING DISCIPLINE" };
+  const categorySkills = skills[activeCategory] || skills["Programming"] || [];
 
   const currentMilestone = MILESTONES[activeMilestoneIndex] || MILESTONES[0];
 
@@ -341,7 +354,7 @@ export default function Portfolio({
 
       {/* 03 / SKILLS: THE FORGE OF INTELLIGENCE */}
       <section id="skills" className={`section forge-section ${isSkillsIsolated ? "is-skills-isolated" : ""}`}>
-        {/* Environment Background Layer (Desktop only) */}
+        {/* Environment Background Layer (Desktop ambient background) */}
         <div className="forge-background-layer" aria-hidden="true" />
 
         <div className="forge-container">
@@ -355,11 +368,15 @@ export default function Portfolio({
           </div>
 
           <div className="forge-main-grid">
-            {/* Left HUD: Title & Filter Nav on desktop; horizontal category selector on mobile */}
+            {/* Left Region: Interactive Skill Category Cards */}
             <div className="forge-left-hud">
               <div className="forge-category-nav" role="tablist" aria-label="Skill Categories">
                 {["All skills", ...Object.keys(skills)].map((c) => {
                   const isActive = category.toLowerCase() === c.toLowerCase();
+                  const count = c === "All skills"
+                    ? Object.values(skills).flat().length
+                    : (skills[c]?.length || 0);
+                  const countStr = count < 10 ? `0${count}` : `${count}`;
                   return (
                     <button
                       key={c}
@@ -368,16 +385,18 @@ export default function Portfolio({
                       className={`forge-cat-btn ${isActive ? "active" : ""}`}
                       onClick={() => {
                         setCategory(c);
-                        const match = FORGE_NODES.find(
-                          (n) => c === "All skills" || n.category.toLowerCase() === c.toLowerCase()
-                        );
-                        if (match) {
-                          setSelectedNodeId(match.id);
-                          setSelected(match.skills[0] || selected);
+                        if (c !== "All skills") {
+                          const catSkills = skills[c] || [];
+                          if (!catSkills.includes(selected) && catSkills.length > 0) {
+                            setSelected(catSkills[0]);
+                          }
                         }
                       }}
                     >
-                      <span className="cat-name mono">{c.toUpperCase()}</span>
+                      <div className="cat-btn-left">
+                        <span className="cat-name mono">{c.toUpperCase()}</span>
+                        <span className="cat-count-pill mono">{countStr}</span>
+                      </div>
                       <ArrowRight size={13} className="cat-arrow" />
                     </button>
                   );
@@ -385,48 +404,46 @@ export default function Portfolio({
               </div>
             </div>
 
-            {/* Center 3D Stage: Four Grounded Podiums on desktop; Featured single globe on mobile */}
-            <div className="forge-stage">
-              <ForgeOfIntelligenceScene
-                activeCategory={category}
-                selectedNodeId={selectedNodeId}
-                onSelectNode={(node) => {
-                  setSelectedNodeId(node.id);
-                  setCategory(node.category);
-                  setSelected(node.skills[0] || node.name);
-                }}
-                reduced={reduced}
-              />
+            {/* Center Region: Authentic Gothic Cathedral Environment Artwork & Cloaked Explorer */}
+            <div className="forge-center-stage" role="img" aria-label="Gothic Cathedral Sanctum with Cloaked Explorer">
+              <div className="forge-sanctum-bg" />
+              <div className="forge-sanctum-vignette" />
+              <div className="forge-sanctum-badge mono" aria-hidden="true">
+                <span className="sanctum-gem">◈</span>
+                <span>CATHEDRAL SANCTUM // THE ARCHITECT</span>
+              </div>
             </div>
 
-            {/* Right HUD: Selected Tech Telemetry Panel */}
+            {/* Right Region: Selected Tech Telemetry Panel */}
             <div className="forge-right-hud">
-              {/* Detailed Tool Inspector Glass Card */}
               <aside className="forge-inspector glass" aria-live="polite">
                 <div className="inspector-header">
-                  <span className="eyebrow mono">
-                    FORGE TELEMETRY // {
-                      category.toLowerCase() === "programming" ? "01" :
-                      category.toLowerCase() === "ai / ml" ? "02" :
-                      category.toLowerCase() === "databases" ? "03" :
-                      category.toLowerCase() === "tools & cloud" ? "04" :
-                      category.toLowerCase() === "web development" ? "05" : "06"
-                    }
-                  </span>
+                  <div className="inspector-meta-row">
+                    <span className="eyebrow mono">
+                      FORGE TELEMETRY // {currentTelemetry.code}
+                    </span>
+                    <span className="inspector-category-badge mono">
+                      {activeCategory.toUpperCase()}
+                    </span>
+                  </div>
                   <h4 className="inspector-title card-heading">{selected.toUpperCase()}</h4>
-                  <span className="inspector-category mono">{currentNode?.category || category}</span>
+                  <span className="inspector-domain mono">{currentTelemetry.domain}</span>
                 </div>
 
-                <p className="inspector-desc">{descriptions[selected] || currentNode?.description}</p>
+                <p className="inspector-desc">{descriptions[selected] || "Core engineering competence in production environments."}</p>
 
                 <div className="inspector-subskills">
-                  <span className="subskills-label mono">VERIFIED CAPABILITIES:</span>
+                  <span className="subskills-label mono">
+                    VERIFIED IN {activeCategory.toUpperCase()}:
+                  </span>
                   <div className="subskills-pills">
-                    {(skills[currentNode?.category || category] || visible.slice(0, 5)).map((s) => (
+                    {categorySkills.map((s) => (
                       <button
                         key={s}
+                        type="button"
                         className={`subskill-pill mono ${selected === s ? "active" : ""}`}
                         onClick={() => setSelected(s)}
+                        aria-pressed={selected === s}
                       >
                         {s}
                       </button>
@@ -442,28 +459,42 @@ export default function Portfolio({
             </div>
           </div>
 
-          {/* Accessible Index for keyboard and screen readers */}
-          <details className="skill-list" open>
-            <summary className="mono">Accessible skill index · {visible.length} verified technologies</summary>
-            <div>
-              {visible.map((s) => (
-                <button
-                  key={s}
-                  aria-pressed={selected === s}
-                  onClick={() => {
-                    setSelected(s);
-                    // Match corresponding node if exists
-                    const matchingNode = FORGE_NODES.find((n) =>
-                      n.skills.includes(s)
-                    );
-                    if (matchingNode) setSelectedNodeId(matchingNode.id);
-                  }}
-                >
-                  {s}
-                </button>
-              ))}
+          {/* Full Skills Index — All 22 Technologies Clean Responsive Grid */}
+          <div className="forge-skills-index">
+            <div className="skills-index-header">
+              <div className="skills-index-title-group">
+                <span className="skills-index-title mono">ACCESSIBLE SKILL INDEX</span>
+                <span className="skills-index-count-pill mono">22 VERIFIED TECHNOLOGIES</span>
+              </div>
+              <span className="skills-index-filter-status mono">
+                {category === "All skills" ? "SHOWING ALL 22 SKILLS" : `FILTERED: ${visible.length} OF 22 TECHNOLOGIES`}
+              </span>
             </div>
-          </details>
+
+            <div className="skills-index-grid" role="region" aria-label="All 22 Verified Technologies">
+              {visible.map((s) => {
+                const sCat = getCategoryForSkill(s);
+                const isSelected = selected === s;
+                return (
+                  <button
+                    key={s}
+                    type="button"
+                    className={`skill-index-card ${isSelected ? "selected" : ""}`}
+                    aria-pressed={isSelected}
+                    onClick={() => {
+                      setSelected(s);
+                      if (category !== "All skills" && category !== sCat) {
+                        setCategory(sCat);
+                      }
+                    }}
+                  >
+                    <span className="skill-card-name">{s}</span>
+                    <span className="skill-card-cat mono">{sCat}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
       {/* 04 / PROJECTS: THE ARCHIVE OF CREATIONS (CINEMATIC GOTHIC PROJECT PORTRAIT GALLERY) */}

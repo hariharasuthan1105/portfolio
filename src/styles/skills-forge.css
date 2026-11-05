@@ -1,13 +1,14 @@
 /* ==========================================================================
-   03 / SKILLS: THE FORGE OF INTELLIGENCE (RESPONSIVE 3D ALIGNED ARENA)
+   03 / SKILLS: THE FORGE OF INTELLIGENCE (LUXURY GRAPHITE 2D INTERFACE)
+   Deep Graphite #14171B | Cloud White #F3F5F4 | Sunshine Yellow #FFD447
    ========================================================================== */
 
 .forge-section {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  background: #000000;
-  padding: clamp(70px, 8vh, 100px) 0 60px;
+  min-height: auto;
+  background-color: var(--bg-primary, #14171B);
+  padding: clamp(64px, 8vh, 96px) 0 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,32 +17,20 @@
   scroll-margin-top: calc(var(--topbar-height, 64px) + 12px);
 }
 
+/* Subtle Full-Bleed Ambient Background */
 .forge-background-layer {
   position: absolute;
   inset: 0;
   background: url('/assets/forge-environment.webp') no-repeat center center / cover;
-  filter: saturate(0) contrast(1.06) brightness(0.95);
-  opacity: 0.96;
+  filter: saturate(0) contrast(1.08) brightness(0.92);
+  opacity: 0.16;
   pointer-events: none;
   z-index: 1;
 }
 
-.forge-background-layer::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    transparent 0%,
-    rgba(0, 0, 0, 0.35) 55%,
-    rgba(0, 0, 0, 0.92) 100%
-  );
-  pointer-events: none;
-}
-
-/* Isolated 3D Mode (?isolate=skills3d) */
+/* Isolated Mode (?isolate=skills3d) */
 .forge-section.is-skills-isolated {
-  background: #060609 !important;
+  background: var(--bg-darker, #0D0F12) !important;
 }
 
 .forge-section.is-skills-isolated .forge-background-layer {
@@ -50,7 +39,7 @@
 
 .forge-section.is-skills-isolated .forge-left-hud,
 .forge-section.is-skills-isolated .forge-right-hud,
-.forge-section.is-skills-isolated .skill-list {
+.forge-section.is-skills-isolated .forge-skills-index {
   opacity: 0.2;
   pointer-events: none;
 }
@@ -59,56 +48,62 @@
   position: relative;
   z-index: 5;
   width: 100%;
-  max-width: 1680px;
+  max-width: 1560px;
   margin: 0 auto;
   padding: 0 clamp(16px, 4vw, 40px);
   box-sizing: border-box;
 }
 
+/* Section Header Block */
 .forge-header-block {
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+  text-align: left;
 }
 
 .forge-header-block .eyebrow {
-  color: #a7a7ad;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  color: var(--text-secondary, #A7ADB4);
   font-size: 11px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   display: block;
   margin-bottom: 8px;
 }
 
 .forge-heading {
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 3.8vw, 3.8rem);
+  font-family: var(--font-display, 'Manrope', sans-serif);
+  font-size: clamp(2.2rem, 3.8vw, 3.6rem);
   font-weight: 700;
   line-height: 1.08;
-  color: #ffffff;
+  color: var(--text-primary, #F3F5F4);
   margin: 0 0 8px 0;
   letter-spacing: 0.02em;
-  text-shadow: 0 0 24px rgba(255, 255, 255, 0.25);
 }
 
 .forge-tagline {
-  font-family: var(--font-technical);
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
   font-size: 11px;
-  color: #888894;
+  color: var(--text-secondary, #A7ADB4);
   letter-spacing: 1.5px;
 }
 
 .forge-tagline-bar {
-  color: #ffffff;
+  color: var(--accent-sunshine, #FFD447);
+  font-weight: 700;
   margin-right: 6px;
 }
 
 /* ==========================================================================
    DESKTOP 3-REGION COORDINATED LAYOUT (>= 1025px)
+   LEFT: Category Cards
+   CENTER: Gothic Cathedral Environment Artwork & Cloaked Explorer
+   RIGHT: Selected Skill Telemetry Panel
    ========================================================================== */
+
 .forge-main-grid {
   display: grid;
-  grid-template-columns: minmax(210px, 0.75fr) minmax(0, 1.8fr) minmax(240px, 0.85fr);
-  gap: clamp(18px, 2.2vw, 32px);
-  align-items: center;
-  min-height: 560px;
+  grid-template-columns: minmax(230px, 0.72fr) minmax(360px, 1.45fr) minmax(290px, 0.95fr);
+  gap: clamp(18px, 2.4vw, 32px);
+  align-items: stretch;
   width: 100%;
   box-sizing: border-box;
 }
@@ -117,10 +112,12 @@
   min-width: 0;
 }
 
+/* --------------------------------------------------------------------------
+   REGION 1 (LEFT): Interactive Skill Category Navigation
+   -------------------------------------------------------------------------- */
 .forge-left-hud {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   z-index: 10;
   min-width: 0;
   position: relative;
@@ -130,12 +127,12 @@
 .forge-category-nav {
   display: flex;
   flex-direction: column;
-  background: rgba(12, 12, 16, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 8px;
+  background: var(--bg-card, #22262C);
+  border: 1px solid var(--border-graphite, #373D45);
+  border-radius: 10px;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
   overflow: hidden;
 }
 
@@ -143,30 +140,75 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 18px;
+  padding: 13px 18px;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  color: #9898a4;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary, #A7ADB4);
   cursor: pointer;
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  min-height: 46px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 48px;
+  text-align: left;
+  outline: none;
 }
 
 .forge-cat-btn:last-child {
   border-bottom: 0;
 }
 
-.forge-cat-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+.forge-cat-btn:hover,
+.forge-cat-btn:focus-visible {
+  background: #2A2F37;
+  color: var(--text-primary, #F3F5F4);
 }
 
 .forge-cat-btn.active {
-  background: var(--bg-surface-elevated, #2A2F37);
-  color: var(--accent-sunshine, #FFD447);
-  font-weight: 700;
+  background: #2A2F37;
+  color: var(--text-primary, #F3F5F4);
   border-left: 3px solid var(--accent-sunshine, #FFD447);
+  font-weight: 700;
+}
+
+.cat-btn-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.cat-name {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.cat-count-pill {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9.5px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-graphite, #373D45);
+  color: var(--text-muted, #7E858E);
+  transition: all 0.2s ease;
+}
+
+.forge-cat-btn.active .cat-count-pill {
+  background: var(--accent-sunshine, #FFD447);
+  color: var(--bg-darker, #0D0F12);
+  border-color: var(--accent-sunshine, #FFD447);
+  font-weight: 700;
+}
+
+.cat-arrow {
+  color: var(--text-secondary, #A7ADB4);
+  transition: transform 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.forge-cat-btn:hover .cat-arrow {
+  color: var(--text-primary, #F3F5F4);
+  transform: translateX(2px);
 }
 
 .forge-cat-btn.active .cat-arrow {
@@ -174,39 +216,82 @@
   transform: translateX(3px);
 }
 
-.forge-cat-btn .cat-name {
-  font-size: 11px;
-  letter-spacing: 1px;
-}
-
-.forge-cat-btn .cat-arrow {
-  color: #606068;
-  transition: transform 0.2s ease;
-}
-
-/* 3D Stage */
-.forge-stage {
+/* --------------------------------------------------------------------------
+   REGION 2 (CENTER): Authentic Cathedral Environment Artwork & Character
+   Static plate, zero 3D models, zero WebGL canvas, pure visual centerpiece
+   -------------------------------------------------------------------------- */
+.forge-center-stage {
   position: relative;
   width: 100%;
-  height: clamp(480px, 58vh, 600px);
-  min-width: 0;
-  z-index: 4;
+  min-height: 460px;
+  border-radius: 10px;
+  border: 1px solid var(--border-graphite, #373D45);
+  overflow: hidden;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.65);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  box-sizing: border-box;
+  background: var(--bg-darker, #0D0F12);
 }
 
-.forge-canvas-wrapper {
+.forge-sanctum-bg {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  background: url('/assets/forge-environment.webp') no-repeat center center / cover;
+  filter: saturate(0) contrast(1.08) brightness(0.96);
+  opacity: 0.96;
+  pointer-events: none;
+  z-index: 1;
 }
 
-.forge-three-canvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
+.forge-sanctum-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    transparent 0%,
+    rgba(13, 15, 18, 0.25) 55%,
+    rgba(13, 15, 18, 0.82) 100%
+  ),
+  linear-gradient(
+    180deg,
+    rgba(13, 15, 18, 0.55) 0%,
+    transparent 20%,
+    transparent 80%,
+    rgba(13, 15, 18, 0.85) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
 }
 
-/* Right HUD / Telemetry Card */
+.forge-sanctum-badge {
+  position: relative;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--text-secondary, #A7ADB4);
+  background: rgba(13, 15, 18, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-graphite, #373D45);
+  padding: 8px 14px;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+.sanctum-gem {
+  color: var(--accent-sunshine, #FFD447);
+}
+
+/* --------------------------------------------------------------------------
+   REGION 3 (RIGHT): Selected Tech Telemetry Panel
+   -------------------------------------------------------------------------- */
 .forge-right-hud {
   display: flex;
   flex-direction: column;
@@ -217,47 +302,89 @@
 }
 
 .forge-inspector {
-  padding: clamp(18px, 2.2vw, 28px);
-  border-radius: 12px;
+  padding: 24px 26px;
+  border-radius: 10px;
   border: 1px solid var(--border-graphite, #373D45);
-  background: var(--bg-card, rgba(34, 38, 44, 0.85));
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.85);
+  background: var(--bg-card, #22262C);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 16px;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.forge-inspector::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 212, 71, 0.45), transparent);
 }
 
 .inspector-header {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
-.inspector-header .eyebrow {
+.inspector-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.inspector-meta-row .eyebrow {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
   font-size: 10px;
-  color: #a7a7ad;
+  color: var(--text-secondary, #A7ADB4);
   letter-spacing: 1.5px;
 }
 
+.inspector-category-badge {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-graphite, #373D45);
+  border-radius: 4px;
+  color: var(--accent-sunshine, #FFD447);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
 .inspector-title {
-  font-size: clamp(1.4rem, 2vw, 1.85rem);
-  color: #ffffff;
+  font-family: var(--font-display, 'Manrope', sans-serif);
+  font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+  font-weight: 700;
+  color: var(--text-primary, #F3F5F4);
   margin: 0;
   line-height: 1.15;
 }
 
-.inspector-category {
-  font-size: 11px;
-  color: #888894;
-  letter-spacing: 1px;
+.inspector-domain {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9.5px;
+  color: var(--text-muted, #7E858E);
+  letter-spacing: 0.08em;
+  display: block;
 }
 
 .inspector-desc {
-  font-size: clamp(12.5px, 1vw, 14px);
-  line-height: 1.65;
-  color: #b8b8c2;
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-primary, #F3F5F4);
   margin: 0;
   overflow-wrap: anywhere;
 }
@@ -269,9 +396,11 @@
 }
 
 .subskills-label {
-  font-size: 10px;
-  color: #888894;
-  letter-spacing: 1.5px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9.5px;
+  color: var(--text-secondary, #A7ADB4);
+  letter-spacing: 1.2px;
+  display: block;
 }
 
 .subskills-pills {
@@ -281,92 +410,163 @@
 }
 
 .subskill-pill {
-  min-height: 38px;
-  padding: 8px 14px;
+  min-height: 36px;
+  padding: 6px 12px;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #d0d0d8;
+  background: var(--bg-primary, #14171B);
+  border: 1px solid var(--border-graphite, #373D45);
+  color: var(--text-primary, #F3F5F4);
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
   font-size: 11px;
   letter-spacing: 0.5px;
   cursor: pointer;
   transition: all 0.2s ease;
-  white-space: normal;
-  overflow-wrap: anywhere;
+  outline: none;
 }
 
-.subskill-pill:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.3);
+.subskill-pill:hover,
+.subskill-pill:focus-visible {
+  border-color: rgba(255, 212, 71, 0.45);
+  background: #2A2F37;
 }
 
 .subskill-pill.active {
-  background: var(--bg-surface-elevated, #2A2F37);
-  color: var(--accent-sunshine, #FFD447);
+  background: var(--accent-sunshine, #FFD447);
+  color: var(--bg-darker, #0D0F12);
   border-color: var(--accent-sunshine, #FFD447);
-  box-shadow: 0 0 10px var(--accent-sunshine-glow, rgba(255, 212, 71, 0.22));
-  font-weight: 600;
+  box-shadow: 0 0 10px rgba(255, 212, 71, 0.22);
+  font-weight: 700;
 }
 
 .forge-telemetry-badge {
   display: flex;
   align-items: center;
   gap: 8px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
   font-size: 10px;
-  color: #888894;
+  color: var(--text-secondary, #A7ADB4);
   letter-spacing: 1px;
-  padding-top: 8px;
+  padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: auto;
 }
 
-.badge-gem {
+/* ==========================================================================
+   FULL SKILLS INDEX — CLEAN RESPONSIVE 22-TECHNOLOGY GRID
+   ========================================================================== */
+
+.forge-skills-index {
+  margin-top: 36px;
+  width: 100%;
+  border: 1px solid var(--border-graphite, #373D45);
+  border-radius: 10px;
+  background: var(--bg-card, #22262C);
+  padding: 22px 26px;
+  box-sizing: border-box;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.skills-index-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 18px;
+}
+
+.skills-index-title-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.skills-index-title {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  color: var(--text-primary, #F3F5F4);
+}
+
+.skills-index-count-pill {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-graphite, #373D45);
+  border-radius: 4px;
+  color: var(--text-secondary, #A7ADB4);
+  white-space: nowrap;
+}
+
+.skills-index-filter-status {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--accent-sunshine, #FFD447);
+  white-space: nowrap;
+}
+
+.skills-index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.skill-index-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: var(--bg-primary, #14171B);
+  border: 1px solid var(--border-graphite, #373D45);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: left;
+  outline: none;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+.skill-index-card:hover,
+.skill-index-card:focus-visible {
+  background: #2A2F37;
+  border-color: rgba(255, 212, 71, 0.45);
+  transform: translateY(-1px);
+}
+
+.skill-index-card.selected {
+  background: #2A2F37;
+  border-color: var(--accent-sunshine, #FFD447);
+  outline: 1px solid var(--accent-sunshine, #FFD447);
+  box-shadow: 0 0 14px rgba(255, 212, 71, 0.16);
+}
+
+.skill-card-name {
+  font-family: var(--font-display, 'Manrope', sans-serif);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-primary, #F3F5F4);
+}
+
+.skill-index-card.selected .skill-card-name {
   color: var(--accent-sunshine, #FFD447);
 }
 
-/* Full Accessible Skill Index */
-.forge-section .skill-list {
-  margin-top: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  background: rgba(10, 10, 14, 0.75);
-  padding: 16px 20px;
-}
-
-.forge-section .skill-list summary {
-  cursor: pointer;
-  font-size: 12px;
-  letter-spacing: 1px;
-  color: #b0b0ba;
-}
-
-.forge-section .skill-list div {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 14px;
-}
-
-.forge-section .skill-list button {
-  padding: 8px 14px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #cccccc;
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.forge-section .skill-list button:hover {
-  background: rgba(255, 255, 255, 0.14);
-  color: #ffffff;
-}
-
-.forge-section .skill-list button[aria-pressed="true"] {
-  background: #ffffff;
-  color: #000000;
-  font-weight: 600;
+.skill-card-cat {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
+  color: var(--text-muted, #7E858E);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-left: 6px;
 }
 
 /* ==========================================================================
@@ -374,21 +574,22 @@
    ========================================================================== */
 @media (min-width: 1025px) and (max-width: 1439px) {
   .forge-main-grid {
-    grid-template-columns: minmax(190px, 0.72fr) minmax(0, 1.7fr) minmax(220px, 0.8fr);
+    grid-template-columns: minmax(210px, 0.7fr) minmax(320px, 1.4fr) minmax(260px, 0.9fr);
     gap: 18px;
   }
-  .forge-stage {
-    height: 520px;
+  .forge-center-stage {
+    min-height: 420px;
   }
 }
 
 /* ==========================================================================
-   MOBILE & TABLET PORTRAIT RECONSTRUCTED FLOW (<= 1024px)
-   1. Compact header ([03 / SKILLS] + THE FORGE OF INTELLIGENCE)
-   2. Interactive skill-category selector (horizontal scrollable bar)
-   3. Properly framed cinematic 3D scene (height ~280-360px, scoped cathedral bg)
-   4. Selected-skill telemetry panel (100% width, auto height)
-   5. Complete accessible skill index
+   TABLET & MOBILE RESPONSIVE BEHAVIOR (<= 1024px)
+   Display order:
+   1. Skills heading (.forge-header-block)
+   2. Category selector (.forge-left-hud)
+   3. Selected skill information (.forge-right-hud)
+   4. Compact cinematic background (.forge-center-stage)
+   5. Full skills index (.forge-skills-index)
    ========================================================================== */
 @media (max-width: 1024px) {
   .forge-section {
@@ -396,7 +597,6 @@
     padding: calc(var(--topbar-height, 64px) + 20px) 0 48px;
   }
 
-  /* Scoped cathedral background on stage itself, not stretched across 2000px */
   .forge-background-layer {
     display: none;
   }
@@ -427,7 +627,7 @@
     min-height: auto;
   }
 
-  /* 2. Interactive Category Selector */
+  /* 2. Category Selector */
   .forge-left-hud {
     order: 1;
     width: 100%;
@@ -441,9 +641,9 @@
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     gap: 8px;
-    padding: 6px 4px;
-    background: rgba(12, 12, 18, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 6px;
+    background: var(--bg-card, #22262C);
+    border: 1px solid var(--border-graphite, #373D45);
     border-radius: 8px;
     scrollbar-width: none;
   }
@@ -457,9 +657,9 @@
     scroll-snap-align: start;
     min-height: 44px;
     padding: 8px 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-graphite, #373D45);
     border-radius: 6px;
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--bg-primary, #14171B);
     white-space: nowrap;
     justify-content: center;
   }
@@ -469,49 +669,16 @@
   }
 
   .forge-cat-btn.active {
-    background: var(--bg-surface-elevated, #2A2F37);
+    background: #2A2F37;
     color: var(--accent-sunshine, #FFD447);
     border-color: var(--accent-sunshine, #FFD447);
-    box-shadow: 0 0 12px var(--accent-sunshine-glow, rgba(255, 212, 71, 0.22));
+    border-left: 1px solid var(--accent-sunshine, #FFD447);
+    box-shadow: 0 0 12px rgba(255, 212, 71, 0.22);
   }
 
-  /* 3. Properly Framed Cinematic 3D Scene */
-  .forge-stage {
-    order: 2;
-    width: 100%;
-    height: clamp(280px, 72vw, 360px);
-    aspect-ratio: 16 / 10;
-    margin: 0 auto;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: url('/assets/forge-environment.webp') no-repeat center bottom / cover;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.9);
-    overflow: hidden;
-  }
-
-  .forge-stage::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      ellipse at 50% 50%,
-      transparent 0%,
-      rgba(0, 0, 0, 0.3) 55%,
-      rgba(0, 0, 0, 0.85) 100%
-    );
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .forge-canvas-wrapper {
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-  }
-
-  /* 4. Selected Tech Telemetry Panel */
+  /* 3. Selected Skill Telemetry Panel */
   .forge-right-hud {
-    order: 3;
+    order: 2;
     width: 100%;
     margin: 0;
   }
@@ -521,7 +688,6 @@
     box-sizing: border-box;
     padding: clamp(16px, 4vw, 24px);
     height: auto;
-    position: static;
   }
 
   .subskill-pill {
@@ -529,27 +695,64 @@
     padding: 10px 16px;
   }
 
-  /* 5. Complete Accessible Skill Index */
-  .forge-section .skill-list {
+  /* 4. Compact Cinematic Background */
+  .forge-center-stage {
+    order: 3;
+    width: 100%;
+    min-height: clamp(240px, 55vw, 320px);
+    aspect-ratio: 16 / 10;
+    margin: 0 auto;
+    border-radius: 8px;
+    border: 1px solid var(--border-graphite, #373D45);
+    background: var(--bg-darker, #0D0F12);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+  }
+
+  /* 5. Full Skills Index */
+  .forge-skills-index {
     order: 4;
     width: 100%;
     margin-top: 10px;
+    padding: 18px 20px;
     box-sizing: border-box;
   }
 
-  .forge-section .skill-list button {
-    min-height: 44px;
-    padding: 10px 14px;
+  .skills-index-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   }
 }
 
-/* Small mobile optimizations (320px - 360px) */
-@media (max-width: 360px) {
-  .forge-stage {
-    height: 270px;
+/* Mobile Screens (<= 600px) */
+@media (max-width: 600px) {
+  .skills-index-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
-  .forge-cat-btn {
-    padding: 8px 12px;
-    font-size: 10px;
+
+  .skill-index-card {
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+
+  .skill-card-name {
+    font-size: 12.5px;
+  }
+
+  .skill-card-cat {
+    display: none;
+  }
+}
+
+/* Small Mobile Optimizations (<= 360px) */
+@media (max-width: 360px) {
+  .forge-center-stage {
+    min-height: 220px;
+  }
+  .skills-index-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .skill-card-cat {
+    display: block;
   }
 }
