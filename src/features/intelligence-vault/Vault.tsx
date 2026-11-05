@@ -4,6 +4,7 @@ import {
   Unlock,
   ScanLine,
   ArrowRight,
+  ArrowDown,
   Check,
   RotateCcw,
   Network,
@@ -143,39 +144,102 @@ export default function Vault({ reduced = false }: { reduced?: boolean }) {
 
         {/* Cinematic Chamber Foreground HUD & Gateway */}
         <div className="vault-chamber-overlay-inner">
-          <div className="vault-chamber-header">
-            <span className="eyebrow mono">[ 08 / THE SIGNATURE EXPERIMENT ]</span>
-            <div className="vault-title-row">
-              <LockKeyhole size={28} className={unlocked ? "unlocked-icon" : "locked-icon"} />
-              <h2 className="vault-main-title section-heading-text">THE INTELLIGENCE VAULT</h2>
-            </div>
-            <p className="vault-subheading mono">
-              THREE KEYS. ONE INTELLIGENCE. UNLOCK MY SUPERPOWER.
-            </p>
+          <div className="vault-hero-grid">
+            {/* LEFT ZONE (~40% on Desktop): Section label, Heading, Subtitle, 3-Key Navigation, CTA */}
+            <div className="vault-left-zone">
+              <div className="vault-chamber-header">
+                <div className="vault-eyebrow-row">
+                  <span className="eyebrow mono">[ 08 / THE SIGNATURE EXPERIMENT ]</span>
+                  <span className={`vault-status-indicator mono ${unlocked ? "unlocked" : "locked"}`}>
+                    <LockKeyhole size={13} className={unlocked ? "unlocked-icon" : "locked-icon"} />
+                    <span>{unlocked ? "CORE ALIGNED" : "VAULT SEALED"}</span>
+                  </span>
+                </div>
 
-            {/* Unobtrusive Progress Indicator */}
-            <div
-              className="key-progress"
-              aria-label={`${keys.filter(Boolean).length} of 3 keys collected`}
-            >
-              {keys.map((k, i) => (
-                <span key={i} className={`key-chip ${k ? "complete" : ""}`}>
-                  {k ? <Key size={13} className="key-spin" /> : <LockKeyhole size={11} />}
-                  <strong className="mono">KEY 0{i + 1}</strong>
-                  <small className="mono">
-                    {i === 0 ? "PERCEPTION" : i === 1 ? "REASONING" : "CONNECTION"}
-                  </small>
-                </span>
-              ))}
+                <h2 className="vault-main-title section-heading-text">
+                  <span className="vault-title-line">THE</span>
+                  <span className="vault-title-line">INTELLIGENCE</span>
+                  <span className="vault-title-line">VAULT</span>
+                </h2>
+
+                <p className="vault-subheading mono">
+                  THREE KEYS. ONE INTELLIGENCE. UNLOCK MY SUPERPOWER.
+                </p>
+
+                {/* Priority 3: Elegant Selectable Key Controls */}
+                <div
+                  className="vault-keys-nav"
+                  role="tablist"
+                  aria-label="Three Intelligence Keys"
+                >
+                  {[
+                    { id: "01", name: "PERCEPTION", sub: "DOCRECON", icon: ScanLine },
+                    { id: "02", name: "REASONING", sub: "PATHWAY AI", icon: Layers },
+                    { id: "03", name: "CONNECTION", sub: "HEFIN", icon: Network },
+                  ].map((item, i) => {
+                    const isUnlocked = keys[i];
+                    const isTabActive = activeTab === i;
+                    const IconComponent = item.icon;
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={isTabActive}
+                        className={`vault-hero-key-card ${isUnlocked ? "is-unlocked" : "is-locked"} ${isTabActive ? "is-active" : ""}`}
+                        onClick={() => {
+                          setActiveTab(i);
+                          const trialsEl = document.getElementById("vault-trials");
+                          if (trialsEl) {
+                            trialsEl.scrollIntoView({ behavior: "smooth" });
+                          }
+                        }}
+                      >
+                        <div className="hero-key-top">
+                          <span className="hero-key-tag mono">KEY {item.id}</span>
+                          <span className="hero-key-status mono">
+                            {isUnlocked ? (
+                              <>
+                                <Key size={11} className="key-spin" />
+                                <span>FORGED</span>
+                              </>
+                            ) : (
+                              <>
+                                <LockKeyhole size={10} />
+                                <span>PENDING</span>
+                              </>
+                            )}
+                          </span>
+                        </div>
+                        <div className="hero-key-name">{item.name}</div>
+                        <div className="hero-key-sub mono">{item.sub}</div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Priority 4: Polished Sunshine Yellow Primary CTA */}
+                <div className="vault-gateway-cue">
+                  <a
+                    href="#vault-trials"
+                    className="vault-primary-cta"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const trialsEl = document.getElementById("vault-trials");
+                      if (trialsEl) {
+                        trialsEl.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                  >
+                    <span className="cta-label">BEGIN THE INTELLIGENCE TRIAL</span>
+                    <ArrowDown size={16} className="cta-icon" />
+                  </a>
+                </div>
+              </div>
             </div>
 
-            {/* Interactive Gateway Cue */}
-            <div className="vault-gateway-cue">
-              <a href="#vault-trials" className="vault-trial-cue-btn mono">
-                <span>[ BEGIN THE INTELLIGENCE TRIAL ]</span>
-                <ChevronDown size={14} className="cue-bounce-icon" />
-              </a>
-            </div>
+            {/* RIGHT ZONE (~60% on Desktop): Unobstructed view for Cathedral background, Orb & Explorer */}
+            <div className="vault-right-zone" aria-hidden="true" />
           </div>
         </div>
       </div>
