@@ -678,9 +678,9 @@ function GothicSkillPodium({
       <mesh position={[0, -0.678, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.48, 0.52, 48]} />
         <meshBasicMaterial
-          color="#ffffff"
+          color={isSelected ? "#FFD447" : "#A7ADB4"}
           transparent
-          opacity={isSelected ? 0.85 : hovered ? 0.5 : 0.22}
+          opacity={isSelected ? 0.95 : hovered ? 0.6 : 0.25}
         />
       </mesh>
 
@@ -769,7 +769,7 @@ function GothicSkillPodium({
       <pointLight
         position={[0, -0.25, 0]}
         intensity={isSelected ? 32 : hovered ? 18 : 8}
-        color="#ffffff"
+        color={isSelected ? "#FFE27A" : "#ffffff"}
         distance={2.8}
       />
 

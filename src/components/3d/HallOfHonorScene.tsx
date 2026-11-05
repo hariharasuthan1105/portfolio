@@ -49,9 +49,9 @@ function DaisContactDisc({
       <mesh ref={ringRef} position={[0, 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.44 * scale, 0.47 * scale, 48]} />
         <meshBasicMaterial
-          color="#ffffff"
+          color={isSelected ? "#FFD447" : "#A7ADB4"}
           transparent
-          opacity={0.5}
+          opacity={isSelected ? 0.9 : 0.45}
           side={THREE.DoubleSide}
           depthWrite={false}
         />
@@ -549,17 +549,25 @@ function WCHLTrophy({
           />
         </mesh>
 
-        {/* Floating Horizontal Silver Security Ring */}
+        {/* Floating Horizontal Silver Security Ring & Dual Orbital Ring */}
         <group ref={ringRef}>
           <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[0.22 * scale, 0.012 * scale, 16, 48]} />
+            <torusGeometry args={[0.26 * scale, 0.012 * scale, 16, 48]} />
             <meshStandardMaterial
               color="#dadde6"
               metalness={0.96}
               roughness={0.1}
             />
           </mesh>
-          {[-0.22, 0.22].map((x, i) => (
+          <mesh rotation={[Math.PI / 4, 0, Math.PI / 6]}>
+            <torusGeometry args={[0.31 * scale, 0.011 * scale, 16, 48]} />
+            <meshStandardMaterial
+              color="#c8ccd8"
+              metalness={0.96}
+              roughness={0.1}
+            />
+          </mesh>
+          {[-0.26, 0.26].map((x, i) => (
             <mesh key={i} position={[x * scale, 0, 0]}>
               <sphereGeometry args={[0.016 * scale, 12, 12]} />
               <meshBasicMaterial color="#ffffff" />
@@ -760,7 +768,7 @@ export default function HallOfHonorScene({
           position={[-1.62, 3.2, 2.0]}
           target-position={leftPos}
           intensity={selectedAwardIndex === 0 ? 5.5 : 2.6}
-          color="#ffffff"
+          color={selectedAwardIndex === 0 ? "#FFD447" : "#ffffff"}
           angle={0.4}
           penumbra={0.65}
         />
@@ -768,7 +776,7 @@ export default function HallOfHonorScene({
           position={[0, 4.0, -2.5]}
           target-position={altarPos}
           intensity={selectedAwardIndex === 1 ? 6.0 : 3.2}
-          color="#ffffff"
+          color={selectedAwardIndex === 1 ? "#FFD447" : "#ffffff"}
           angle={0.4}
           penumbra={0.6}
         />
@@ -776,7 +784,7 @@ export default function HallOfHonorScene({
           position={[1.62, 3.2, 2.0]}
           target-position={rightPos}
           intensity={selectedAwardIndex === 2 ? 5.5 : 2.6}
-          color="#ffffff"
+          color={selectedAwardIndex === 2 ? "#FFD447" : "#ffffff"}
           angle={0.4}
           penumbra={0.65}
         />
@@ -817,7 +825,7 @@ export default function HallOfHonorScene({
             isDimmed={selectedAwardIndex !== null && selectedAwardIndex !== 1}
             position={altarPos}
             onClick={() => onSelectAward(1)}
-            scale={0.85}
+            scale={1.22}
           />
 
           {/* Trophy 03: World Computer Hacker League (Right Front Podium) */}

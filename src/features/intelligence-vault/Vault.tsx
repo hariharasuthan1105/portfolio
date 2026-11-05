@@ -26,6 +26,7 @@ import VaultChamberScene from "../../components/3d/VaultChamberScene";
 
 export default function Vault({ reduced = false }: { reduced?: boolean }) {
   const [keys, setKeys] = useState([false, false, false]);
+  const [activeTab, setActiveTab] = useState<number>(0);
   const [scan, setScan] = useState(0);
   const [q, setQ] = useState(0);
   const [stage, setStage] = useState(0);
@@ -192,10 +193,72 @@ export default function Vault({ reduced = false }: { reduced?: boolean }) {
             </p>
           </div>
 
+          {/* V16 Responsive Laptop & Mobile Challenge Tabs */}
+          <div className="vault-tabs" role="tablist" aria-label="Intelligence Vault Engineering Trials">
+            <button
+              type="button"
+              role="tab"
+              id="vault-tab-0"
+              aria-selected={activeTab === 0}
+              aria-controls="c1-panel"
+              className={`vault-tab-btn ${activeTab === 0 ? "active" : ""} ${keys[0] ? "tab-solved" : ""}`}
+              onClick={() => setActiveTab(0)}
+            >
+              <span className="tab-num mono">01</span>
+              <span className="tab-title">PERCEPTION</span>
+              {keys[0] ? (
+                <span className="tab-pill-solved mono"><Key size={11} /> KEY 01</span>
+              ) : (
+                <span className="tab-pill-idle mono">DOCRECON</span>
+              )}
+            </button>
+
+            <button
+              type="button"
+              role="tab"
+              id="vault-tab-1"
+              aria-selected={activeTab === 1}
+              aria-controls="c2-panel"
+              className={`vault-tab-btn ${activeTab === 1 ? "active" : ""} ${keys[1] ? "tab-solved" : ""}`}
+              onClick={() => setActiveTab(1)}
+            >
+              <span className="tab-num mono">02</span>
+              <span className="tab-title">REASONING</span>
+              {keys[1] ? (
+                <span className="tab-pill-solved mono"><Key size={11} /> KEY 02</span>
+              ) : (
+                <span className="tab-pill-idle mono">PATHWAY AI</span>
+              )}
+            </button>
+
+            <button
+              type="button"
+              role="tab"
+              id="vault-tab-2"
+              aria-selected={activeTab === 2}
+              aria-controls="c3-panel"
+              className={`vault-tab-btn ${activeTab === 2 ? "active" : ""} ${keys[2] ? "tab-solved" : ""}`}
+              onClick={() => setActiveTab(2)}
+            >
+              <span className="tab-num mono">03</span>
+              <span className="tab-title">CONNECTION</span>
+              {keys[2] ? (
+                <span className="tab-pill-solved mono"><Key size={11} /> KEY 03</span>
+              ) : (
+                <span className="tab-pill-idle mono">HEFIN</span>
+              )}
+            </button>
+          </div>
+
           {/* 3 Challenge Pillars */}
           <div className="vault-grid">
             {/* CHALLENGE 1: PERCEPTION (DocRecon) */}
-            <article className={`challenge ${keys[0] ? "solved" : ""}`} aria-labelledby="c1-title">
+            <article
+              id="c1-panel"
+              role="tabpanel"
+              aria-labelledby="vault-tab-0"
+              className={`challenge ${keys[0] ? "solved" : ""} ${activeTab === 0 ? "tab-active" : "tab-inactive"}`}
+            >
               <header>
                 <span className="challenge-index mono">01</span>
                 <div>
@@ -296,13 +359,29 @@ export default function Vault({ reduced = false }: { reduced?: boolean }) {
                 )}
               </div>
 
+              {keys[0] && (
+                <button
+                  type="button"
+                  className="vault-next-tab-btn mono"
+                  onClick={() => setActiveTab(1)}
+                >
+                  <span>PROCEED TO TRIAL 02: REASONING</span>
+                  <ArrowRight size={14} />
+                </button>
+              )}
+
               <small className="demo-label mono">
                 [ DEMO: Predefined offline document layout simulation. No external OCR called. ]
               </small>
             </article>
 
             {/* CHALLENGE 2: REASONING (Pathway AI) */}
-            <article className={`challenge ${keys[1] ? "solved" : ""}`} aria-labelledby="c2-title">
+            <article
+              id="c2-panel"
+              role="tabpanel"
+              aria-labelledby="vault-tab-1"
+              className={`challenge ${keys[1] ? "solved" : ""} ${activeTab === 1 ? "tab-active" : "tab-inactive"}`}
+            >
               <header>
                 <span className="challenge-index mono">02</span>
                 <div>
@@ -398,13 +477,29 @@ export default function Vault({ reduced = false }: { reduced?: boolean }) {
                 <ArrowRight size={14} />
               </button>
 
+              {keys[1] && (
+                <button
+                  type="button"
+                  className="vault-next-tab-btn mono"
+                  onClick={() => setActiveTab(2)}
+                >
+                  <span>PROCEED TO TRIAL 03: CONNECTION</span>
+                  <ArrowRight size={14} />
+                </button>
+              )}
+
               <small className="demo-label mono">
                 [ DEMO: Streaming RAG workflow simulation with grounded IoT telemetry. ]
               </small>
             </article>
 
             {/* CHALLENGE 3: CONNECTION (HEFIN) */}
-            <article className={`challenge ${keys[2] ? "solved" : ""}`} aria-labelledby="c3-title">
+            <article
+              id="c3-panel"
+              role="tabpanel"
+              aria-labelledby="vault-tab-2"
+              className={`challenge ${keys[2] ? "solved" : ""} ${activeTab === 2 ? "tab-active" : "tab-inactive"}`}
+            >
               <header>
                 <span className="challenge-index mono">03</span>
                 <div>
@@ -463,6 +558,16 @@ export default function Vault({ reduced = false }: { reduced?: boolean }) {
                 <span className="network-note mono">{networkNote}</span>
               </div>
 
+              {unlocked && (
+                <a
+                  href="#vault-reveal"
+                  className="vault-next-tab-btn mono"
+                >
+                  <span>ASTRAL CORE ALIGNED · PROCEED TO REVEAL</span>
+                  <ArrowRight size={14} />
+                </a>
+              )}
+
               <small className="demo-label mono">
                 [ DEMO: Decentralized topology simulation. Accessible via keyboard & touch. ]
               </small>
@@ -471,6 +576,7 @@ export default function Vault({ reduced = false }: { reduced?: boolean }) {
 
           {/* GRAND FINALE — THE INTELLIGENCE REVEAL */}
           <div
+            id="vault-reveal"
             className={`vault-reveal ${unlocked ? "unlocked" : "locked"}`}
             aria-live="polite"
           >
