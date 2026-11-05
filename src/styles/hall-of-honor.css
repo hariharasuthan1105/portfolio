@@ -1,12 +1,13 @@
 /* ==========================================================================
-   06 / ACHIEVEMENTS: THE HALL OF HONOR (RESPONSIVE 3D ALIGNED EXHIBITION)
+   06 / ACHIEVEMENTS: THE HALL OF HONOR (LUXURY GRAPHITE & REFINED 2D GALLERY)
+   Deep Graphite #14171B | Cloud White #F3F5F4 | Sunshine Yellow #FFD447
    ========================================================================== */
 
 .awards-section.hall-of-honor-section {
   position: relative;
   width: 100%;
   min-height: auto;
-  background-color: #000000;
+  background-color: var(--bg-primary, #14171B);
   overflow: visible;
   display: flex;
   flex-direction: column;
@@ -15,21 +16,22 @@
 }
 
 /* ==========================================================================
-   TOP HALF: CINEMATIC 3D CEREMONIAL STAGE
-   Contains background cathedral plate, explorer in central aisle, and 3 trophies
+   TOP HALF: CINEMATIC CATHEDRAL STAGE
+   Contains background cathedral plate, columns, banners & walking cloaked explorer
+   Visual atmosphere preserved; all 3D canvas / trophy meshes removed
    ========================================================================== */
 
 .hall-cinematic-stage {
   position: relative;
   width: 100%;
-  height: clamp(480px, 58vh, 640px);
-  min-height: 480px;
-  max-height: 660px;
+  height: clamp(380px, 48vh, 520px);
+  min-height: 340px;
+  max-height: 560px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   overflow: hidden;
-  background: #000000;
+  background: var(--bg-darker, #0D0F12);
   box-sizing: border-box;
 }
 
@@ -38,30 +40,30 @@
   position: absolute;
   inset: 0;
   background: url("/assets/hall-of-honor-environment.webp") center center / cover no-repeat;
-  filter: saturate(0) contrast(1.08) brightness(0.94);
+  filter: saturate(0) contrast(1.08) brightness(0.95);
   opacity: 0.96;
   pointer-events: none;
   z-index: 1;
 }
 
-/* Subtle Vertical Vignettes: Top edge & bottom stage transition */
+/* Atmospheric Vignette: Deep graphite gradients connecting to surrounding sections */
 .hall-vignette-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.92) 0%,
-    rgba(0, 0, 0, 0.1) 14%,
-    transparent 28%,
-    transparent 72%,
-    rgba(0, 0, 0, 0.6) 88%,
-    #050508 100%
+    rgba(13, 15, 18, 0.92) 0%,
+    rgba(13, 15, 18, 0.22) 15%,
+    transparent 30%,
+    transparent 68%,
+    rgba(20, 23, 27, 0.72) 88%,
+    var(--bg-primary, #14171B) 100%
   );
   pointer-events: none;
   z-index: 2;
 }
 
-/* Isolated 3D Mode (?isolate=hall3d) */
+/* Isolated Mode (?isolate=hall3d) */
 .awards-section.hall-of-honor-section.is-hall-isolated .hall-background-layer,
 .awards-section.hall-of-honor-section.is-hall-isolated .hall-vignette-overlay {
   display: none !important;
@@ -73,37 +75,16 @@
   pointer-events: none;
 }
 
-/* Three.js Canvas Container across the Stage */
-.hall-scene-container {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-}
-
-.hall-canvas-wrapper {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.hall-three-canvas {
-  width: 100% !important;
-  height: 100% !important;
-  pointer-events: auto;
-  outline: none;
-}
-
-/* Top-Left Section Heading Block — Clear of Left Trophy */
+/* Top-Left Section Heading Block */
 .hall-header-block {
   position: relative;
   z-index: 10;
   pointer-events: auto;
-  max-width: 440px;
-  background: rgba(10, 10, 14, 0.76);
+  max-width: 460px;
+  background: rgba(20, 23, 27, 0.82);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--border-graphite, #373D45);
   padding: 24px 28px;
   border-radius: 10px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
@@ -112,67 +93,53 @@
 }
 
 .hall-header-block .eyebrow {
-  color: #a0a0b0;
-  font-size: 10.5px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  color: var(--text-secondary, #A7ADB4);
+  font-size: 11px;
   letter-spacing: 0.16em;
   display: block;
   margin-bottom: 8px;
 }
 
 .hall-main-title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 3.2vw, 3.4rem);
+  font-family: var(--font-display, 'Manrope', sans-serif);
+  font-size: clamp(2rem, 3.2vw, 3.2rem);
   font-weight: 700;
-  color: #ffffff;
-  line-height: 1.08;
-  letter-spacing: 0.04em;
+  color: var(--text-primary, #F3F5F4);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
   margin: 0 0 10px 0;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95);
 }
 
 .hall-lead-quote {
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 13px;
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: 13.5px;
   line-height: 1.55;
-  color: #b0b0b8;
+  color: var(--text-secondary, #A7ADB4);
   margin: 0;
   font-style: italic;
 }
 
 .hall-header-block .hall-accent-line {
-  width: 32px;
+  width: 36px;
   height: 2px;
   background: var(--accent-sunshine, #FFD447);
-  opacity: 0.9;
-  margin-top: 12px;
+  opacity: 0.95;
+  margin-top: 14px;
   border-radius: 1px;
-}
-
-/* Exploration Hint placed subtly near bottom of stage */
-.hall-explore-hint {
-  position: absolute;
-  bottom: 14px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: #9999aa;
-  pointer-events: none;
-  z-index: 8;
-  text-transform: uppercase;
 }
 
 /* ==========================================================================
    BOTTOM HALF: DEDICATED RESPONSIVE CONTENT AREA BELOW THE CINEMATIC STAGE
-   Clean document flow, zero character overlap, full scrolling visibility
+   Equal-width, consistent-height, properly aligned achievement gallery
    ========================================================================== */
 
 .hall-content-flow {
   position: relative;
   z-index: 10;
   width: 100%;
-  background: #000000;
+  background: var(--bg-primary, #14171B);
   padding: 32px 0 60px;
   box-sizing: border-box;
 }
@@ -186,103 +153,38 @@
   min-width: 0;
 }
 
-/* Mobile Trophy Selector Controls (hidden on desktop) */
-.hall-mobile-controls {
-  display: none;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-  pointer-events: auto;
-}
-
-.hall-mobile-btn {
-  background: rgba(14, 14, 18, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #dddddd;
-  padding: 6px 12px;
-  font-size: 9.5px;
-  letter-spacing: 0.12em;
-  border-radius: 2px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.hall-mobile-btn:hover {
-  background: rgba(24, 24, 32, 0.95);
-  border-color: #ffffff;
-  color: #ffffff;
-}
-
-.hall-mobile-dots {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.hall-mobile-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #444455;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.hall-mobile-dot.active {
-  background: var(--accent-sunshine, #FFD447);
-  box-shadow: 0 0 8px var(--accent-sunshine-glow, rgba(255, 212, 71, 0.4));
-  transform: scale(1.3);
-}
-
-.hall-mobile-view-btn {
-  background: var(--accent-sunshine, #FFD447);
-  color: var(--bg-darker, #0D0F12);
-  border: none;
-  padding: 6px 14px;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.hall-mobile-view-btn:hover {
-  background: var(--accent-sunshine-hover, #F5C72E);
-}
-
 /* Three Equal-Width Responsive Achievement Cards */
 .hall-awards-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
   width: 100%;
   margin-bottom: 24px;
 }
 
-/* Individual Obsidian Award Podium Card */
+/* Individual Achievement Gallery Card */
 .hall-award-panel.hall-podium-card {
-  background: var(--bg-card, rgba(34, 38, 44, 0.85));
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: var(--bg-elevated, #22262C);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-graphite, #373D45);
-  padding: 18px 22px 16px;
-  border-radius: 12px;
+  padding: 22px 24px 18px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 120px;
+  min-height: 154px;
   position: relative;
   cursor: pointer;
   outline: none;
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
-  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.24s ease,
-              box-shadow 0.24s ease,
-              background 0.24s ease;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.22s ease,
+              box-shadow 0.22s ease,
+              background 0.22s ease;
   box-sizing: border-box;
+  text-align: left;
 }
 
 .hall-award-panel.hall-podium-card::before {
@@ -292,22 +194,34 @@
   left: 15%;
   right: 15%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 212, 71, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 212, 71, 0.4), transparent);
+  opacity: 0.6;
+  transition: opacity 0.22s ease;
 }
 
 .hall-award-panel.hall-podium-card:hover,
 .hall-award-panel.hall-podium-card:focus-visible {
-  transform: translateY(-3px);
-  border-color: rgba(255, 212, 71, 0.4);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 20px var(--accent-sunshine-glow, rgba(255, 212, 71, 0.15));
-  background: var(--bg-card-hover, rgba(42, 47, 55, 0.92));
+  transform: translateY(-2px);
+  border-color: rgba(255, 212, 71, 0.45);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 18px rgba(255, 212, 71, 0.12);
+  background: #2A2F37;
+}
+
+.hall-award-panel.hall-podium-card:hover::before,
+.hall-award-panel.hall-podium-card:focus-visible::before {
+  opacity: 1;
 }
 
 .hall-award-panel.hall-podium-card.active-award {
   border-color: var(--accent-sunshine, #FFD447);
-  transform: translateY(-3px);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9), 0 0 24px var(--accent-sunshine-glow, rgba(255, 212, 71, 0.22));
-  background: var(--bg-card-hover, rgba(42, 47, 55, 0.92));
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65), 0 0 20px rgba(255, 212, 71, 0.18);
+  background: #2A2F37;
+}
+
+.hall-award-panel.hall-podium-card.active-award::before {
+  opacity: 1;
+  background: linear-gradient(90deg, transparent, var(--accent-sunshine, #FFD447), transparent);
 }
 
 .badge-meta {
@@ -315,25 +229,28 @@
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .badge-index {
-  font-size: 9.5px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
   color: var(--text-muted, #7E858E);
   letter-spacing: 0.14em;
 }
 
 .badge-status {
-  font-size: 8.5px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
   letter-spacing: 0.12em;
-  padding: 3px 8px;
-  background: rgba(255, 255, 255, 0.08);
+  padding: 4px 9px;
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border-graphite, #373D45);
   color: var(--text-primary, #F3F5F4);
   border-radius: 4px;
   transition: all 0.2s ease;
   text-transform: uppercase;
+  font-weight: 500;
 }
 
 .hall-award-panel:hover .badge-status,
@@ -346,23 +263,25 @@
 
 .badge-body {
   text-align: left;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
+  flex: 1;
 }
 
 .badge-title {
-  font-family: var(--font-display);
-  font-size: clamp(14px, 1.2vw, 17px);
+  font-family: var(--font-display, 'Manrope', sans-serif);
+  font-size: clamp(15px, 1.2vw, 19px);
   font-weight: 600;
-  color: #ffffff;
-  letter-spacing: 0.02em;
-  margin: 0 0 4px;
-  line-height: 1.25;
+  color: var(--text-primary, #F3F5F4);
+  letter-spacing: 0.01em;
+  margin: 0 0 6px;
+  line-height: 1.3;
 }
 
 .badge-organizer {
   display: block;
-  font-size: 9.5px;
-  color: #9999a8;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
+  color: var(--text-secondary, #A7ADB4);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -371,20 +290,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 9px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9.5px;
   letter-spacing: 0.12em;
-  color: #888899;
-  padding-top: 8px;
+  color: var(--text-secondary, #A7ADB4);
+  padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   transition: color 0.2s ease;
 }
 
 .hall-award-panel:hover .badge-action,
 .hall-award-panel.active-award .badge-action {
-  color: #ffffff;
+  color: var(--accent-sunshine, #FFD447);
 }
 
-/* Expandable Certifications Drawer Below Cards */
+/* ==========================================================================
+   EXPANDABLE CERTIFICATIONS DRAWER
+   ========================================================================== */
+
 .hall-certifications-wrapper {
   width: 100%;
   margin-top: 10px;
@@ -399,14 +322,14 @@
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  background: rgba(10, 10, 14, 0.72);
+  background: var(--bg-elevated, #22262C);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  padding: 12px clamp(10px, 3vw, 22px);
-  border-radius: 6px;
+  border: 1px solid var(--border-graphite, #373D45);
+  padding: 14px clamp(12px, 3vw, 24px);
+  border-radius: 8px;
   cursor: pointer;
-  color: #dadada;
+  color: var(--text-primary, #F3F5F4);
   transition: all 0.2s ease;
   min-width: 0;
   overflow-wrap: anywhere;
@@ -414,8 +337,8 @@
 
 .certifications-toggle-btn:hover,
 .certifications-toggle-btn:focus-visible {
-  border-color: rgba(255, 255, 255, 0.4);
-  background: rgba(16, 16, 22, 0.85);
+  border-color: rgba(255, 212, 71, 0.4);
+  background: #2A2F37;
   color: #ffffff;
 }
 
@@ -423,74 +346,80 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   min-width: 0;
 }
 
 .cert-eyebrow {
-  font-size: clamp(9px, 2.8vw, 11px);
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: clamp(10px, 2.8vw, 11.5px);
   letter-spacing: 0.12em;
-  color: #ffffff;
+  color: var(--text-primary, #F3F5F4);
+  font-weight: 600;
   overflow-wrap: anywhere;
 }
 
 .cert-count-pill {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
   font-size: 9px;
   letter-spacing: 0.12em;
-  padding: 2px 7px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-graphite, #373D45);
   border-radius: 4px;
-  color: #b0b0b0;
+  color: var(--text-secondary, #A7ADB4);
   white-space: nowrap;
 }
 
 .cert-toggle-right {
-  font-size: clamp(8.5px, 2.5vw, 10px);
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: clamp(9px, 2.5vw, 10.5px);
   letter-spacing: 0.1em;
-  color: #999999;
+  color: var(--accent-sunshine, #FFD447);
   white-space: nowrap;
 }
 
 .certifications-drawer {
   margin-top: 12px;
-  background: rgba(8, 8, 12, 0.92);
+  background: var(--bg-darker, #0D0F12);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 18px 22px;
-  border-radius: 6px;
+  border: 1px solid var(--border-graphite, #373D45);
+  padding: 20px 24px;
+  border-radius: 8px;
 }
 
 .certifications-grid-inner {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
 }
 
 .cert-item-card {
-  background: rgba(16, 16, 22, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 12px 14px;
+  background: var(--bg-elevated, #22262C);
+  border: 1px solid var(--border-graphite, #373D45);
+  padding: 14px 16px;
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  border-radius: 4px;
-  transition: border-color 0.2s ease;
+  border-radius: 6px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 .cert-item-card:hover {
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 212, 71, 0.35);
+  transform: translateY(-1px);
 }
 
 .cert-item-badge {
-  color: #ffffff;
+  color: var(--bg-darker, #0D0F12);
   padding: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--accent-sunshine, #FFD447);
   border-radius: 50%;
   display: grid;
   place-items: center;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .cert-item-info {
@@ -500,40 +429,45 @@
 }
 
 .cert-item-issuer {
-  font-size: 9px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9.5px;
   letter-spacing: 0.12em;
-  color: #888888;
+  color: var(--text-secondary, #A7ADB4);
   text-transform: uppercase;
 }
 
 .cert-item-name {
-  font-family: var(--font-display);
-  font-size: 13px;
-  color: #f0f0f0;
+  font-family: var(--font-display, 'Manrope', sans-serif);
+  font-size: 13.5px;
+  color: var(--text-primary, #F3F5F4);
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   line-height: 1.35;
   margin: 0;
 }
 
 .cert-item-category {
-  font-size: 8.5px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
   letter-spacing: 0.1em;
-  color: #777777;
+  color: var(--text-muted, #7E858E);
 }
 
-/* FOCUSED ACHIEVEMENT CITATION DIALOG */
+/* ==========================================================================
+   FOCUSED ACHIEVEMENT CITATION DIALOG
+   ========================================================================== */
+
 .award-citation-dialog {
   max-width: 660px;
   width: 90vw;
-  background: rgba(8, 8, 12, 0.95);
+  background: rgba(13, 15, 18, 0.96);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 6px;
-  color: #ffffff;
+  border: 1px solid var(--border-graphite, #373D45);
+  border-radius: 10px;
+  color: var(--text-primary, #F3F5F4);
   padding: 0;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 40px rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 0, 0, 0.8);
 }
 
 .award-citation-dialog::backdrop {
@@ -543,11 +477,11 @@
 }
 
 .citation-dialog-inner {
-  padding: 30px;
+  padding: 28px 32px;
 }
 
 .citation-dialog-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid var(--border-graphite, #373D45);
   padding-bottom: 18px;
   margin-bottom: 20px;
 }
@@ -560,19 +494,21 @@
 }
 
 .citation-eyebrow {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
   font-size: 10px;
   letter-spacing: 0.14em;
-  color: #888888;
+  color: var(--text-secondary, #A7ADB4);
 }
 
 .citation-badge {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
   font-size: 9px;
   letter-spacing: 0.12em;
   padding: 3px 8px;
-  background: #ffffff;
-  color: #000000;
-  border-radius: 2px;
-  font-weight: 600;
+  background: var(--accent-sunshine, #FFD447);
+  color: var(--bg-darker, #0D0F12);
+  border-radius: 3px;
+  font-weight: 700;
 }
 
 .citation-title-row {
@@ -583,16 +519,26 @@
 }
 
 .citation-title {
-  font-family: var(--font-display);
-  font-size: clamp(20px, 2.2vw, 28px);
+  font-family: var(--font-display, 'Manrope', sans-serif);
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 700;
+  color: var(--text-primary, #F3F5F4);
   margin: 0 0 4px;
   line-height: 1.2;
 }
 
-.citation-close-btn {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+.citation-org {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
+  color: var(--text-secondary, #A7ADB4);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dialog-close-btn {
+  background: var(--bg-elevated, #22262C);
+  border: 1px solid var(--border-graphite, #373D45);
+  color: var(--text-primary, #F3F5F4);
   padding: 6px;
   border-radius: 4px;
   cursor: pointer;
@@ -601,106 +547,129 @@
   transition: all 0.2s ease;
 }
 
-.citation-close-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: #ffffff;
+.dialog-close-btn:hover {
+  background: #2A2F37;
+  border-color: var(--accent-sunshine, #FFD447);
+  color: var(--accent-sunshine, #FFD447);
 }
 
-.citation-organizer-pill {
-  display: inline-block;
-  font-size: 10px;
-  color: #a0a0b0;
-  letter-spacing: 0.1em;
-  margin-top: 4px;
-}
-
-.citation-body {
+.citation-dialog-body {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
-.citation-desc-block p {
-  font-size: 13.5px;
-  line-height: 1.65;
-  color: #cccccc;
-  margin: 0;
+.citation-banner-emblem {
+  display: flex;
+  justify-content: center;
+  padding: 6px 0;
 }
 
-.citation-specs-grid {
+.citation-big-emblem {
+  width: 56px;
+  height: 56px;
+  color: var(--accent-sunshine, #FFD447);
+}
+
+.citation-grid-details {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
 }
 
-.citation-spec-item {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 10px 14px;
-  border-radius: 4px;
+.citation-box {
+  background: var(--bg-elevated, #22262C);
+  border: 1px solid var(--border-graphite, #373D45);
+  padding: 12px 14px;
+  border-radius: 6px;
 }
 
-.citation-spec-label {
+.citation-box.full-width {
+  grid-column: 1 / -1;
+}
+
+.citation-box-label {
   display: block;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
   font-size: 9px;
   letter-spacing: 0.12em;
-  color: #888888;
+  color: var(--text-secondary, #A7ADB4);
   margin-bottom: 4px;
 }
 
-.citation-spec-val {
-  font-size: 11.5px;
-  color: #ffffff;
+.citation-box p {
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-primary, #F3F5F4);
+  margin: 0;
 }
 
-.citation-footer-actions {
+.citation-highlight-box {
+  border-left: 3px solid var(--accent-sunshine, #FFD447);
+}
+
+.citation-highlight-box h4 {
+  font-family: var(--font-display, 'Manrope', sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #F3F5F4);
+  margin: 4px 0 2px;
+}
+
+.citation-dialog-footer {
   display: flex;
   justify-content: flex-end;
-  padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 16px;
+  margin-top: 6px;
+  border-top: 1px solid var(--border-graphite, #373D45);
 }
 
-.citation-dismiss-btn {
-  background: #ffffff;
-  color: #000000;
-  border: none;
+.citation-close-action {
+  background: var(--bg-elevated, #22262C);
+  color: var(--text-primary, #F3F5F4);
+  border: 1px solid var(--border-graphite, #373D45);
   padding: 8px 18px;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.1em;
-  border-radius: 2px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
-.citation-dismiss-btn:hover {
-  background: #d8d8d8;
+.citation-close-action:hover {
+  background: var(--accent-sunshine, #FFD447);
+  color: var(--bg-darker, #0D0F12);
+  border-color: var(--accent-sunshine, #FFD447);
 }
 
 /* ==========================================================================
-   RESPONSIVE BREAKPOINTS FOR SECTION 06 (HALL OF HONOR)
+   RESPONSIVE BREAKPOINTS FOR SECTION 06 (THE HALL OF HONOR)
+   Desktop & Laptop (>=769px): 3 equal-width cards in 1 row
+   Tablet Portrait & Mobile (<=768px): Vertical stacked cards, clean natural padding, no overflow
    ========================================================================== */
 
 @media (max-width: 1280px) {
   .hall-cinematic-stage {
-    height: clamp(440px, 54vh, 580px);
+    height: clamp(340px, 46vh, 480px);
   }
   .hall-header-block {
     margin: 28px 0 0 28px;
     padding: 20px 24px;
-    max-width: 380px;
+    max-width: 400px;
   }
 }
 
 @media (max-width: 1024px) {
   .hall-cinematic-stage {
-    height: 440px;
+    height: 360px;
   }
   .hall-header-block {
     margin: 20px 0 0 20px;
     padding: 18px 20px;
-    max-width: 340px;
+    max-width: 380px;
   }
   .hall-awards-grid {
     gap: 16px;
@@ -712,43 +681,23 @@
 
 @media (max-width: 768px) {
   .hall-cinematic-stage {
-    height: clamp(280px, 60vw, 360px);
+    height: clamp(260px, 50vw, 340px);
   }
   .hall-header-block {
-    margin: 14px 14px 0;
-    padding: 12px 16px;
-    max-width: calc(100% - 28px);
-  }
-  .hall-mobile-controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 16px;
-  }
-  .hall-mobile-btn,
-  .hall-mobile-view-btn {
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 14px;
-  }
-  .hall-mobile-dot {
-    width: 10px;
-    height: 10px;
+    margin: 16px 16px 0;
+    padding: 14px 18px;
+    max-width: calc(100% - 32px);
   }
   .hall-awards-grid {
+    grid-template-columns: minmax(0, 1fr);
     display: flex;
     flex-direction: column;
     gap: 14px;
   }
-  .hall-award-panel {
-    display: none;
-  }
-  .hall-award-panel.active-award {
-    display: flex;
+  .hall-award-panel.hall-podium-card {
+    display: flex !important;
     width: 100%;
-    box-sizing: border-box;
+    min-height: 140px;
   }
   .hall-content-inner {
     padding: 0 16px;
@@ -757,17 +706,21 @@
 
 @media (max-width: 480px) {
   .hall-cinematic-stage {
-    height: clamp(260px, 68vw, 320px);
+    height: clamp(240px, 55vw, 300px);
   }
   .hall-header-block {
-    margin: 10px 10px 0;
-    padding: 10px 12px;
-    max-width: calc(100% - 20px);
+    margin: 12px 12px 0;
+    padding: 12px 14px;
+    max-width: calc(100% - 24px);
   }
   .hall-main-title {
-    font-size: 1.8rem;
+    font-size: 1.85rem;
   }
   .hall-lead-quote {
-    display: none;
+    font-size: 12px;
+  }
+  .hall-award-panel.hall-podium-card {
+    padding: 16px 18px;
+    min-height: 130px;
   }
 }

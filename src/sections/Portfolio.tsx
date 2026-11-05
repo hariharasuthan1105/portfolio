@@ -41,7 +41,6 @@ import { DocReconSchematic, PathwayAISchematic, HefinSchematic } from "../compon
 import JourneyTimelineScene, {
   MILESTONES,
 } from "../components/3d/JourneyTimelineScene";
-import HallOfHonorScene from "../components/3d/HallOfHonorScene";
 import { ACHIEVEMENTS, CERTIFICATIONS } from "../data/achievements";
 import { LaurelEmblem, GeometricEmblem, GlobeEmblem } from "../components/ui/AwardEmblems";
 import ContactPortalScene from "../components/3d/ContactPortalScene";
@@ -656,7 +655,7 @@ export default function Portfolio({
 
       {/* 06 / ACHIEVEMENTS — THE HALL OF HONOR */}
       <section id="achievements" className={`section awards-section hall-of-honor-section ${isHallIsolated ? "is-hall-isolated" : ""}`}>
-        {/* TOP CINEMATIC 3D STAGE: Authentic Cathedral Atmosphere, Podiums & Trophies */}
+        {/* TOP CINEMATIC CATHEDRAL STAGE: Authentic Gothic Cathedral Atmosphere & Cloaked Explorer */}
         <div className="hall-cinematic-stage">
           {/* Environment Background Layer */}
           <div className="hall-background-layer" aria-hidden="true" />
@@ -673,69 +672,11 @@ export default function Portfolio({
             </p>
             <div className="hall-accent-line" aria-hidden="true" />
           </div>
-
-          {/* Real-time 3D Scene Viewport (Left/Right Podiums & Center Altar) */}
-          <div className="hall-scene-container" aria-hidden="false">
-            <HallOfHonorScene
-              selectedAwardIndex={selectedAwardIndex}
-              onSelectAward={(i) => {
-                setSelectedAwardIndex(i);
-              }}
-              reduced={reduced}
-            />
-          </div>
-
-          {/* Unobtrusive Exploration Hint */}
-          <div className="hall-explore-hint mono" aria-hidden="true">
-            [ SELECT A TROPHY TO EXPLORE ]
-          </div>
         </div>
 
         {/* DEDICATED RESPONSIVE CONTENT AREA BELOW THE CINEMATIC STAGE */}
         <div className="hall-content-flow">
           <div className="hall-content-inner">
-            {/* Mobile Carousel Controls (shown on small screens) */}
-            <div className="hall-mobile-controls" role="group" aria-label="Trophy Navigation">
-              <button
-                type="button"
-                className="hall-mobile-btn mono"
-                onClick={() => {
-                  const prev = selectedAwardIndex === null ? 0 : (selectedAwardIndex + 2) % 3;
-                  setSelectedAwardIndex(prev);
-                }}
-                aria-label="Previous trophy"
-              >
-                [ PREVIOUS ]
-              </button>
-              <div className="hall-mobile-dots" aria-hidden="true">
-                {[0, 1, 2].map((idx) => (
-                  <span
-                    key={idx}
-                    className={`hall-mobile-dot ${selectedAwardIndex === idx ? "active" : ""}`}
-                    onClick={() => setSelectedAwardIndex(idx)}
-                  />
-                ))}
-              </div>
-              <button
-                type="button"
-                className="hall-mobile-btn mono"
-                onClick={() => {
-                  const next = selectedAwardIndex === null ? 1 : (selectedAwardIndex + 1) % 3;
-                  setSelectedAwardIndex(next);
-                }}
-                aria-label="Next trophy"
-              >
-                [ NEXT ]
-              </button>
-              <button
-                type="button"
-                className="hall-mobile-view-btn mono"
-                onClick={() => openAwardModal(selectedAwardIndex ?? 0)}
-              >
-                [ VIEW ACHIEVEMENT ]
-              </button>
-            </div>
-
             {/* Three Equal-Width Responsive Achievement Cards */}
             <div className="hall-awards-grid" role="region" aria-label="Authentic Engineering Honors">
               {ACHIEVEMENTS.map((award, i) => (
@@ -749,7 +690,7 @@ export default function Portfolio({
                   tabIndex={0}
                   role="button"
                   aria-pressed={selectedAwardIndex === i}
-                  aria-label={`Select ${award.name} - ${award.status}`}
+                  aria-label={`View ${award.name} - ${award.status}`}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
@@ -772,7 +713,7 @@ export default function Portfolio({
 
                   {/* Action Bar */}
                   <div className="badge-action mono">
-                    <span>[ EXPLORE TROPHY ]</span>
+                    <span>[ VIEW ACHIEVEMENT ]</span>
                     <ArrowUpRight size={13} />
                   </div>
                 </article>
