@@ -220,6 +220,7 @@ export default function ContactPortalScene({
         dpr={[1, 1.5]}
         gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
         className="contact-portal-three-canvas"
+        style={{ pointerEvents: "none" }}
       >
         <ambientLight intensity={0.95} />
         {/* Core Celestial Portal Point Light */}
